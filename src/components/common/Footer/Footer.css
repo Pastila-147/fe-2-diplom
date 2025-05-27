@@ -1,0 +1,107 @@
+.footer {
+    padding-top: 40px;
+    margin-top: 95px;
+    background-color: rgba(45, 43, 47, 1);
+    color: white;
+}
+
+.footer__contacts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding: 0 100px;
+}
+
+.contacts__section {
+    width: 46%;
+}
+
+.footer__subscribe {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.footer__footer {
+    border-top: solid 1px white;
+    margin-top: 20px;
+}
+
+.footer__logo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 100px;
+}
+
+.arrow {
+    width: 30px;
+    height: 30px;
+    background: url('/public/img/arrow.png') center center no-repeat;
+    background-size: contain;
+}
+
+.socials {
+    display: flex;
+    gap: 15px;
+}
+
+.socials {
+    display: flex;
+    gap: 20px; /* расстояние между иконками */
+    padding: 0; /* убираем отступы */
+    list-style-type: none; /* убираем буллиты */
+}
+
+.social {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.youtube {
+    background-image: url('/public/img/youtube.png');
+}
+
+.in {
+    background-image: url('/public/img/linkedin.png');
+}
+
+.google {
+    background-image: url('/public/img/google.png');
+}
+
+.facebook {
+    background-image: url('/public/img/facebook.png');
+}
+
+.twitter {
+    background-image: url('/public/img/twitter.png');
+}
+
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 100px;
+    background-color: rgba(45, 43, 47, 1);
+    border-top: 1px solid white;
+}
+
+.footer__logo {
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.footer__arrow {
+    width: 30px;
+    height: 30px;
+    background: url('/public/img/arrow.png') center center no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.footer__year {
+    font-size: 18px;
+    color: white;
+}

@@ -1,0 +1,236 @@
+.ticket-card {
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    margin-bottom: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.ticket-card__header {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding: 0 20px;
+    background-color: #f7f6f6;
+}
+
+.ticket-card__icon {
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-right: 20px;
+}
+
+.ticket-card__button {
+    font-weight: 700;
+    font-size: 24px;
+    height: 60px;
+    padding: 0 33px;
+    border: 1px solid #292929;
+    border-radius: 5px;
+    background: #fff;
+    color: #292929;
+}
+
+.ticket-card__button:hover {
+    color: #FFD800;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.ticket-card__train-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+    background-color: #f7f6f6;
+}
+
+.ticket-card__aside {
+    display: flex;
+    align-items: center;
+    width: 25%;
+}
+
+.ticket-card__aside-icon {
+    width: 30px;
+    height: 30px;
+    background-image: url('../../assets/img/Train-orange.svg');
+    background-size: cover;
+    background-position: center;
+    margin-right: 20px;
+}
+
+.ticket-card__aside-title .desc-name {
+    font-weight: bold;
+    font-size: 20px;
+    color: #292929;
+}
+
+.ticket-card__aside-title .desc-city {
+    font-size: 16px;
+    color: #928F94;
+}
+
+.ticket-card__route {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.route-info {
+    text-align: center;
+}
+
+.route-info .time {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.route-info .desc-city,
+.route-info .station {
+    font-size: 16px;
+    color: #292929;
+}
+
+.direction-arrow {
+    width: 30px;
+    height: 20px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ticket-card__duration {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    justify-content: center;
+}
+
+.duration-img {
+    width: 30px;
+    height: 30px;
+    background-image: url('../../assets/img/Clock.svg');
+    background-position: center;
+    background-size: contain;
+    margin-right: 10px;
+}
+
+.duration-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+}
+
+.ticket-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #292929;
+    margin: 30px 0 0 30px;
+}
+
+.ticket-ages {
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+}
+
+.age-inputs {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.age-inputs label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.age-input {
+    padding: 10px;
+    border: 1px solid #928F94;
+    border-radius: 5px;
+}
+
+.input-desc {
+    font-size: 14px;
+    color: #928f94;
+    margin-top: 8px;
+}
+
+.seat-carriage-type {
+    padding: 30px;
+}
+
+.carriage-type-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #292929;
+    margin-bottom: 20px;
+}
+
+.carriage-types {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+}
+
+.carriage-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carriage-type-button {
+    border: none;
+    background: none;
+}
+
+.carriage-type-img {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* обычные иконки */
+.carriage-type-img.lux {
+    background-image: url('../../assets/img/Lux.svg');
+}
+
+.carriage-type-img.coupe {
+    background-image: url('../../assets/img/Kupe.svg');
+}
+
+.carriage-type-img.sed {
+    background-image: url('../../assets/img/Sitting.svg');
+}
+
+.carriage-type-img.res {
+    background-image: url('../../assets/img/Platskart.svg');
+}
+
+/* оранжевые иконки */
+.carriage-type-img.lux.active {
+    background-image: url('../../assets/img/Lux-hover.svg');
+}
+
+.carriage-type-img.coupe.active {
+    background-image: url('../../assets/img/Kupe-hover.svg');
+}
+
+.carriage-type-img.sed.active {
+    background-image: url('../../assets/img/Sitting-hover.svg');
+}
+
+.carriage-type-img.res.active {
+    background-image: url('../../assets/img/Platskart-hover.svg');
+}
+
+
+.ticket-card__wagon-placeholder {
+    margin: 20px 0;
+}

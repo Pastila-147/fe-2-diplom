@@ -1,0 +1,44 @@
+/* AboutUs.css */
+
+.about-us {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 144px;
+    padding: 40px 20px;
+    font-family: Roboto, sans-serif;
+    color: #333;
+}
+
+.about-us__container {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.about-us__title {
+    font-weight: 500;
+    font-size: 36px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.about-us-vertical-line {
+    width: 9px;
+    height: 231px;
+    background-color: #FFA800;
+}
+
+.about-us__text {
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.about-us__text p {
+    margin-bottom: 15px;
+}
+
+.about-us__text-bold {
+    font-weight: 600;
+}
