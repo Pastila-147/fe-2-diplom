@@ -2,7 +2,7 @@ import React from 'react'
 import { renderSeat } from './renderSeat'
 import './WagonScheme.css'
 
-export default function SchemeKupe({ coach, seats, selectedSeats, handleClick }) {
+export default function SchemeKupe({ coach, seats, selectedSeats, onSeatClick }) {
     if (!coach || !seats) return null
 
     return (
@@ -14,13 +14,13 @@ export default function SchemeKupe({ coach, seats, selectedSeats, handleClick })
             <ul className="scheme_top-seats">
                 {seats
                     .filter((seat) => seat.index % 2 === 0)
-                    .map((seat) => renderSeat(seat, selectedSeats, handleClick))}
+                    .map((seat) => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
 
             <ul className="scheme_bottom-seats">
                 {seats
                     .filter((seat) => seat.index % 2 !== 0)
-                    .map((seat) => renderSeat(seat, selectedSeats, handleClick))}
+                    .map((seat) => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
         </div>
     )

@@ -70,8 +70,24 @@
 .next-button:hover {
   background-color: #FFD800;
 }
+/*------------PassengerDetails.css----------*/
+.passenger-details-page {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+}
 
+.passenger-details__aside {
+  flex: 1;
+  max-width: 350px;
+}
 
+.passenger-details__section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 /*------------Common.css----------*/
 .page-container {
   display: flex;

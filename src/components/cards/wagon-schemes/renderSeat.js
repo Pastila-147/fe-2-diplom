@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const renderSeat = (seat, selectedSeats, handleClick) => {
-    const isSelected = selectedSeats.includes(seat.index)
+export const renderSeat = (seat, selectedSeats, onSeatClick) => {
+    const isSelected = selectedSeats.some((s) => s.index === seat.index)
 
     const className = [
         'seat-wagon_button_box',
@@ -13,7 +13,7 @@ export const renderSeat = (seat, selectedSeats, handleClick) => {
         <li
             key={seat.index}
             className={className}
-            onClick={() => seat.available && handleClick(seat.index)}
+            onClick={() => seat.available && onSeatClick(seat)}
         >
             {seat.index}
         </li>

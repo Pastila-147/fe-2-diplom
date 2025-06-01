@@ -2,7 +2,7 @@ import React from 'react'
 import { renderSeat } from './renderSeat'
 import './WagonScheme.css'
 
-export default function SchemeLux({ coach, seats, selectedSeats, handleClick }) {
+export default function SchemeLux({ coach, seats, selectedSeats, onSeatClick }) {
     if (!coach || !seats) return null
 
     const topSeats = seats.filter(seat => seat.index % 2 === 0)
@@ -12,10 +12,10 @@ export default function SchemeLux({ coach, seats, selectedSeats, handleClick }) 
         <div className="seats-scheme luxury-wagon">
             <span className="scheme_wagon-number">{coach.name.slice(-2)}</span>
             <ul className="scheme_top-seats">
-                {topSeats.map(seat => renderSeat(seat, selectedSeats, handleClick))}
+                {topSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
             <ul className="scheme_bottom-seats">
-                {bottomSeats.map(seat => renderSeat(seat, selectedSeats, handleClick))}
+                {bottomSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
         </div>
     )

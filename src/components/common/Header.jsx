@@ -11,8 +11,8 @@ import { CityApi } from '../../api/Api'
 import './Header.css'
 
 const Header = ({ isMainPage = true }) => {
-    const [from, setFrom] = useState('')
-    const [to, setTo] = useState('')
+    const [from, setFrom] = useState([ "санкт-петербург" ])
+    const [to, setTo] = useState(["архангельск"])
     const [fromSuggestions, setFromSuggestions] = useState([])
     const [toSuggestions, setToSuggestions] = useState([])
     const [isFromOpen, setIsFromOpen] = useState(false)
@@ -23,6 +23,8 @@ const Header = ({ isMainPage = true }) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+
 
     // Поиск городов по названию
     const fetchCities = async (query, setSuggestions, setOpen) => {
@@ -177,8 +179,8 @@ const Header = ({ isMainPage = true }) => {
                     <div className="search-form__group">
                         <label>Дата</label>
                         <div className="search-form__inputs">
-                            <input type="date" name="departureDate" />
-                            <input type="date" name="returnDate" />
+                            <input type="date" name="departureDate" value="2027-11-26" />
+                            <input type="date" name="returnDate" value="2027-11-30" />
                         </div>
                     </div>
 

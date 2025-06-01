@@ -2,7 +2,7 @@ import React from 'react'
 import { renderSeat } from './renderSeat'
 import './WagonScheme.css'
 
-export default function SchemeSitting({ coach, selectedSeats, handleClick }) {
+export default function SchemeSitting({ coach, selectedSeats, onSeatClick }) {
     if (!coach || !coach.seats) return null
 
     const topSeats = coach.seats.filter(seat => seat.index % 2 !== 0)
@@ -15,11 +15,11 @@ export default function SchemeSitting({ coach, selectedSeats, handleClick }) {
             </span>
 
             <ul className="scheme_top-seats">
-                {topSeats.map(seat => renderSeat(seat, selectedSeats, handleClick))}
+                {topSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
 
             <ul className="scheme_bottom-seats">
-                {bottomSeats.map(seat => renderSeat(seat, selectedSeats, handleClick))}
+                {bottomSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
         </div>
     )

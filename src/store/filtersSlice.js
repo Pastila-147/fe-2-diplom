@@ -56,6 +56,12 @@ const filtersSlice = createSlice({
         setEndTimes: (state, action) => {
             state.endTimes = action.payload
         },
+        setDeparture: (state, action) => {
+            state.departure = action.payload
+        },
+        setArrival: (state, action) => {
+            state.arrival = action.payload
+        },
     },
 })
 
@@ -68,6 +74,8 @@ export const {
     setOption,
     setStartTimes,
     setEndTimes,
+    setDeparture,
+    setArrival,
 } = filtersSlice.actions
 
 export default filtersSlice.reducer
