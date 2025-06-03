@@ -9,10 +9,10 @@ const formatDuration = (sec) => {
     return `${hours} ч ${minutes} мин`;
 };
 
-export default function TrainInfo({ route, type }) {
+export default function TrainInfo({ route, direction }) {
     if (!route || !route.train || !route.from || !route.to) return null;
 
-    const arrowIcon = type === 'departure'
+    const arrowIcon = direction === 'departure'
         ? '/assets/img/train-arrow.png'
         : '/assets/img/train-arrow-back.png';
 

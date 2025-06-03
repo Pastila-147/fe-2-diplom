@@ -2,10 +2,14 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 export default function RouteDetails() {
-    const { selectedSeats } = useSelector((state) => state.seats)
-    const passengersCount = useSelector((state) => state.passengers.count)
-    const departure = useSelector((state) => state.filters.departure)
-    const arrival = useSelector((state) => state.filters.arrival)
+
+    const passengersCount = useSelector((state) => state.passengers.passengersCount)
+
+    const departureTrain = useSelector((state) => state.seats.train.departure);
+    const arrivalTrain = useSelector((state) => state.seats.train.arrival);
+
+    const departureSeats = useSelector((state) => state.seats.selectedSeats.departure.seats)
+    const arrivalSeats = useSelector((state) => state.seats.selectedSeats.arrival.seats)
 
     const formatDate = (timestamp) =>
         new Date(timestamp * 1000).toLocaleDateString('ru-RU')
@@ -19,14 +23,11 @@ export default function RouteDetails() {
     const priceAdult = 1940
     const priceChild = 970
 
-    const countDep = passengersCount?.departure || {}
-    const countArr = passengersCount?.arrival || {}
+    const depAdults = passengersCount.adult || 0
+    const depChildren = passengersCount.child || 0
 
-    const depAdults = countDep.adult || 0
-    const depChildren = countDep.child || 0
-
-    const arrAdults = countArr.adult || 0
-    const arrChildren = countArr.child || 0
+    const arrAdults = passengersCount.adult || 0
+    const arrChildren = passengersCount.child || 0
 
     const totalAdults = depAdults + arrAdults
     const totalChildren = depChildren + arrChildren
@@ -39,34 +40,34 @@ export default function RouteDetails() {
         <aside className="route-details">
             <h3 className="route-details__title">Детали поездки</h3>
 
-            {departure && (
+            {departureTrain && (
                 <div className="route-block">
                     <strong>Туда</strong>
-                    <p>{departure.train.name}</p>
+                    <p>{departureTrain.train.name}</p>
                     <p>
-                        {departure.from.city.name} → {departure.to.city.name}
+                        {departureTrain.from.city.name} → {departureTrain.to.city.name}
                     </p>
                     <p>
-                        {formatTime(departure.from.datetime)} — {formatTime(departure.to.datetime)}
+                        {formatTime(departureTrain.from.datetime)} — {formatTime(departureTrain.to.datetime)}
                     </p>
                     <p>
-                        {formatDate(departure.from.datetime)} — {formatDate(departure.to.datetime)}
+                        {formatDate(departureTrain.from.datetime)} — {formatDate(departureTrain.to.datetime)}
                     </p>
                 </div>
             )}
 
-            {arrival && (
+            {arrivalTrain && (
                 <div className="route-block">
                     <strong>Обратно</strong>
-                    <p>{arrival.train.name}</p>
+                    <p>{arrivalTrain.train.name}</p>
                     <p>
-                        {arrival.from.city.name} → {arrival.to.city.name}
+                        {arrivalTrain.from.city.name} → {arrivalTrain.to.city.name}
                     </p>
                     <p>
-                        {formatTime(arrival.from.datetime)} — {formatTime(arrival.to.datetime)}
+                        {formatTime(arrivalTrain.from.datetime)} — {formatTime(arrivalTrain.to.datetime)}
                     </p>
                     <p>
-                        {formatDate(arrival.from.datetime)} — {formatDate(arrival.to.datetime)}
+                        {formatDate(arrivalTrain.from.datetime)} — {formatDate(arrivalTrain.to.datetime)}
                     </p>
                 </div>
             )}

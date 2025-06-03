@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     background-color: #3e3c41;
-    height: 100px;
+    height: 98px; /* ← уточнено */
     width: 100%;
     color: white;
     position: sticky;
@@ -16,7 +16,8 @@
     align-items: center;
     padding-left: 70px;
     flex-basis: 25%;
-    height: 98px;
+    height: 98px; /* ← уточнено */
+    background-color: #3e3c41;
 }
 
 .progress-bar__step_active {
@@ -55,3 +56,4 @@
     height: 98px;
     pointer-events: none;
 }
+

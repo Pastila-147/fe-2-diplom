@@ -2,10 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     passengersCount: {
-        adult: 0,
+        adult: 1,
         child: 0,
         baby: 0,
     },
+    // selectedSeats: {
+    //     departure: [],
+    //     arrival: [],
+    // },
     passengersPrice: {
         departure: { adult: 0, child: 0, services: 0 },
         arrival: { adult: 0, child: 0, services: 0 },

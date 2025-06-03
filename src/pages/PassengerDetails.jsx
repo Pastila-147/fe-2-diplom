@@ -9,7 +9,7 @@ import '../App.css'
 export default function PassengerDetails() {
     const dispatch = useDispatch()
 
-    const count = useSelector((state) => state.passengers.count.departure) // ← только departure
+    const count = useSelector((state) => state.passengers.passengersCount) // ← только departure
     const passengers = useSelector((state) => state.passengers.passengers)
 
     useEffect(() => {

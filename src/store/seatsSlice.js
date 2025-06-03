@@ -23,7 +23,7 @@ const initialState = {
         departure: null,
         arrival: null,
     },
-    availableSeats: {
+    availableCoaches: {
         departure: {
             couchesList: null,
             queryStatus: 'idle',
@@ -40,16 +40,16 @@ const initialState = {
             selectedCoachClass: null,
             coachesOfSelectedClass: [],
             selectedCoachId: null,
-            seats: {},
-            seatsCount: 0,
+            seatsMap: {},
+            seats: [],
             services: {},
         },
         arrival: {
             selectedCoachClass: null,
             coachesOfSelectedClass: [],
             selectedCoachId: null,
-            seats: {},
-            seatsCount: 0,
+            seatsMap: {},
+            seats: [],
             services: {},
         }
     },
@@ -69,13 +69,13 @@ const seatsSlice = createSlice({
             state.train.arrival = arrivalTrain;
         },
         resetSeats: (state) => {
-            state.availableSeats.departure.couchesList = null;
-            state.availableSeats.departure.queryStatus = 'idle';
-            state.availableSeats.departure.queryError = null;
+            state.availableCoaches.departure.couchesList = null;
+            state.availableCoaches.departure.queryStatus = 'idle';
+            state.availableCoaches.departure.queryError = null;
 
-            state.availableSeats.arrival.couchesList = null;
-            state.availableSeats.arrival.queryStatus = 'idle';
-            state.availableSeats.arrival.queryError = null;
+            state.availableCoaches.arrival.couchesList = null;
+            state.availableCoaches.arrival.queryStatus = 'idle';
+            state.availableCoaches.arrival.queryError = null;
         },
         trainAdd: (state, { payload }) => {
             state.train.departure = payload.departure;
@@ -88,8 +88,8 @@ const seatsSlice = createSlice({
         coachItemsClear: (state, { payload }) => {
             state.selectedSeats[payload.type].coachesOfSelectedClass = [];
             state.selectedSeats[payload.type].selectedCoach = null;
-            state.selectedSeats[payload.type].seats = {};
-            state.selectedSeats[payload.type].seatsCount = 0;
+            state.selectedSeats[payload.type].seatsMap = {};
+            state.selectedSeats[payload.type].seats = [];
             state.selectedSeats[payload.type].services = {};
         },
         coachClassChange: (state, { payload }) => {
@@ -97,52 +97,53 @@ const seatsSlice = createSlice({
             state.selectedSeats[payload.type].coachesOfSelectedClass = payload.coachesOfSelectedClass;
         },
         seatsItemSelect: (state, { payload }) => {
-            const { id, number, type } = payload;
-            if (!state.selectedSeats[type].seats[id]) state.selectedSeats[type].seats[id] = [];
-            state.selectedSeats[type].seats[id].push(number);
-            state.selectedSeats[type].seatsCount++;
+            const { coach, seat_number, direction } = payload;
+            if (!state.selectedSeats[direction].seatsMap[coach._id]) state.selectedSeats[direction].seatsMap[coach._id] = [];
+            state.selectedSeats[direction].seatsMap[coach._id].push(seat_number);
+            state.selectedSeats[direction].seats.push({coach: coach, seat_number: seat_number});
         },
         seatsItemUnSelect: (state, { payload }) => {
-            const { id, number, type } = payload;
-            state.selectedSeats[type].seats[id] = state.selectedSeats[type].seats[id].filter((n) => n !== number);
-            if (state.selectedSeats[type].seats[id].length === 0) delete state.selectedSeats[type].seats[id];
-            state.selectedSeats[type].seatsCount--;
+            const { coach, seat_number, direction } = payload;
+            state.selectedSeats[direction].seatsMap[coach._id] = state.selectedSeats[direction].seatsMap[coach._id].filter((n) => n !== seat_number);
+            if (state.selectedSeats[direction].seatsMap[coach._id].length === 0) delete state.selectedSeats[direction].seatsMap[coach._id];
+
+            state.selectedSeats[direction].seats = state.selectedSeats[direction].seats.filter(s => s.coach._id !== coach._id && s.seat_number !== seat_number);
         },
         serviceItemSelect: (state, { payload }) => {
-            const { id, service, type } = payload;
-            if (!state.selectedSeats[type].services[id]) state.selectedSeats[type].services[id] = [];
-            if (!state.selectedSeats[type].services[id].includes(service)) {
-                state.selectedSeats[type].services[id].push(service);
+            const { id, service, direction } = payload;
+            if (!state.selectedSeats[direction].services[id]) state.selectedSeats[direction].services[id] = [];
+            if (!state.selectedSeats[direction].services[id].includes(service)) {
+                state.selectedSeats[direction].services[id].push(service);
             }
         },
         serviceItemUnSelect: (state, { payload }) => {
-            const { id, service, type } = payload;
-            if (state.selectedSeats[type].services[id]) {
-                state.selectedSeats[type].services[id] = state.selectedSeats[type].services[id].filter((s) => s !== service);
-                if (state.selectedSeats[type].services[id].length === 0) delete state.selectedSeats[type].services[id];
+            const { id, service, direction } = payload;
+            if (state.selectedSeats[direction].services[id]) {
+                state.selectedSeats[direction].services[id] = state.selectedSeats[direction].services[id].filter((s) => s !== service);
+                if (state.selectedSeats[direction].services[id].length === 0) delete state.selectedSeats[direction].services[id];
             }
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchDepartureSeats.pending, (state) => {
-                state.availableSeats.departure.queryStatus = 'loading';
+                state.availableCoaches.departure.queryStatus = 'loading';
             })
             .addCase(fetchDepartureSeats.fulfilled, (state, action) => {
-                state.availableSeats.departure.couchesList = action.payload;
-                state.availableSeats.departure.seatsQueryStatus = 'succeeded';
+                state.availableCoaches.departure.couchesList = action.payload;
+                state.availableCoaches.departure.seatsQueryStatus = 'succeeded';
             })
             .addCase(fetchArrivalSeats.fulfilled, (state, action) => {
-                state.availableSeats.arrival.couchesList = action.payload;
-                state.availableSeats.arrival.seatsQueryStatus = 'succeeded';
+                state.availableCoaches.arrival.couchesList = action.payload;
+                state.availableCoaches.arrival.seatsQueryStatus = 'succeeded';
             })
             .addCase(fetchDepartureSeats.rejected, (state, action) => {
-                state.availableSeats.departure.queryStatus = 'failed';
-                state.availableSeats.departure.queryError = action.error.message;
+                state.availableCoaches.departure.queryStatus = 'failed';
+                state.availableCoaches.departure.queryError = action.error.message;
             })
             .addCase(fetchArrivalSeats.rejected, (state, action) => {
-                state.availableSeats.arrival.queryStatus = 'failed';
-                state.availableSeats.arrival.queryError = action.error.message;
+                state.availableCoaches.arrival.queryStatus = 'failed';
+                state.availableCoaches.arrival.queryError = action.error.message;
             });
     },
 });

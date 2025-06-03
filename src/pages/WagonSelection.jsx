@@ -17,14 +17,10 @@ export default function WagonSelection() {
     const arrivalTrain = useSelector((state) => state.seats.train.arrival);
 
 
-    const departureAvailableSeats = useSelector((state) => state.seats.availableSeats.departure);
-    const arrivalAvailableSeats = useSelector((state) => state.seats.availableSeats.arrival);
+    const departureAvailableCoaches = useSelector((state) => state.seats.availableCoaches.departure);
+    const arrivalAvailableCoaches = useSelector((state) => state.seats.availableCoaches.arrival);
 
-    // const train = useSelector((state) => state.seats.train);
-    // const seatsDeparture = useSelector((state) =>{
-    //     return state.seats.train.departure.seatsCount
-    // });
-    // const seatsArrival = useSelector((state) => state.seats.train.arrival.seatsCount);
+
     const { passengersCount } = useSelector((state) => state.passengers);
 
     const passengersCountAll =
@@ -32,26 +28,6 @@ export default function WagonSelection() {
 
     const [disabled, setDisabled] = useState(true);
     const [page, setPage] = useState(1);
-
-    // useEffect(() => {
-    //     dispatch(passengersPriceClear());
-    //     dispatch(fetchSeats('departure'));
-    //     if (train.arrival?._id) dispatch(fetchSeats('arrival'));
-    // }, [dispatch, train.arrival]);
-
-    // useEffect(() => {
-    //     setDisabled(true);
-    //     if (arrivalTrain?._id) {
-    //         if (
-    //             arrivalSeats. === 0 ||
-    //             Number(seatsArrival) !== passengersCountAll
-    //         )
-    //             return;
-    //     }
-    //     if (seatsDeparture === 0 || Number(seatsDeparture) !== passengersCountAll)
-    //         return;
-    //     setDisabled(false);
-    // }, [passengersCount, seatsArrival, seatsDeparture, passengersCountAll, train.arrival]);
 
     const handleClick = () => {
         navigate('/passenger-details');
@@ -74,15 +50,14 @@ export default function WagonSelection() {
             <main className="main-section">
                 <h3 className="title seats_title">Выбор мест</h3>
 
-                {departureAvailableSeats && <TicketCard train={departureTrain} coachesList={departureAvailableSeats.couchesList} direction="departure" />}
-                {arrivalAvailableSeats && <TicketCard train={arrivalTrain} coachesList={arrivalAvailableSeats.couchesList} direction="arrival" />}
+                {departureTrain && <TicketCard train={departureTrain} coachesList={departureAvailableCoaches.couchesList} direction="departure" />}
+                {arrivalTrain && <TicketCard train={arrivalTrain} coachesList={arrivalAvailableCoaches.couchesList} direction="arrival" />}
 
                 <div className="seats_buttons">
                     <button
                         type="button"
                         className="button seats_button"
                         onClick={handleClick}
-                        disabled={disabled}
                     >
                         Далее
                     </button>

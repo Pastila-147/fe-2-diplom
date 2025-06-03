@@ -27,11 +27,7 @@ export default function PassengerTabs({ activeTab, onTabChange, counts, onCountC
                         placeholder={tab.label}
                         value={counts[tab.key] ?? ''}
                         onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
-
-                        // placeholder={counts[tab.key] === 0 || counts[tab.key] === '' ? tab.label : undefined}
-                        // // value={counts[tab.key] === 0 ? '' : counts[tab.key]}
-                        //
-                        // onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
+                        min={0}
                     />
                     <p className="input-desc">{descriptions[tab.key]}</p>
                 </button>

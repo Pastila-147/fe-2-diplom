@@ -7,34 +7,43 @@ import {
 
 import Price from './Price';
 import Services from './Services';
-import Seat from './Seat';
+// import Seat from './Seat';
+
+import SchemeKupe from '../wagon-schemes/SchemeKupe';
+import SchemePlatzkart from '../wagon-schemes/SchemePlatzkart';
+import SchemeSitting from '../wagon-schemes/SchemeSitting';
+import SchemeLux from '../wagon-schemes/SchemeLux';
+import './TicketCard.css'
+
+
+const schemeComponents = {
+    second: SchemeKupe,
+    third: SchemePlatzkart,
+    fourth: SchemeSitting,
+    first: SchemeLux,
+};
 
 export default function CoachDetails({ selectedCoach, direction, activeTab }) {
     const dispatch = useDispatch();
+    const seatsState = useSelector((state) => state.seats.selectedSeats[direction]);
+
     const { coach, seats } = selectedCoach;
-    //const { seats: selectedSeats, seatsCount } = useSelector((state) => state.seats[activeTab]);
+    const selectedSeats = seatsState?.seatsMap?.[coach._id] || [];
+    const seatsCount = selectedSeats.length;
+
     const { passengersCount } = useSelector((state) => state.passengers);
 
     const maxSeats = passengersCount.adult + passengersCount.child;
-    //const selected = selectedSeats[coach._id] || [];
 
-    const handleClick = (number, available) => {
-        if (!available) return;
-
-        // if (selected.includes(number)) {
-        //     dispatch(seatsItemUnSelect({ id: coach._id, number, type: activeTab }));
-        // } else if (seatsCount < maxSeats) {
-        //     dispatch(seatsItemSelect({ id: coach._id, number, type: activeTab }));
-        // }
-    };
 
     const isLux = coach.class_type === 'first';
     const isPlatz = coach.class_type === 'third';
     const isKupe = coach.class_type === 'second';
     const isSeat = coach.class_type === 'fourth';
+    const SchemeComponent = schemeComponents[coach.class_type];
 
     return (
-        <div className="coach">
+        <div className="coach-wrapper">
             <div className="coach-info">
                 <div className="coach-info-header">
                     <p className="coach-number">{coach.name.replace(/\D/g, '')}</p>
@@ -96,19 +105,22 @@ export default function CoachDetails({ selectedCoach, direction, activeTab }) {
                 <div className="coach-demand">
                     {seats.filter((el) => !el.available).length} человек выбирают места в этом поезде
                 </div>
-                <div className="coach-seats-grid">
-                    {seats.map((seat) => (
-                        <Seat
-                            key={seat.index}
-                            id={coach._id}
-                            number={seat.index}
-                            type={seatType(seat, coach)}
-                            available={seat.available}
-                            direction={direction}
-                            onClick={() => handleClick(seat.index, seat.available)}
-                        />
-                    ))}
-                </div>
+
+                <SchemeComponent
+                    coach={coach}
+                    seats={seats}
+                    selectedSeats={
+                        (seatsState?.seatsMap?.[coach._id] || []).map((seat_number) => ({ index: seat_number }))
+                    }
+                    onSeatClick={(seat) => {
+                        const isSelected = seatsState?.seatsMap?.[coach._id]?.includes(seat.index);
+                        if (isSelected) {
+                            dispatch(seatsItemUnSelect({ coach: coach, seat_number: seat.index, direction: direction }));
+                        } else if (seatsCount < maxSeats) {
+                            dispatch(seatsItemSelect({ coach: coach, seat_number: seat.index, direction: direction }));
+                        }
+                    }}
+                />
             </div>
         </div>
     );

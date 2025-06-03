@@ -7,7 +7,13 @@ import {
 
 export default function Services({ coach, direction }) {
     const dispatch = useDispatch();
-    const services = useSelector((state) => state.seats.selectedSeats[direction].services);
+    const services = useSelector((state) => {
+        return state.seats.selectedSeats[direction].services
+    });
+    const coach_has_wifi = coach.have_wifi;
+    const coach_has_air_conditioning = coach.have_air_conditioning;
+    const linens_always_included = coach.is_linens_included;
+
     const id = coach._id;
 
     const handleClick = (service) => {
@@ -21,15 +27,12 @@ export default function Services({ coach, direction }) {
 
     return (
         <div className="coach-services">
-            {coach.have_air_conditioning && (
+            {coach_has_air_conditioning && (
                 <button
-                    className={`service air__item ${
-                        services[id]?.includes('air') ? 'service-active air__item-active' : ''
-                    }`}
-                    onClick={() => handleClick('air')}
+                    className="service air__item service-active air__item-active"
                 />
             )}
-            {coach.have_wifi && (
+            {coach_has_wifi && (
                 <button
                     className={`service wifi__item ${
                         services[id]?.includes('wifi') ? 'service-active wifi__item-active' : ''
@@ -43,7 +46,7 @@ export default function Services({ coach, direction }) {
                         services[id]?.includes('linens') ? 'service-active linens__item-active' : ''
                     }`}
                     onClick={() => handleClick('linens')}
-                    disabled={coach.is_linens_included}
+                    disabled={linens_always_included}
                 />
             )}
             <button

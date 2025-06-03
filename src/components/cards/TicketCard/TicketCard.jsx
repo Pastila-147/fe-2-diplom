@@ -21,29 +21,17 @@ import CoachDetails from "./CoachDetails";
 export default function TicketCard({train, coachesList, direction }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const train = useSelector((state) => state.seats.train[direction.type]);
 
     const seatState = useSelector((state) => state.seats.selectedSeats[direction]);
 
     const [activeTab, setActiveTab] = useState('adult');
-    const [passengerCount, setPassengerCount] = useState({ adult: '', child:'', noPlace: ''});
+
+    const passengerCount = useSelector((state) => state.passengers.passengersCount);
 
     const coachClass = seatState?.selectedCoachClass;
     const coachesOfSelectedClass = seatState?.coachesOfSelectedClass;
     const selectedCoachId = seatState?.selectedCoachId;
     const selectedCoach = coachesList ? coachesList.find(c => c.coach._id === selectedCoachId) : null;
-    const seats = seatState?.seats || {};
-
-    useEffect(() => {
-        if (!coachClass && coachesList.length > 0) {
-            const classOfTheFirstCoach = coachesList[0].coach.class_type;
-            handleCoachClassChange(classOfTheFirstCoach);
-        }
-    }, [coachClass, coachesList, direction, dispatch]);
-
-    if (!coachesList || !train) {
-        return <Loading />;
-    }
 
     const availableClasses = {
         fourth: train.have_fourth_class,
@@ -70,25 +58,33 @@ export default function TicketCard({train, coachesList, direction }) {
         navigate("/search");
     }
 
-    // const handleSeatClick = ({ seat, coachId, price }) => {
-    //     const isSelected = seats[coachId]?.includes(seat.index);
-    //     if (isSelected) {
-    //         dispatch(seatsItemUnSelect({ id: coachId, number: seat.index, type: direction }));
-    //     } else {
-    //         dispatch(seatsItemSelect({ id: coachId, number: seat.index, type: direction }));
-    //     }
-    // };
+    useEffect(() => {
+        if (!coachClass && coachesList.length > 0) {
+            const classOfTheFirstCoach = coachesList[0].coach.class_type;
+            handleCoachClassChange(classOfTheFirstCoach);
+        }
+    }, [coachClass, coachesList, direction, dispatch])
+
+    useEffect(() => {
+        if (coachesOfSelectedClass.length > 0 && (!selectedCoach || selectedCoach.coach.class_type !== coachClass)) {
+            handleCoachToggle(coachesOfSelectedClass[0].coach._id)
+        }
+    }, [coachClass, selectedCoach, coachesOfSelectedClass, direction, dispatch]);
+
+    if (!coachesList || !train) {
+        return <Loading />;
+    }
 
     return (
         <div className="ticket-card">
             <TicketHeader type={direction} onSelectAnotherTrain={handleSelectAnotherTrain}/>
-            <TrainInfo route={train} type={direction}/>
+            <TrainInfo route={train} direction={direction}/>
             <PassengerTabs
                 activeTab={activeTab}
                 onTabChange={setActiveTab}
                 counts={passengerCount}
                 onCountChange={(type, value) => {
-                    setPassengerCount((prev) => ({...prev, [type]: value}));
+                    //setPassengerCount((prev) => ({...prev, [type]: value}));
                     if (value !== '') {
                         dispatch(passengersCountChange({type, count: value}));
                     }
@@ -107,27 +103,35 @@ export default function TicketCard({train, coachesList, direction }) {
 
             {coachesOfSelectedClass.length > 0 && (
                 <div className="ticket-card__wagon-placeholder">
+
                     <div className="ticket-card__wagon-numbers">
-                        {coachesOfSelectedClass
-                            .map((el) => (
+                        <div className="wagon-numbers__title">Вагоны</div>
+
+                        <div className="wagon-numbers__buttons">
+                            {coachesOfSelectedClass.map((el) => (
                                 <button
                                     key={el.coach._id}
                                     className={`carriage-button ${el.coach._id === selectedCoachId ? 'active' : ''}`}
                                     onClick={() => handleCoachToggle(el.coach._id)}
                                 >
-                                    <div className="number-current">{el.coach.name}</div>
+                                    <div className="number-current">{el.coach.name.replace(/\D/g, '')}</div>
                                 </button>
                             ))}
+                        </div>
+
+                        <div className="wagon-numbers__note">
+                            Нумерация вагонов начинается с головы поезда
+                        </div>
                     </div>
 
                     {selectedCoach && (
-                            <CoachDetails
-                                key={selectedCoach.coach.name}
-                                selectedCoach={selectedCoach}
-                                direction={direction}
-                                activeTab={activeTab}
-                            />
-                        )}
+                        <CoachDetails
+                            key={selectedCoach.coach.name}
+                            selectedCoach={selectedCoach}
+                            direction={direction}
+                            activeTab={activeTab}
+                        />
+                    )}
                 </div>
             )}
         </div>

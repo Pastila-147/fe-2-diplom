@@ -28,8 +28,8 @@ export default function TrainCard({ data }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const departureSeats = useSelector((state) => state.seats.availableSeats.departure);
-    const arrivalSeats = useSelector((state) => state.seats.availableSeats.arrival);
+    const departureSeats = useSelector((state) => state.seats.availableCoaches.departure);
+    const arrivalSeats = useSelector((state) => state.seats.availableCoaches.arrival);
 
     const handleSelect = () => {
         console.log('DISPATCH setTrain', data);
