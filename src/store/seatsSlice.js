@@ -97,30 +97,52 @@ const seatsSlice = createSlice({
             state.selectedSeats[payload.type].coachesOfSelectedClass = payload.coachesOfSelectedClass;
         },
         seatsItemSelect: (state, { payload }) => {
-            const { coach, seat_number, direction } = payload;
+            const { coach, seat_number, passenger_type, extra_services, direction } = payload;
             if (!state.selectedSeats[direction].seatsMap[coach._id]) state.selectedSeats[direction].seatsMap[coach._id] = [];
             state.selectedSeats[direction].seatsMap[coach._id].push(seat_number);
-            state.selectedSeats[direction].seats.push({coach: coach, seat_number: seat_number});
+            state.selectedSeats[direction].seats.push({
+                coach: coach,
+                seat_number: seat_number,
+                passenger_type: passenger_type,
+                extra_services: extra_services,
+                //direction: direction
+            });
         },
         seatsItemUnSelect: (state, { payload }) => {
             const { coach, seat_number, direction } = payload;
             state.selectedSeats[direction].seatsMap[coach._id] = state.selectedSeats[direction].seatsMap[coach._id].filter((n) => n !== seat_number);
-            if (state.selectedSeats[direction].seatsMap[coach._id].length === 0) delete state.selectedSeats[direction].seatsMap[coach._id];
+            if (state.selectedSeats[direction].seatsMap[coach._id].length === 0)
+                delete state.selectedSeats[direction].seatsMap[coach._id];
 
-            state.selectedSeats[direction].seats = state.selectedSeats[direction].seats.filter(s => s.coach._id !== coach._id && s.seat_number !== seat_number);
+
+            const filteredSeats = state.selectedSeats[direction].seats.filter(s => !(s.coach._id === coach._id && s.seat_number === seat_number));
+            state.selectedSeats[direction].seats = filteredSeats
         },
         serviceItemSelect: (state, { payload }) => {
-            const { id, service, direction } = payload;
-            if (!state.selectedSeats[direction].services[id]) state.selectedSeats[direction].services[id] = [];
-            if (!state.selectedSeats[direction].services[id].includes(service)) {
-                state.selectedSeats[direction].services[id].push(service);
+            const { coach_id, service, direction } = payload;
+            if (!state.selectedSeats[direction].services[coach_id]) state.selectedSeats[direction].services[coach_id] = [];
+            if (!state.selectedSeats[direction].services[coach_id].includes(service)) {
+                state.selectedSeats[direction].services[coach_id].push(service);
+
+                for(var seat of state.selectedSeats[direction].seats) {
+                    if (seat.coach._id === coach_id && !seat.extra_services.includes(service)) {
+                        seat.extra_services.push(service);
+                    }
+                }
             }
         },
         serviceItemUnSelect: (state, { payload }) => {
-            const { id, service, direction } = payload;
-            if (state.selectedSeats[direction].services[id]) {
-                state.selectedSeats[direction].services[id] = state.selectedSeats[direction].services[id].filter((s) => s !== service);
-                if (state.selectedSeats[direction].services[id].length === 0) delete state.selectedSeats[direction].services[id];
+            const { coach_id, service, direction } = payload;
+            if (state.selectedSeats[direction].services[coach_id]) {
+                state.selectedSeats[direction].services[coach_id] = state.selectedSeats[direction].services[coach_id].filter((s) => s !== service);
+                if (state.selectedSeats[direction].services[coach_id].length === 0)
+                    delete state.selectedSeats[direction].services[coach_id];
+
+                for(var seat of state.selectedSeats[direction].seats) {
+                    if (seat.coach._id === coach_id && seat.extra_services.includes(service)) {
+                        seat.extra_services = seat.extra_services.filter(s => s !== service)
+                    }
+                }
             }
         },
     },

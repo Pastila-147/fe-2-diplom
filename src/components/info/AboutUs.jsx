@@ -3,7 +3,7 @@ import './AboutUs.css';
 
 export default function AboutUs() {
     return (
-        <section className="about-us">
+        <section className="about-us" id="about">
             <div className="about-us__container">
                 <p className="about-us__title col-lg-2">О нас</p>
                 <div className="about-us-vertical-line"></div>

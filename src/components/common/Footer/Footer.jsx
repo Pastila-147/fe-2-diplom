@@ -1,9 +1,8 @@
 import React from "react";
 import Contacts from "./Contacts";
-import Subscription from "./Subscription";
-import SocialMedia from "./SocialMedia";
 import FooterBottom from "./FooterBottom";
 import "./Footer.css";
+import SubscriptionSection from "./SubscriptionSection";
 
 const Footer = () => {
     return (
@@ -13,8 +12,7 @@ const Footer = () => {
                     <Contacts />
                 </div>
                 <div className="footer__subscribe">
-                    <Subscription />
-                    <SocialMedia />
+                    <SubscriptionSection />
                 </div>
             </div>
             <div className="footer__footer">

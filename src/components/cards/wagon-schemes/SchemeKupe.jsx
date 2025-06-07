@@ -3,7 +3,20 @@ import { renderSeat } from './renderSeat'
 import './WagonScheme.css'
 
 export default function SchemeKupe({ coach, seats, selectedSeats, onSeatClick }) {
-    if (!coach || !seats) return null
+    if (!coach) return null;
+
+    const availableMap = new Map((seats || []).map(seat => [seat.index, seat.available]));
+
+    const allSeats = Array.from({ length: 32 }, (_, i) => {
+        const index = i + 1;
+        return {
+            index,
+            available: availableMap.get(index) ?? false,
+        };
+    });
+
+    const topSeats = allSeats.filter(seat => seat.index % 2 === 0);
+    const bottomSeats = allSeats.filter(seat => seat.index % 2 !== 0);
 
     return (
         <div className="seats-scheme cupe">
@@ -12,16 +25,12 @@ export default function SchemeKupe({ coach, seats, selectedSeats, onSeatClick })
             </span>
 
             <ul className="scheme_top-seats">
-                {seats
-                    .filter((seat) => seat.index % 2 === 0)
-                    .map((seat) => renderSeat(seat, selectedSeats, onSeatClick))}
+                {topSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
 
             <ul className="scheme_bottom-seats">
-                {seats
-                    .filter((seat) => seat.index % 2 !== 0)
-                    .map((seat) => renderSeat(seat, selectedSeats, onSeatClick))}
+                {bottomSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
         </div>
-    )
+    );
 }

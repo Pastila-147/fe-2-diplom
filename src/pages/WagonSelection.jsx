@@ -51,7 +51,7 @@ export default function WagonSelection() {
                 <h3 className="title seats_title">Выбор мест</h3>
 
                 {departureTrain && <TicketCard train={departureTrain} coachesList={departureAvailableCoaches.couchesList} direction="departure" />}
-                {arrivalTrain && <TicketCard train={arrivalTrain} coachesList={arrivalAvailableCoaches.couchesList} direction="arrival" />}
+                {arrivalTrain   && <TicketCard train={arrivalTrain}   coachesList={arrivalAvailableCoaches.couchesList}   direction="arrival" />}
 
                 <div className="seats_buttons">
                     <button

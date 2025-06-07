@@ -6,10 +6,6 @@ const initialState = {
         child: 0,
         baby: 0,
     },
-    // selectedSeats: {
-    //     departure: [],
-    //     arrival: [],
-    // },
     passengersPrice: {
         departure: { adult: 0, child: 0, services: 0 },
         arrival: { adult: 0, child: 0, services: 0 },
@@ -36,12 +32,15 @@ const passengersSlice = createSlice({
             };
         },
         setInitialPassengers: (state, { payload }) => {
-            state.passengers = payload; // payload должен быть массивом пассажиров
+            state.passengers = payload;
         },
         updatePassengerData: (state, { payload }) => {
-            const { index, data } = payload; // index — номер пассажира, data — объект с обновлёнными полями
-            state.passengers[index] = { ...state.passengers[index], ...data };
-        },
+            const { id, changes } = payload;
+            const passenger = state.passengers.find(p => p.id === id);
+            if (passenger) {
+                Object.assign(passenger, changes);
+            }
+        }
     },
 });
 

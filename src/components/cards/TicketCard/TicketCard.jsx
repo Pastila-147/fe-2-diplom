@@ -84,7 +84,6 @@ export default function TicketCard({train, coachesList, direction }) {
                 onTabChange={setActiveTab}
                 counts={passengerCount}
                 onCountChange={(type, value) => {
-                    //setPassengerCount((prev) => ({...prev, [type]: value}));
                     if (value !== '') {
                         dispatch(passengersCountChange({type, count: value}));
                     }
@@ -92,7 +91,7 @@ export default function TicketCard({train, coachesList, direction }) {
             />
 
             <div className="seat-carriage-type">
-                <h3 className="carriage-type-title">Тип вагона</h3>
+                <h3 className="ticket-section-title">Тип вагона</h3>
                 <CoachTypeSelector
                     selectedType={coachClass}
                     onSelect={handleCoachClassChange}
@@ -103,26 +102,28 @@ export default function TicketCard({train, coachesList, direction }) {
 
             {coachesOfSelectedClass.length > 0 && (
                 <div className="ticket-card__wagon-placeholder">
-
                     <div className="ticket-card__wagon-numbers">
-                        <div className="wagon-numbers__title">Вагоны</div>
+                        <div className="wagon-numbers__left">
+                            <div className="wagon-numbers__title">Вагоны</div>
 
-                        <div className="wagon-numbers__buttons">
-                            {coachesOfSelectedClass.map((el) => (
-                                <button
-                                    key={el.coach._id}
-                                    className={`carriage-button ${el.coach._id === selectedCoachId ? 'active' : ''}`}
-                                    onClick={() => handleCoachToggle(el.coach._id)}
-                                >
-                                    <div className="number-current">{el.coach.name.replace(/\D/g, '')}</div>
-                                </button>
-                            ))}
+                            <div className="wagon-numbers__buttons">
+                                {coachesOfSelectedClass.map((el) => (
+                                    <button
+                                        key={el.coach._id}
+                                        className={`carriage-button ${el.coach._id === selectedCoachId ? 'active' : ''}`}
+                                        onClick={() => handleCoachToggle(el.coach._id)}
+                                    >
+                                        <div className="number-current">{el.coach.name.replace(/\D/g, '')}</div>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="wagon-numbers__note">
                             Нумерация вагонов начинается с головы поезда
                         </div>
                     </div>
+
 
                     {selectedCoach && (
                         <CoachDetails

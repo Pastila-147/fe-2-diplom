@@ -1,7 +1,7 @@
 const Contacts = () => {
     return (
-        <div className="footer__contacts">
-            <h3 className="footer__contacts__title">Свяжитесь с нами</h3>
+        <div id="contacts" className="contacts__container">
+            <h3 className="footer__section-title">Свяжитесь с нами</h3>
             <ul className="footer__contacts__list">
                 <li className="footer__contacts__item">
                     <img className="footer__contacts__icon" src="/img/phone.png" alt="phone" />

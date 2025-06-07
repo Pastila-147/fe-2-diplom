@@ -109,7 +109,8 @@ const Header = ({ isMainPage = true }) => {
             <div className="header__content">
                 {isMainPage && (
                     <div className="header__left-text">
-                        Вся жизнь — путешествие
+                        <span className="header__left-text--light">Вся жизнь — </span>
+                        <span className="header__left-text--bold">путешествие!</span>
                     </div>
                 )}
 

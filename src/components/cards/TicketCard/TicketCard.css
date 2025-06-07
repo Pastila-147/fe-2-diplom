@@ -9,9 +9,8 @@
 .ticket-card__header {
     display: flex;
     align-items: center;
-    height: 100px;
+    height: 108px;
     padding: 0 20px;
-    background-color: #f7f6f6;
 }
 
 .ticket-card__icon {
@@ -41,8 +40,9 @@
 
 .ticket-card__train-info {
     display: flex;
+    height: 122px;
     justify-content: space-between;
-    padding: 20px 30px;
+    padding: 0 30px;
     background-color: #f7f6f6;
 }
 
@@ -56,9 +56,13 @@
     width: 30px;
     height: 30px;
     background-image: url('../../../assets/img/Train-orange.svg');
-    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
-    margin-right: 20px;
+    background-size: 100% auto;
+}
+
+.ticket-card__aside-title{
+    padding-left: 20px
 }
 
 .ticket-card__aside-title .desc-name {
@@ -164,11 +168,24 @@
     padding: 30px;
 }
 
-.carriage-type-title {
+.ticket-section-title {
     font-size: 30px;
     font-weight: bold;
     color: #292929;
-    margin-bottom: 20px;
+    height: 94px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    margin: 0;
+}
+
+.ticket-ages-block {
+    height: 337px;
+    border-bottom: 1px dashed #C4C4C4;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .carriage-types {
@@ -283,9 +300,6 @@
     display: flex;
     justify-content: space-between;
     background-color: #fff;
-    border: 1px solid #c4c4c4;
-    /*margin: 20px 30px;*/
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
     font-family: 'Roboto', sans-serif;
 }
 
@@ -347,10 +361,31 @@
 }
 
 .coach-info-text {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 4px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #292929;
 }
+
+.coach-info-text span {
+    font-weight: 700;
+}
+
+.coach-info-price {
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rouble-icon {
+    width: 14px;
+    height: 17px;
+    object-fit: contain;
+}
+
+
+
 
 .coach-info-count {
     font-weight: 700;
@@ -422,9 +457,9 @@
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: contain;
     cursor: pointer;
     transition: all 0.2s ease;
+    background-size: 20px 20px;
 }
 
 /* По умолчанию: черная иконка */
@@ -438,6 +473,7 @@
     background-color: #FDB935;
     border-color: #FDB935;
 }
+
 .air__item-active    { background-image: url('../../../assets/img/Services/Cond-active.svg'); }
 .wifi__item-active   { background-image: url('../../../assets/img/Services/Wifi-active.svg'); }
 .linens__item-active { background-image: url('../../../assets/img/Services/Lines-active.svg'); }
@@ -469,3 +505,60 @@
 .food__item:disabled {
     background-image: url('../../../assets/img/Services/Eat-gray.svg');
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    max-width: 180px;
+    background-color: #F5F4F6;
+    color: #292929;
+    text-align: center;
+    font-size: 16px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    position: absolute;
+    top: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.coach-demand {
+    width: 199px;
+    height: 72px;
+    background-color: #F3F3F3;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+    color: #292929;
+    font-family: Roboto, sans-serif;
+    text-align: center;
+}
+
+.wagon-numbers__left {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+
+

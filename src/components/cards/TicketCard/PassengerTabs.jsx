@@ -1,10 +1,11 @@
 import React from 'react'
 import './TicketCard.css'
+import {PassengerType} from "../../common/PassengerType";
 
 const tabs = [
-    { key: 'adult', label: 'Взрослых' },
-    { key: 'child', label: 'Детских' },
-    { key: 'baby', label: 'Детских «без места»' },
+    { key: PassengerType.Adult, label: 'Взрослых' },
+    { key: PassengerType.Child, label: 'Детских' },
+    { key: PassengerType.Baby, label: 'Детских «без места»' },
 ]
 
 const descriptions = {
@@ -15,23 +16,45 @@ const descriptions = {
 
 export default function PassengerTabs({ activeTab, onTabChange, counts, onCountChange }) {
     return (
-        <div className="ticket-ages-tabs">
-            {tabs.map((tab) => (
-                <button
-                    key={tab.key}
-                    className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
-                    onClick={() => onTabChange(tab.key)}
-                >
-                    <input
-                        type="number"
-                        placeholder={tab.label}
-                        value={counts[tab.key] ?? ''}
-                        onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
-                        min={0}
-                    />
-                    <p className="input-desc">{descriptions[tab.key]}</p>
-                </button>
-            ))}
+        <div className="ticket-ages-block">
+            <h3 className="ticket-section-title">Количество билетов</h3>
+            <div className="ticket-ages-tabs">
+                {tabs.map((tab) => (
+                    <button
+                        key={tab.key}
+                        className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
+                        onClick={() => onTabChange(tab.key)}
+                    >
+                        <input
+                            type="number"
+                            placeholder={tab.label}
+                            value={counts[tab.key] ?? ''}
+                            onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
+                            min={0}
+                        />
+                        <p className="input-desc">{descriptions[tab.key]}</p>
+                    </button>
+                ))}
+            </div>
         </div>
+
+        // <div className="ticket-ages-tabs">
+        //     {tabs.map((tab) => (
+        //         <button
+        //             key={tab.key}
+        //             className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
+        //             onClick={() => onTabChange(tab.key)}
+        //         >
+        //             <input
+        //                 type="number"
+        //                 placeholder={tab.label}
+        //                 value={counts[tab.key] ?? ''}
+        //                 onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
+        //                 min={0}
+        //             />
+        //             <p className="input-desc">{descriptions[tab.key]}</p>
+        //         </button>
+        //     ))}
+        // </div>
     )
 }

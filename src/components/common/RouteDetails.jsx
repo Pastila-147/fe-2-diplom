@@ -1,5 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import './RouteDetails.css';
+import {GetSeatPrice} from "./PriceCalculator";
+import {PassengerType} from "./PassengerType";
 
 export default function RouteDetails() {
 
@@ -20,21 +23,33 @@ export default function RouteDetails() {
             minute: '2-digit',
         })
 
-    const priceAdult = 1940
-    const priceChild = 970
+    const departureAdults = departureSeats
+        .filter(s => s.passenger_type === PassengerType.Adult)
+        .map(s => GetSeatPrice(s))
+        .reduce((acc, val) => acc + val, 0);
 
-    const depAdults = passengersCount.adult || 0
-    const depChildren = passengersCount.child || 0
+    const departureChildren = departureSeats
+        .filter(s => s.passenger_type === PassengerType.Child)
+        .map(s => GetSeatPrice(s))
+        .reduce((acc, val) => acc + val, 0);
 
-    const arrAdults = passengersCount.adult || 0
-    const arrChildren = passengersCount.child || 0
+    const arrivalAdults = arrivalSeats
+        .filter(s => s.passenger_type === PassengerType.Adult)
+        .map(s => GetSeatPrice(s))
+        .reduce((acc, val) => acc + val, 0);
 
-    const totalAdults = depAdults + arrAdults
-    const totalChildren = depChildren + arrChildren
+    const arrivalChildren = arrivalSeats
+        .filter(s => s.passenger_type === PassengerType.Child)
+        .map(s => GetSeatPrice(s))
+        .reduce((acc, val) => acc + val, 0);
 
-    const totalPriceDeparture = depAdults * priceAdult + depChildren * priceChild
-    const totalPriceArrival = arrAdults * priceAdult + arrChildren * priceChild
-    const totalPrice = totalPriceDeparture + totalPriceArrival
+    const totalPrice = departureAdults + departureChildren + arrivalAdults + arrivalChildren;
+
+    const formatDuration = (sec) => {
+        const hours = Math.floor(sec / 3600);
+        const minutes = Math.floor((sec % 3600) / 60);
+        return `${hours}:${minutes}`;
+    };
 
     return (
         <aside className="route-details">
@@ -42,54 +57,121 @@ export default function RouteDetails() {
 
             {departureTrain && (
                 <div className="route-block">
-                    <strong>Туда</strong>
-                    <p>{departureTrain.train.name}</p>
-                    <p>
-                        {departureTrain.from.city.name} → {departureTrain.to.city.name}
-                    </p>
-                    <p>
-                        {formatTime(departureTrain.from.datetime)} — {formatTime(departureTrain.to.datetime)}
-                    </p>
-                    <p>
-                        {formatDate(departureTrain.from.datetime)} — {formatDate(departureTrain.to.datetime)}
-                    </p>
+                    <div className="details-route-head">
+                        <div className="details-route-icon departure"/>
+                        <h4 className="head-title">Туда</h4>
+                        <p className="head-date">{formatDate(departureTrain.from.datetime)}</p>
+                        <button className="collapse-button" /> {/* Пока без логики */}
+                    </div>
+
+                    <div className="details-route-content">
+                        <div className="number">
+                            <h4>№ Поезда</h4>
+                            <p>{departureTrain.train.name}</p>
+                        </div>
+                        <div className="name">
+                            <h4>Название</h4>
+                            <p>{departureTrain.from.city.name} {departureTrain.to.city.name}</p>
+                        </div>
+                        <div className="details-route-time">
+                            <div className="duration-text">{formatDuration(departureTrain.duration)}</div>
+                            <div className="time-box to">
+                                <p className="itemTime">{formatTime(departureTrain.from.datetime)}</p>
+                                <p className="itemTime">{formatTime(departureTrain.to.datetime)}</p>
+                            </div>
+                            <div className="direction-dates">
+                                <p className="date">{formatDate(departureTrain.from.datetime)}</p>
+                                <p className="date">{formatDate(departureTrain.to.datetime)}</p>
+                            </div>
+                            <div className="direction-names">
+                                <h5 className="there-direction-from">{departureTrain.from.city.name}</h5>
+                                <h5 className="there-direction-to">{departureTrain.to.city.name}</h5>
+                            </div>
+                            <div className="stations-names">
+                                <h5 className="there-direction-from">{departureTrain.from.railway_station_name} вокзал</h5>
+                                <h5 className="there-direction-to">{departureTrain.to.railway_station_name} вокзал</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
 
             {arrivalTrain && (
                 <div className="route-block">
-                    <strong>Обратно</strong>
-                    <p>{arrivalTrain.train.name}</p>
-                    <p>
-                        {arrivalTrain.from.city.name} → {arrivalTrain.to.city.name}
-                    </p>
-                    <p>
-                        {formatTime(arrivalTrain.from.datetime)} — {formatTime(arrivalTrain.to.datetime)}
-                    </p>
-                    <p>
-                        {formatDate(arrivalTrain.from.datetime)} — {formatDate(arrivalTrain.to.datetime)}
-                    </p>
+                    <div className="details-route-head">
+                        <div className="details-route-icon arrival"/>
+                        <h4 className="head-title">Обратно</h4>
+                        <p className="head-date">{formatDate(arrivalTrain.from.datetime)}</p>
+                        <button className="collapse-button"/>
+                        {/* Пока без логики */}
+                    </div>
+
+                    <div className="details-route-content">
+                        <div className="number">
+                            <h4>№ Поезда</h4>
+                            <p>{arrivalTrain.train.name}</p>
+                        </div>
+                        <div className="name">
+                            <h4>Название</h4>
+                            <p>{arrivalTrain.from.city.name} {arrivalTrain.to.city.name}</p>
+                        </div>
+                        <div className="details-route-time">
+                            <div className="durationText">{formatDuration(departureTrain.duration)}</div>
+                            <div className="time-box back">
+                                <p className="itemTimee">{formatTime(arrivalTrain.from.datetime)}</p>
+                                <p className="itemTime">{formatTime(arrivalTrain.to.datetime)}</p>
+                            </div>
+                            <div className="direction-dates">
+                                <p className="date">{formatDate(arrivalTrain.from.datetime)}</p>
+                                <p className="date">{formatDate(arrivalTrain.to.datetime)}</p>
+                            </div>
+                            <div className="direction-names">
+                                <h5 className="there-direction-from">{arrivalTrain.from.city.name}</h5>
+                                <h5 className="there-direction-to">{arrivalTrain.to.city.name}</h5>
+                            </div>
+                            <div className="stations-names">
+                                <h5 className="there-direction-from">{arrivalTrain.from.railway_station_name} вокзал</h5>
+                                <h5 className="there-direction-to">{arrivalTrain.to.railway_station_name} вокзал</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
 
-            <div className="passenger-summary">
-                <strong>Пассажиры</strong>
-                {depAdults > 0 && (
-                    <p>
-                        {depAdults} взрослых — {depAdults * priceAdult + arrAdults*priceAdult} ₽
-                    </p>
+            <div className="widget-details-pass">
+                <div className="pass-head">
+                    <div className="head-img person"/>
+                    <h4 className="head-title">Пассажиры</h4>
+                    <button className="collapse-button"/>
+                </div>
+                {passengersCount.adult > 0 && (
+                    <div className="pass-age-price">
+                        <p className="age-count">{passengersCount.adult} взрослых</p>
+                        <div className="price">
+                            <p>{departureAdults + arrivalAdults}</p>
+                            <div className="currency-icon small"/>
+                        </div>
+                    </div>
                 )}
-                {depChildren > 0 && (
-                    <p>
-                        {depChildren} детских — {depChildren * priceChild + arrAdults*priceAdult} ₽
-                    </p>
+                {passengersCount.child > 0 && (
+                    <div className="pass-age-price">
+                        <p className="age-count">{passengersCount.child} детских</p>
+                        <div className="price">
+                            <p>{departureChildren + arrivalChildren}</p>
+                            <div className="currency-icon small"/>
+                        </div>
+                    </div>
                 )}
-
             </div>
 
-            <div className="total">
-                <strong>Итого: {totalPrice} ₽</strong>
+            <div className="widget-details-total">
+                <h4 className="total-title">ИТОГО</h4>
+                <div className="total">
+                    <p className="total-price">{totalPrice}</p>
+                    <div className="currency-icon large"/>
+                </div>
             </div>
         </aside>
+
     )
 }

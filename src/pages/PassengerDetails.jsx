@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
 import RouteDetails from '../components/common/RouteDetails'
@@ -11,6 +11,19 @@ export default function PassengerDetails() {
 
     const count = useSelector((state) => state.passengers.passengersCount) // ← только departure
     const passengers = useSelector((state) => state.passengers.passengers)
+    const [validationResults, setValidationResults] = useState({});
+    const updateValidation = (passengerId, isValid, error = '') => {
+        setValidationResults((prev) => ({
+            ...prev,
+            [passengerId]: { isValid, error },
+        }));
+    };
+
+
+
+
+
+
 
     useEffect(() => {
         if (passengers.length === 0 && count) {
@@ -43,9 +56,18 @@ export default function PassengerDetails() {
 
             <section className="passenger-details__section">
                 {passengers.map((passenger, i) => (
-                    <PassengerCard key={passenger.id} data={passenger} number={i + 1} />
+                    <PassengerCard key={passenger.id} data={passenger} number={i + 1} updateValidation={updateValidation} validationResults={validationResults}/>
                 ))}
-                <button className="next-button">Далее</button>
+                {/*<button className="next-button">Далее</button>*/}
+                <div className="seats_buttons">
+                    <button
+                        type="button"
+                        className="button seats_button"
+                        // onClick={handleClick}
+                    >
+                        Далее
+                    </button>
+                </div>
             </section>
         </div>
     )

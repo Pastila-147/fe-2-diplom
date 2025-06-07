@@ -60,21 +60,6 @@
     border-bottom: 5px solid #928f94d6;
 }
 
-.scheme_top-seats li:nth-child(odd),
-.scheme_bottom-seats li:nth-child(odd) {
-    margin-right: 33px;
-}
-
-.scheme_top-seats li:nth-child(2n),
-.scheme_bottom-seats li:nth-child(2n) {
-    border-right: 4px solid #928f94d6;
-}
-
-.scheme_top-seats li:first-child,
-.scheme_bottom-seats li:first-child {
-    border-left: 4px solid #928f94d6;
-    margin-right: 35px;
-}
 
 .scheme_side-seats li {
     height: 24px;
@@ -102,7 +87,7 @@
 }
 
 .available-place {
-    background-color: #E5E5E5;
+    background-color: #F3F3F3;
     color: #000000;
     width: 26px;
     height: 29px;
@@ -180,10 +165,71 @@
     justify-content: flex-start;
 }
 
-
 .seat-wagon_button_selected {
-    border: 3px solid red;
+    position: relative;
+}
+
+.seat-wagon_button_selected::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #FFA800;
+    border-radius: 2px;
     box-sizing: border-box;
+    pointer-events: none; /* чтобы не мешал клику */
+}
+
+/* Перегородки мест */
+.scheme_top-seats li:nth-child(2n + 1),
+.scheme_bottom-seats li:nth-child(2n + 1) {
+    border-left: 4px solid #928f94d6;
+    margin-right: 23px;
+}
+
+.scheme_top-seats li:nth-child(2n),
+.scheme_bottom-seats li:nth-child(2n) {
+    border-right: 4px solid #928f94d6;
+}
+
+/* Сидячий */
+.sitting-wagon .scheme_upper-top,
+.sitting-wagon .scheme_upper-bottom,
+.sitting-wagon .scheme_lower-top,
+.sitting-wagon .scheme_lower-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 4px;
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    font-size: 12px;
+    justify-content: center;
+}
+
+.sitting-wagon .scheme_upper-top {
+    margin-bottom: 2px; /* минимальный зазор между верхними рядами */
+}
+
+.sitting-wagon .scheme_upper-bottom {
+    margin-bottom: 24px; /* отступ между верхними и нижними блоками */
+}
+
+.sitting-wagon .scheme_lower-top {
+    margin-bottom: 2px; /* минимальный зазор между нижними рядами */
+}
+
+.sitting-wagon li {
+    width: 27px;
+    height: 19px;
+    line-height: 20px;
+    margin-left: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 

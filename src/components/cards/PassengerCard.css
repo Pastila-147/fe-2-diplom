@@ -1,0 +1,183 @@
+.passenger-card {
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    /*padding: 32px 40px;*/
+    margin-bottom: 44px;
+    font-family: Roboto, sans-serif;
+}
+
+.passenger-card__title {
+    font-weight: 400;
+    font-size: 30px;
+    color: #292929;
+    margin: 32px 40px 30px 40px;
+}
+
+.personal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 0 40px;
+}
+
+/* Общая группа поля */
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group__label {
+    font-size: 16px;
+    color: #928f94;
+    margin-bottom: 8px;
+}
+
+.field-group__input,
+.field-group select {
+    height: 50px;
+    padding-left: 16px;
+    font-size: 18px;
+    color: #292929;
+    border: 1px solid #928f94;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+/* Группы полей в строку */
+.field-row {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.fio .field-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+.birth-row .field-group {
+    flex: 1;
+}
+
+.docs-row .field-group {
+    max-width: 205px;
+}
+
+.docs-row .field-group:last-child {
+    flex: 2;
+    max-width: none;
+}
+
+/* Блок выбора пола */
+.gender-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.gender-button {
+    width: 103px;
+    height: 50px;
+    border: 1px solid #928f94;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.gender-button.active {
+    background-color: #ffa800;
+}
+
+/* Блок ограничения подвижности */
+.mobility-checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mobility-label {
+    font-size: 18px;
+    color: #292929;
+    display: flex;
+    align-items: center;
+}
+
+.mobility-label input[type='checkbox'] {
+    width: 28px;
+    height: 28px;
+    margin-right: 16px;
+    border: 1px solid #928f94;
+    border-radius: 5px;
+    appearance: none;
+    position: relative;
+    background: #fff;
+}
+
+.mobility-label input[type='checkbox']:checked {
+    border-color: #ffa800;
+}
+
+.mobility-label input[type='checkbox']:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    background-image: url('../../assets/img/check.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+
+/* Валидация */
+.validation-message {
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 20px 0 0 0;
+}
+
+.validation-message.valid {
+    background-color: #D8F5C4;
+    color: #2E7D32;
+}
+
+.validation-message.invalid {
+    background-color: #FFE6E6;
+    color: #C62828;
+}
+
+.validation-message img {
+    width: 20px;
+    height: 20px;
+}
+
+.next-passenger-button {
+    width: 303px;
+    height: 52px;
+    border: 1px solid #292929;
+    background-color: transparent;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    text-align: center;
+    color: #292929;
+    margin-left: auto;
+}
+
+

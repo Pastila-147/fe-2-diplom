@@ -1,12 +1,23 @@
+
 import React from 'react'
 import { renderSeat } from './renderSeat'
 import './WagonScheme.css'
 
 export default function SchemeLux({ coach, seats, selectedSeats, onSeatClick }) {
-    if (!coach || !seats) return null
+    if (!coach) return null;
 
-    const topSeats = seats.filter(seat => seat.index % 2 === 0)
-    const bottomSeats = seats.filter(seat => seat.index % 2 !== 0)
+    const availableMap = new Map((seats || []).map(seat => [seat.index, seat.available]));
+
+    const allSeats = Array.from({ length: 18 }, (_, i) => {
+        const index = i + 1;
+        return {
+            index,
+            available: availableMap.get(index) ?? false,
+        };
+    });
+
+    const topSeats = allSeats.filter(seat => seat.index % 2 === 0);
+    const bottomSeats = allSeats.filter(seat => seat.index % 2 !== 0);
 
     return (
         <div className="seats-scheme luxury-wagon">
@@ -18,5 +29,6 @@ export default function SchemeLux({ coach, seats, selectedSeats, onSeatClick }) 
                 {bottomSeats.map(seat => renderSeat(seat, selectedSeats, onSeatClick))}
             </ul>
         </div>
-    )
+    );
 }
+

@@ -7,13 +7,15 @@ import {
 
 import Price from './Price';
 import Services from './Services';
-// import Seat from './Seat';
+import RoubleIcon from '../../../assets/img/Rouble.svg';
 
 import SchemeKupe from '../wagon-schemes/SchemeKupe';
 import SchemePlatzkart from '../wagon-schemes/SchemePlatzkart';
 import SchemeSitting from '../wagon-schemes/SchemeSitting';
 import SchemeLux from '../wagon-schemes/SchemeLux';
 import './TicketCard.css'
+import {PassengerType} from "../../common/PassengerType";
+import {CoachTypes} from "../../common/CoachConsts";
 
 
 const schemeComponents = {
@@ -35,12 +37,42 @@ export default function CoachDetails({ selectedCoach, direction, activeTab }) {
 
     const maxSeats = passengersCount.adult + passengersCount.child;
 
+    const currentCoachServices = useSelector((state) => state.seats.selectedSeats[direction].services[coach._id]) || [];
 
-    const isLux = coach.class_type === 'first';
-    const isPlatz = coach.class_type === 'third';
-    const isKupe = coach.class_type === 'second';
-    const isSeat = coach.class_type === 'fourth';
+    const isLux = coach.class_type === CoachTypes.Lux;
+    const isPlatz = coach.class_type === CoachTypes.Platzkart;
+    const isKupe = coach.class_type === CoachTypes.Kupe;
+    const isSeat = coach.class_type === CoachTypes.Seat;
     const SchemeComponent = schemeComponents[coach.class_type];
+
+    const selectedSeatsArray = useSelector((state) => state.seats.selectedSeats[direction].seats);
+
+    function handleSeatClick (seat) {
+        const isSelected = seatsState?.seatsMap?.[coach._id]?.includes(seat.index);
+        if (isSelected) {
+            dispatch(seatsItemUnSelect({ coach: coach, seat_number: seat.index, direction: direction }));
+        } else if (seatsCount < maxSeats) {
+            const selectedAdults = selectedSeatsArray.filter(s => s.passenger_type === PassengerType.Adult)
+            const selectedChildren = selectedSeatsArray.filter(s => s.passenger_type === PassengerType.Child)
+
+            var passengerType = "";
+
+            if (selectedAdults.length < passengersCount.adult)
+                passengerType = PassengerType.Adult
+            else if (selectedChildren.length < passengersCount.child)
+                passengerType = PassengerType.Child
+            else
+                console.error("No more seats available")
+
+            dispatch(seatsItemSelect({
+                coach: coach,
+                seat_number: seat.index,
+                passenger_type: passengerType,
+                extra_services: currentCoachServices,
+                direction: direction,
+            }));
+        }
+    }
 
     return (
         <div className="coach-wrapper">
@@ -82,29 +114,32 @@ export default function CoachDetails({ selectedCoach, direction, activeTab }) {
                     <h5 className="coach-info-title">Стоимость</h5>
                     {!isLux && (
                         <p className="coach-info-text">
-                            <Price title="coach-info" value={coach.top_price} /> ₽
+                            <Price title="coach-info-price" value={coach.top_price}/>
+                            <img src={RoubleIcon} alt="₽" className="rouble-icon"/>
                         </p>
                     )}
                     <p className="coach-info-text">
-                        <Price title="coach-info" value={coach.bottom_price} /> ₽
+                        <Price title="coach-info-price" value={coach.bottom_price}/>
+                        <img src={RoubleIcon} alt="₽" className="rouble-icon"/>
                     </p>
                     {isPlatz && (
                         <p className="coach-info-text">
-                            <Price title="coach-info" value={coach.side_price} /> ₽
+                            <Price title="coach-info-price" value={coach.side_price}/>
+                            <img src={RoubleIcon} alt="₽" className="rouble-icon"/>
                         </p>
                     )}
                 </div>
 
                 <div className="coach-info-card coach-info-card--services">
                     <h5 className="coach-info-title">Обслуживание ФПК</h5>
-                    <Services coach={coach} direction={direction} />
+                    <Services coach={coach} direction={direction}/>
+                    <div className="coach-demand">
+                        {seats.filter((el) => !el.available).length} человек выбирают места в этом поезде
+                    </div>
                 </div>
             </div>
 
             <div className="coach-inner">
-                <div className="coach-demand">
-                    {seats.filter((el) => !el.available).length} человек выбирают места в этом поезде
-                </div>
 
                 <SchemeComponent
                     coach={coach}
@@ -112,22 +147,10 @@ export default function CoachDetails({ selectedCoach, direction, activeTab }) {
                     selectedSeats={
                         (seatsState?.seatsMap?.[coach._id] || []).map((seat_number) => ({ index: seat_number }))
                     }
-                    onSeatClick={(seat) => {
-                        const isSelected = seatsState?.seatsMap?.[coach._id]?.includes(seat.index);
-                        if (isSelected) {
-                            dispatch(seatsItemUnSelect({ coach: coach, seat_number: seat.index, direction: direction }));
-                        } else if (seatsCount < maxSeats) {
-                            dispatch(seatsItemSelect({ coach: coach, seat_number: seat.index, direction: direction }));
-                        }
-                    }}
+                    onSeatClick={handleSeatClick}
                 />
             </div>
         </div>
     );
 }
 
-function seatType(seat, coach) {
-    if (coach.class_type === 'first') return 'lux';
-    if (coach.class_type === 'third' && seat.index > 32) return 'side';
-    return seat.index % 2 === 0 ? 'top' : 'bottom';
-}
