@@ -6,10 +6,6 @@ const initialState = {
         child: 0,
         baby: 0,
     },
-    passengersPrice: {
-        departure: { adult: 0, child: 0, services: 0 },
-        arrival: { adult: 0, child: 0, services: 0 },
-    },
     passengers: [],
 };
 
@@ -21,16 +17,6 @@ const passengersSlice = createSlice({
             const { type, count } = payload;
             state.passengersCount[type] = Number(count);
         },
-        passengersPriceChange: (state, { payload }) => {
-            const { typeTicket, type, price } = payload;
-            state.passengersPrice[typeTicket][type] = price;
-        },
-        passengersPriceClear: (state) => {
-            state.passengersPrice = {
-                departure: { adult: 0, child: 0, services: 0 },
-                arrival: { adult: 0, child: 0, services: 0 },
-            };
-        },
         setInitialPassengers: (state, { payload }) => {
             state.passengers = payload;
         },
@@ -40,16 +26,20 @@ const passengersSlice = createSlice({
             if (passenger) {
                 Object.assign(passenger, changes);
             }
+        },
+        removePassenger: (state, action) => {
+            const idToRemove = action.payload;
+            state.passengers = state.passengers.filter(passenger => passenger.id !== idToRemove);
+            // delete state.validation[idToRemove];
         }
     },
 });
 
 export const {
     passengersCountChange,
-    passengersPriceChange,
-    passengersPriceClear,
     setInitialPassengers,
     updatePassengerData,
+    removePassenger,
 } = passengersSlice.actions;
 
 export default passengersSlice.reducer;

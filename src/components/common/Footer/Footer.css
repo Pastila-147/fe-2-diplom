@@ -230,13 +230,13 @@
 
 .footer__subscription__form {
     display: flex;
-    align-items: center;
     gap: 1.7vw; /* ≈33px */
+    margin-bottom: 2vh;
 }
 
 .footer__subscription__form input[type="email"] {
-    width: 23.3vw;  /* ≈447px */
-    height: 6vh;     /* ≈60px */
+    width: 23.3vw;
+    height: 6vh;
     border-radius: 0.15vw;
     border: none;
     padding: 0 1vw;
@@ -256,8 +256,8 @@
 }
 
 .footer__subscription__form button {
-    width: 8.8vw;   /* ≈169px */
-    height: 6vh;    /* ≈60px */
+    width: 8.8vw;
+    height: 6vh;
     border-radius: 0.15vw;
     border: 1px solid #ffffff;
     background: transparent;
@@ -271,7 +271,17 @@
 }
 
 .footer__subscription__form button:hover {
-    background-color: #ffffff22;
+    background-color: #333;
+}
+
+.footer__subscription__success {
+    color: #00c853;
+    margin-top: 1vh;
+}
+
+.footer__subscription__error {
+    color: #ff1744;
+    margin-top: 1vh;
 }
 
 /* Соцсети */

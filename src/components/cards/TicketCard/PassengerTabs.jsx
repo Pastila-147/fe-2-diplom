@@ -16,45 +16,49 @@ const descriptions = {
 
 export default function PassengerTabs({ activeTab, onTabChange, counts, onCountChange }) {
     return (
-        <div className="ticket-ages-block">
-            <h3 className="ticket-section-title">Количество билетов</h3>
-            <div className="ticket-ages-tabs">
-                {tabs.map((tab) => (
-                    <button
-                        key={tab.key}
-                        className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
-                        onClick={() => onTabChange(tab.key)}
-                    >
-                        <input
-                            type="number"
-                            placeholder={tab.label}
-                            value={counts[tab.key] ?? ''}
-                            onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
-                            min={0}
-                        />
-                        <p className="input-desc">{descriptions[tab.key]}</p>
-                    </button>
-                ))}
-            </div>
-        </div>
-
-        // <div className="ticket-ages-tabs">
-        //     {tabs.map((tab) => (
-        //         <button
-        //             key={tab.key}
-        //             className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
-        //             onClick={() => onTabChange(tab.key)}
-        //         >
-        //             <input
-        //                 type="number"
-        //                 placeholder={tab.label}
-        //                 value={counts[tab.key] ?? ''}
-        //                 onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
-        //                 min={0}
-        //             />
-        //             <p className="input-desc">{descriptions[tab.key]}</p>
-        //         </button>
-        //     ))}
+        // <div className="ticket-ages-block">
+        //     <h3 className="ticket-section-title">Количество билетов</h3>
+        //     <div className="ticket-ages-tabs">
+        //         {tabs.map((tab) => (
+        //             <button
+        //                 key={tab.key}
+        //                 className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
+        //                 onClick={() => onTabChange(tab.key)}
+        //             >
+        //                 <input
+        //                     type="number"
+        //                     placeholder={tab.label}
+        //                     value={counts[tab.key] ?? ''}
+        //                     onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
+        //                     min={0}
+        //                 />
+        //                 <p className="input-desc">{descriptions[tab.key]}</p>
+        //             </button>
+        //         ))}
+        //     </div>
         // </div>
+        <div className="ticket-ages-tabs">
+            {tabs.map((tab) => (
+                <div
+                    key={tab.key}
+                    className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
+                    onClick={() => onTabChange(tab.key)}
+                >
+                    <div className="age-tab__input-wrapper">
+                        <div className="age-tab__fake-input">
+                            <span className="age-tab__prefix">{tab.label} — </span>
+                            <input
+                                type="number"
+                                value={counts[tab.key] ?? 0}
+                                onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
+                                min={0}
+                                className="age-tab__number"
+                            />
+                        </div>
+                        <p className="input-desc">{descriptions[tab.key]}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
     )
 }

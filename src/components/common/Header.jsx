@@ -89,24 +89,54 @@ const Header = ({ isMainPage = true }) => {
         navigate('/search')
     }
 
+    const handleNavClick = (anchor) => {
+        if (isMainPage) {
+            const element = document.getElementById(anchor)
+            if (element) element.scrollIntoView({ behavior: 'smooth' })
+        } else {
+            navigate('/', { state: { anchor } })
+        }
+    }
+
     return (
         <header className={`header ${isMainPage ? 'header--main' : 'header--secondary'}`}>
             <div className="header__top">
                 <div className="header__logo">Лого</div>
             </div>
 
+            {/*<div className="header__nav">*/}
+            {/*    <nav>*/}
+            {/*        <ul className="nav__list">*/}
+            {/*            <li><a href="#about">О нас</a></li>*/}
+            {/*            <li><a href="#how-it-works">Как это работает</a></li>*/}
+            {/*            <li><a href="#reviews">Отзывы</a></li>*/}
+            {/*            <li><a href="#contacts">Контакты</a></li>*/}
+            {/*        </ul>*/}
+            {/*    </nav>*/}
+            {/*</div>*/}
+
+
             <div className="header__nav">
                 <nav>
                     <ul className="nav__list">
-                        <li><a href="#about">О нас</a></li>
-                        <li><a href="#how-it-works">Как это работает</a></li>
-                        <li><a href="#reviews">Отзывы</a></li>
-                        <li><a href="#contacts">Контакты</a></li>
+                        <li>
+                            <button type="button" onClick={() => handleNavClick('about')}>О нас</button>
+                        </li>
+                        <li>
+                            <button type="button" onClick={() => handleNavClick('how-it-works')}>Как это работает
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onClick={() => handleNavClick('reviews')}>Отзывы</button>
+                        </li>
+                        <li>
+                            <button type="button" onClick={() => handleNavClick('contacts')}>Контакты</button>
+                        </li>
                     </ul>
                 </nav>
             </div>
 
-            <div className="header__content">
+            <div className={`header__content ${isMainPage ? 'header__content--main' : 'header__content--secondary'}`}>
                 {isMainPage && (
                     <div className="header__left-text">
                         <span className="header__left-text--light">Вся жизнь — </span>
@@ -118,70 +148,66 @@ const Header = ({ isMainPage = true }) => {
                     className={`search-form ${!isMainPage ? 'search-form--compact' : ''}`}
                     onSubmit={handleSubmit}
                 >
-                    <div className="search-form__group">
-                        <label>Направление</label>
-                        <div className="search-form__inputs">
-                            <div className="input-with-suggestions" ref={fromRef}>
-                                <input
-                                    type="text"
-                                    placeholder="Откуда"
-                                    value={from}
-                                    onChange={(e) => setFrom(e.target.value)}
-                                    onFocus={() => from.length > 1 && setIsFromOpen(true)}
-                                    autoComplete="off"
-                                />
-                                {isFromOpen && (
-                                    <ul className="suggestions-list">
-                                        {fromSuggestions.length > 0 ? (
-                                            fromSuggestions.map(city => (
-                                                <li
-                                                    key={city._id}
-                                                    onClick={() => selectFromCity(city)}
-                                                >
-                                                    {city.name}
-                                                </li>
-                                            ))
-                                        ) : (
-                                            <li className="no-suggestions">Ничего не найдено</li>
-                                        )}
-                                    </ul>
-                                )}
-                            </div>
+                    <div className={`${!isMainPage ? 'search-form--compact__row' : ''}`}>
+                        <div className="search-form__group">
+                            <label>Направление</label>
+                            <div className="search-form__inputs">
+                                <div className="input-with-suggestions" ref={fromRef}>
+                                    <input
+                                        type="text"
+                                        placeholder="Откуда"
+                                        value={from}
+                                        onChange={(e) => setFrom(e.target.value)}
+                                        onFocus={() => from.length > 1 && setIsFromOpen(true)}
+                                        autoComplete="off"
+                                    />
+                                    {isFromOpen && (
+                                        <ul className="suggestions-list">
+                                            {fromSuggestions.length > 0 ? (
+                                                fromSuggestions.map((city) => (
+                                                    <li key={city._id} onClick={() => selectFromCity(city)}>
+                                                        {city.name}
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li className="no-suggestions">Ничего не найдено</li>
+                                            )}
+                                        </ul>
+                                    )}
+                                </div>
 
-                            <div className="input-with-suggestions" ref={toRef}>
-                                <input
-                                    type="text"
-                                    placeholder="Куда"
-                                    value={to}
-                                    onChange={(e) => setTo(e.target.value)}
-                                    onFocus={() => to.length > 1 && setIsToOpen(true)}
-                                    autoComplete="off"
-                                />
-                                {isToOpen && (
-                                    <ul className="suggestions-list">
-                                        {toSuggestions.length > 0 ? (
-                                            toSuggestions.map(city => (
-                                                <li
-                                                    key={city._id}
-                                                    onClick={() => selectToCity(city)}
-                                                >
-                                                    {city.name}
-                                                </li>
-                                            ))
-                                        ) : (
-                                            <li className="no-suggestions">Ничего не найдено</li>
-                                        )}
-                                    </ul>
-                                )}
+                                <div className="input-with-suggestions" ref={toRef}>
+                                    <input
+                                        type="text"
+                                        placeholder="Куда"
+                                        value={to}
+                                        onChange={(e) => setTo(e.target.value)}
+                                        onFocus={() => to.length > 1 && setIsToOpen(true)}
+                                        autoComplete="off"
+                                    />
+                                    {isToOpen && (
+                                        <ul className="suggestions-list">
+                                            {toSuggestions.length > 0 ? (
+                                                toSuggestions.map((city) => (
+                                                    <li key={city._id} onClick={() => selectToCity(city)}>
+                                                        {city.name}
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li className="no-suggestions">Ничего не найдено</li>
+                                            )}
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="search-form__group">
-                        <label>Дата</label>
-                        <div className="search-form__inputs">
-                            <input type="date" name="departureDate" value="2027-11-26" />
-                            <input type="date" name="returnDate" value="2027-11-30" />
+                        <div className="search-form__group">
+                            <label>Дата</label>
+                            <div className="search-form__inputs">
+                                <input type="date" name="departureDate" defaultValue="2027-11-26"/>
+                                <input type="date" name="returnDate" defaultValue="2027-11-30"/>
+                            </div>
                         </div>
                     </div>
 
@@ -189,6 +215,7 @@ const Header = ({ isMainPage = true }) => {
                         <button type="submit">Найти билеты</button>
                     </div>
                 </form>
+
             </div>
         </header>
     )

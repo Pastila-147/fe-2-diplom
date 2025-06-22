@@ -71,6 +71,131 @@
   flex-direction: column;
   gap: 20px;
 }
+/*------------Confirmation.css----------*/
+
+.confirmation-section .confirmation-form {
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  padding: 30px;
+  margin-bottom: 40px;
+  border-radius: 4px;
+}
+
+/* Заголовки секций (Поезд, Пассажиры, Всего, Способ оплаты) */
+.confirmation-section .form-title {
+  font-weight: 400;
+  font-size: 30px;
+  color: #292929;
+  margin-bottom: 20px;
+}
+
+/* Контейнер: заголовок + колонки под ним */
+.confirmation-overall {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Заголовок "Пассажиры" на всю ширину */
+.confirmation-overall .full-width-title {
+  width: 100%;
+  margin: 0;
+}
+
+.confirmation-overall .confirmation-overall-row {
+  display: flex;
+  gap: 20px;
+}
+
+.passengers-block {
+  flex: 2;
+}
+
+.summary-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.summary-block > .confirmation-summary {
+  margin-top: auto;
+}
+
+.summary-block > .confirmation-change-btn {
+  margin-top: 8px;
+}
+
+.confirmation-passenger {
+  padding: 16px 0;
+  border-bottom: 1px solid #ddd;
+}
+.confirmation-passenger:last-child {
+  border-bottom: none;
+}
+
+.confirmation-summary {
+  margin: 16px 0;
+  font-size: 16px;
+}
+.confirmation-summary p {
+  margin: 4px 0;
+  font-weight: 500;
+}
+
+.confirmation-change-btn {
+  text-align: right;
+  margin-top: 12px;
+}
+/* Подключаем стиль .seats_button */
+.confirmation-change-btn .seats_button { }
+
+/* Блок способа оплаты */
+.confirmation-payment-method {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+}
+.payment-label {
+  font-weight: 500;
+  margin-right: 8px;
+}
+.payment-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.confirmation-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.confirmation-button > button {
+  width: 222px;
+  height: 60px;
+  border-radius: 5px;
+  background-color: #FFA800;
+  border: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.confirmation-button > button:hover {
+  background-color: #ffbb33;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.confirmation-button > button:active {
+  background-color: #e09900;
+}
+.confirmation-button > button:disabled {
+  background-color: #e0e0e0;
+  color: #928F94;
+  cursor: not-allowed;
+}
+
 /*------------Common.css----------*/
 .page-container {
   display: flex;
@@ -89,7 +214,7 @@
 
 .main-section {
   flex: 1;
-  max-width: 70%;
+  width: 958px;
 }
 
 .seats_buttons {

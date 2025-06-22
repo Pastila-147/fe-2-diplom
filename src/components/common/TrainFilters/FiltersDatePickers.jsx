@@ -1,4 +1,5 @@
 import React from "react";
+import calendarIcon from "../../../assets/img/Calender.svg";
 
 export default function FiltersDatePickers({
                                                dateStart,
@@ -7,29 +8,27 @@ export default function FiltersDatePickers({
                                                onChangeEnd,
                                            }) {
     return (
-        <div className="filters-date-pickers space-y-4">
-            <div className="date-picker">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Дата отправления
-                </label>
+        <div className="filters-date-pickers">
+            <label className="trains-filters__date-title">Дата поездки</label>
+            <div className="trains-filters__date-container">
                 <input
                     type="date"
                     value={dateStart}
                     onChange={(e) => onChangeStart(e.target.value)}
-                    className="w-full border rounded-lg p-2 text-sm"
+                    className="trains-filters__datepicker"
                 />
+                <img src={calendarIcon} alt="calendar" className="calendar-icon" />
             </div>
 
-            <div className="date-picker">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Дата возвращения
-                </label>
+            <label className="trains-filters__date-title">Дата возвращения</label>
+            <div className="trains-filters__date-container">
                 <input
                     type="date"
                     value={dateEnd}
                     onChange={(e) => onChangeEnd(e.target.value)}
-                    className="w-full border rounded-lg p-2 text-sm"
+                    className="trains-filters__datepicker"
                 />
+                <img src={calendarIcon} alt="calendar" className="calendar-icon" />
             </div>
         </div>
     );

@@ -1,10 +1,10 @@
 import React from 'react'
-import coupeIcon from '../../../assets/img/Kupe.png'
-import plazcartIcon from '../../../assets/img/Platscart.png'
-import sittingIcon from '../../../assets/img/SittingPlace.png'
-import luxIcon from '../../../assets/img/Lux.png'
-import wifiIcon from '../../../assets/img/Wifi.png'
-import expressIcon from '../../../assets/img/Express.png'
+import coupeIcon from '../../../assets/img/Kupe.svg'
+import plazcartIcon from '../../../assets/img/Platscart.svg'
+import sittingIcon from '../../../assets/img/SittingPlace.svg'
+import luxIcon from '../../../assets/img/Lux.svg'
+import wifiIcon from '../../../assets/img/Wifi.svg'
+import expressIcon from '../../../assets/img/Express.svg'
 
 import './TrainFilters.css'
 
@@ -21,7 +21,7 @@ export default function TrainOptionsBlock({ values = {}, onChange }) {
     return (
         <div className="train-options">
             {options.map((opt) => (
-                <label key={opt.key} className="train-options__item">
+                <div key={opt.key} className="train-options__item">
                     <div className="train-options__label">
                         <img
                             src={opt.icon}
@@ -39,7 +39,7 @@ export default function TrainOptionsBlock({ values = {}, onChange }) {
                         />
                         <span className="slider"></span>
                     </label>
-                </label>
+                </div>
             ))}
         </div>
     )

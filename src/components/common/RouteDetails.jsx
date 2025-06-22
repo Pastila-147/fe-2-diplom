@@ -1,8 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import './RouteDetails.css';
-import {GetSeatPrice} from "./PriceCalculator";
-import {PassengerType} from "./PassengerType";
+import {selectTicketPrice} from "../../store/seatsPriceSelector";
 
 export default function RouteDetails() {
 
@@ -10,9 +9,6 @@ export default function RouteDetails() {
 
     const departureTrain = useSelector((state) => state.seats.train.departure);
     const arrivalTrain = useSelector((state) => state.seats.train.arrival);
-
-    const departureSeats = useSelector((state) => state.seats.selectedSeats.departure.seats)
-    const arrivalSeats = useSelector((state) => state.seats.selectedSeats.arrival.seats)
 
     const formatDate = (timestamp) =>
         new Date(timestamp * 1000).toLocaleDateString('ru-RU')
@@ -23,27 +19,9 @@ export default function RouteDetails() {
             minute: '2-digit',
         })
 
-    const departureAdults = departureSeats
-        .filter(s => s.passenger_type === PassengerType.Adult)
-        .map(s => GetSeatPrice(s))
-        .reduce((acc, val) => acc + val, 0);
+    const seatsPrice = useSelector(selectTicketPrice);
 
-    const departureChildren = departureSeats
-        .filter(s => s.passenger_type === PassengerType.Child)
-        .map(s => GetSeatPrice(s))
-        .reduce((acc, val) => acc + val, 0);
-
-    const arrivalAdults = arrivalSeats
-        .filter(s => s.passenger_type === PassengerType.Adult)
-        .map(s => GetSeatPrice(s))
-        .reduce((acc, val) => acc + val, 0);
-
-    const arrivalChildren = arrivalSeats
-        .filter(s => s.passenger_type === PassengerType.Child)
-        .map(s => GetSeatPrice(s))
-        .reduce((acc, val) => acc + val, 0);
-
-    const totalPrice = departureAdults + departureChildren + arrivalAdults + arrivalChildren;
+    const totalPrice = seatsPrice.departureAdults + seatsPrice.departureChildren + seatsPrice.arrivalAdults + seatsPrice.arrivalChildren;
 
     const formatDuration = (sec) => {
         const hours = Math.floor(sec / 3600);
@@ -74,7 +52,7 @@ export default function RouteDetails() {
                             <p>{departureTrain.from.city.name} {departureTrain.to.city.name}</p>
                         </div>
                         <div className="details-route-time">
-                            <div className="duration-text">{formatDuration(departureTrain.duration)}</div>
+                            <div className="durationText">{formatDuration(departureTrain.duration)}</div>
                             <div className="time-box to">
                                 <p className="itemTime">{formatTime(departureTrain.from.datetime)}</p>
                                 <p className="itemTime">{formatTime(departureTrain.to.datetime)}</p>
@@ -148,7 +126,7 @@ export default function RouteDetails() {
                     <div className="pass-age-price">
                         <p className="age-count">{passengersCount.adult} взрослых</p>
                         <div className="price">
-                            <p>{departureAdults + arrivalAdults}</p>
+                            <p>{seatsPrice.departureAdults + seatsPrice.arrivalAdults}</p>
                             <div className="currency-icon small"/>
                         </div>
                     </div>
@@ -157,7 +135,7 @@ export default function RouteDetails() {
                     <div className="pass-age-price">
                         <p className="age-count">{passengersCount.child} детских</p>
                         <div className="price">
-                            <p>{departureChildren + arrivalChildren}</p>
+                            <p>{seatsPrice.departureChildren + seatsPrice.arrivalChildren}</p>
                             <div className="currency-icon small"/>
                         </div>
                     </div>
@@ -167,7 +145,7 @@ export default function RouteDetails() {
             <div className="widget-details-total">
                 <h4 className="total-title">ИТОГО</h4>
                 <div className="total">
-                    <p className="total-price">{totalPrice}</p>
+                    <p className="total-price">{totalPrice.toFixed(2)}</p>
                     <div className="currency-icon large"/>
                 </div>
             </div>

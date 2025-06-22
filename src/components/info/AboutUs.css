@@ -1,44 +1,52 @@
-/* AboutUs.css */
-
 .about-us {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 144px;
-    padding: 40px 20px;
+    height: 52.2vh;
     font-family: Roboto, sans-serif;
-    color: #333;
+    color: #292929;
 }
 
 .about-us__container {
     display: flex;
     align-items: flex-start;
-    gap: 40px;
+    gap: 2vw;
+    width: 68.75vw;
 }
 
 .about-us__title {
     font-weight: 500;
-    font-size: 36px;
+    font-size: 1.875vw;
     text-transform: uppercase;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #292929;
     margin: 0;
+    flex-shrink: 0;
 }
 
 .about-us-vertical-line {
-    width: 9px;
-    height: 231px;
+    width: 0.47vw;
+    height: 21.4vh;
     background-color: #FFA800;
+    flex-shrink: 0;
 }
 
 .about-us__text {
-    max-width: 600px;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 1.25vw;
+    font-weight: 400;
+    line-height: 100%;
+    color: #292929;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
 }
 
 .about-us__text p {
-    margin-bottom: 15px;
+    margin: 0;
+    padding: 0;
 }
 
 .about-us__text-bold {
-    font-weight: 600;
+    font-weight: 700;
 }

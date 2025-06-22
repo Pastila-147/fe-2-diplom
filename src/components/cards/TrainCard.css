@@ -1,5 +1,6 @@
 .train-card {
-    width: 960px;
+    /*width: 960px;*/
+    width: 100%;
     min-height: 270px;
     display: flex;
     background: #fff;
@@ -152,11 +153,11 @@
 }
 
 .train-service__item-wifi {
-    background-image: url('../../assets/img/Wifi.png');
+    background-image: url('../../assets/img/Wifi.svg');
 }
 
 .train-service__item-express {
-    background-image: url('../../assets/img/Express.png');
+    background-image: url('../../assets/img/Express.svg');
 }
 
 .train-service__item-conditioner {
@@ -207,4 +208,8 @@
     background-repeat: no-repeat;
     background-size: contain;
     margin-bottom: 17px;
+}
+
+.train-card:first-child {
+    margin-top: 40px;
 }

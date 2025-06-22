@@ -23,6 +23,8 @@ const initialState = {
         departure: null,
         arrival: null,
     },
+    availableSeatsInfo: null,       // new
+    priceInfo: null,  // new
     availableCoaches: {
         departure: {
             couchesList: null,
@@ -62,24 +64,19 @@ const seatsSlice = createSlice({
         resetTrain: (state) => {
             state.train.departure = null;
             state.train.arrival = null;
+            state.availableSeatsInfo = null;
+            state.priceInfo = null;
         },
         setTrain: (state, action) => {
-            const { departureTrain, arrivalTrain } = action.payload;
+            const { departureTrain, arrivalTrain, seatsInfo, priceInfo } = action.payload;
             state.train.departure = departureTrain;
             state.train.arrival = arrivalTrain;
+            state.availableSeatsInfo = seatsInfo;
+            state.priceInfo = priceInfo;
         },
         resetSeats: (state) => {
-            state.availableCoaches.departure.couchesList = null;
-            state.availableCoaches.departure.queryStatus = 'idle';
-            state.availableCoaches.departure.queryError = null;
-
-            state.availableCoaches.arrival.couchesList = null;
-            state.availableCoaches.arrival.queryStatus = 'idle';
-            state.availableCoaches.arrival.queryError = null;
-        },
-        trainAdd: (state, { payload }) => {
-            state.train.departure = payload.departure;
-            state.train.arrival = payload.arrival;
+            state.availableCoaches.departure = { couchesList: null, queryStatus: 'idle', queryError: null };
+            state.availableCoaches.arrival = { couchesList: null, queryStatus: 'idle', queryError: null };
         },
         coachSelect: (state, { payload }) => {
             const { id, type } = payload;
@@ -105,7 +102,6 @@ const seatsSlice = createSlice({
                 seat_number: seat_number,
                 passenger_type: passenger_type,
                 extra_services: extra_services,
-                //direction: direction
             });
         },
         seatsItemUnSelect: (state, { payload }) => {
@@ -174,7 +170,6 @@ export const {
     setTrain,
     resetTrain,
     resetSeats,
-    trainAdd,
     coachSelect,
     coachItemsClear,
     coachClassChange,

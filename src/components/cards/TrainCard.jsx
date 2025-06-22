@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './TrainCard.css';
 import { useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchArrivalSeats, fetchDepartureSeats, resetSeats, setTrain, trainAdd} from '../../store/seatsSlice';
+import {fetchArrivalSeats, fetchDepartureSeats, resetSeats, setTrain} from '../../store/seatsSlice';
 import Loading from "../common/Loading";
 
 const formatTime = (timestamp) => {
@@ -18,10 +18,10 @@ const formatDate = (timestamp) => {
 const formatDuration = (sec) => {
     const hours = Math.floor(sec / 3600);
     const minutes = Math.floor((sec % 3600) / 60);
-    return `${hours} ч ${minutes} мин`;
+    return `${hours} ч ${minutes} мин`
 };
 
-export default function TrainCard({ data }) {
+export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonly = false }) {
     const dep = data.departure;
     const arr = data.arrival;
 
@@ -31,20 +31,28 @@ export default function TrainCard({ data }) {
     const departureSeats = useSelector((state) => state.seats.availableCoaches.departure);
     const arrivalSeats = useSelector((state) => state.seats.availableCoaches.arrival);
 
-    const handleSelect = () => {
-        console.log('DISPATCH setTrain', data);
+    const handleChange = () => {
+        navigate('/');
+    };
 
+    const handleSelect = () => {
         dispatch(resetSeats());
-        dispatch(setTrain({departureTrain: dep, arrivalTrain: arr}));
+
+        dispatch(setTrain({
+            departureTrain: dep,
+            arrivalTrain: arr,
+            seatsInfo: data.available_seats_info,
+            priceInfo: { departure: dep.price_info, arrival: arr?.price_info }
+        }));
         dispatch(fetchDepartureSeats(dep._id));
         dispatch(fetchArrivalSeats(arr._id));
     };
 
     useEffect(() => {
-        if (departureSeats.couchesList && arrivalSeats.couchesList) {
+        if (!readonly && departureSeats.couchesList && arrivalSeats.couchesList) {
             navigate('/wagon-selection');
         }
-    }, [departureSeats, arrivalSeats, navigate]);
+    }, [readonly, departureSeats, arrivalSeats, navigate]);
 
     const seatTypes = [
         { label: 'Сидячий', key: 'fourth', price: 'fourth', count: 'fourth' },
@@ -121,24 +129,55 @@ export default function TrainCard({ data }) {
                                 <div className="train-seats__count">{count}</div>
                                 <div className="train-seats__price">
                                     <span className="train-seats__price-text">от {price}</span>
-                                    <span className="train-seats__price-img" />
+                                    <span className="train-seats__price-img"/>
                                 </div>
                             </div>
                         );
                     })}
 
+                    {readonly && availableSeatsInfo && priceInfo?.departure && (
+                        <div className="train-card__confirmation-info">
+                            <div className="train-card__type">
+                                {seatTypes.map((type) => {
+                                    const count = availableSeatsInfo[type.count];
+                                    const price = priceInfo.departure[type.price]?.top_price;
+                                    if (!count || !price) return null;
+
+                                    return (
+                                        <div key={type.key} className="train-seats__item">
+                                            <div className="train-seats__type">{type.label}</div>
+                                            <div className="train-seats__count">{count}</div>
+                                            <div className="train-seats__price">
+                                                <span className="train-seats__price-text">от {price} ₽</span>
+                                                <span className="train-seats__price-img" />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
+
                     <div className="train-service__block">
-                        {dep.have_wifi && <div className="train-service__item train-service__item-wifi" />}
+                        {dep.have_wifi && <div className="train-service__item train-service__item-wifi"/>}
                         {dep.have_air_conditioning && (
-                            <div className="train-service__item train-service__item-conditioner" />
+                            <div className="train-service__item train-service__item-conditioner"/>
                         )}
-                        {dep.is_express && <div className="train-service__item train-service__item-express" />}
+                        {dep.is_express && <div className="train-service__item train-service__item-express"/>}
                     </div>
 
-                    <button className="train-card__btn" onClick={handleSelect}>
-                        Выбрать места
-                    </button>
-                    {(departureSeats.queryStatus === 'loading'  || arrivalSeats.queryStatus === 'loading') && <Loading />}
+                    {/*<button className="train-card__btn" onClick={handleSelect}>*/}
+                    {/*    Выбрать места*/}
+                    {/*</button>*/}
+                    {!readonly ? (
+                        <button className="train-card__btn" onClick={handleSelect}>Выбрать места</button>
+                    ) : (
+                        <button className="train-card__btn" onClick={handleChange}>Изменить выбор</button>
+                    )}
+                    {!readonly && (departureSeats.queryStatus === 'loading' || arrivalSeats.queryStatus === 'loading') && (
+                        <Loading />
+                    )}
+                    {/*{(departureSeats.queryStatus === 'loading' || arrivalSeats.queryStatus === 'loading') && <Loading/>}*/}
                 </div>
             </div>
         </div>

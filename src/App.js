@@ -9,21 +9,35 @@ import Confirmation from './pages/Confirmation';
 import SuccessOrder from './pages/SuccessOrder';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer/Footer';
-import NavigationSteps from './components/common/NavigationSteps';
+import ProgressBar from './components/common/ProgressBar';
 
 
 const AppContent = () => {
     const location = useLocation();
-    const isMainPage = location.pathname === '/';
-    const isSuccessPage = location.pathname === '/success';
+    const pathname = location.pathname;
+    const isMainPage = pathname === '/';
+    const isSuccessPage = pathname === '/success';
 
-    const showNavigationSteps = !isMainPage && !isSuccessPage;
+
+    const getStep = () => {
+        if (pathname.startsWith('/confirmation')) return 4;
+        if (pathname.startsWith('/payment')) return 3;
+        if (pathname.startsWith('/passenger-details')) return 2;
+        if (pathname.startsWith('/wagon-selection') || pathname.startsWith('/search')) return 1;
+        return null;
+    };
+
+    const currentStep = getStep();
 
     return (
         <div className="flex flex-col min-h-screen">
             <Header isMainPage={isMainPage} />
 
-            {showNavigationSteps && <NavigationSteps />}
+            {!isMainPage && !isSuccessPage && currentStep && (
+                <ProgressBar step={currentStep} />
+            )}
+
+            {/*{showNavigationSteps && <NavigationSteps />}*/}
 
             <div className="flex-grow">
                 <Routes>

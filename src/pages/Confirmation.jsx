@@ -1,14 +1,150 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../App.css';
+import RouteDetails from '../components/common/RouteDetails';
+import TrainCard from '../components/cards/TrainCard';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectTicketPrice} from "../store/seatsPriceSelector";
+import {PassengerGender} from "../components/common/PassengerGender";
+import {PassengerType} from "../components/common/PassengerType";
+import React, {useEffect} from "react";
+import {selectTicketsForOrder} from "../store/seatsOrderSelector";
+import {purchaseTickets} from "../store/purchaseTicketsRequest";
 
 const Confirmation = () => {
-    return (
-        <div>
-            <main>
-                <h1>Подтверждение</h1>
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const availableSeatsInfo = useSelector(state => state.seats.availableSeatsInfo);
+    const priceInfo = useSelector(state => state.seats.priceInfo);
+    const departureTrain = useSelector(state => state.seats.train.departure);
+    const arrivalTrain = useSelector(state => state.seats.train.arrival);
+    const paymentMethod = useSelector(state => state.payment.paymentMethod);
+    const passengers = useSelector(state => state.passengers.passengers);
+    const ticketsForOrder = useSelector(selectTicketsForOrder);
 
-            </main>
-        </div>
+    const orderStatus = useSelector(state => {
+        return state.order
+    });
+
+    if (orderStatus.complete) {
+        console.log(orderStatus);
+    }
+
+    var order = {
+        "user": {
+            "first_name": "string",
+            "last_name": "string",
+            "patronymic": "string",
+            "phone": "string",
+            "email": "string",
+            "payment_method": "cash"
+        },
+        "departure": ticketsForOrder.departureTickets,
+        "arrival": ticketsForOrder.arrivalTickets,
+    }
+
+    const { adult, child, baby } = useSelector(state => state.passengers.passengersCount);
+
+    const totalCount = adult + child;
+    const seatsPrice = useSelector(selectTicketPrice);
+    const totalPrice = seatsPrice.departureAdults + seatsPrice.departureChildren + seatsPrice.arrivalAdults + seatsPrice.arrivalChildren;
+
+    const handlePurchaseTicketsClick = () => {
+        dispatch(purchaseTickets(order));
+    };
+
+    useEffect(() => {
+        if (orderStatus.complete && orderStatus.success) {
+            navigate('/success');
+        }
+    }, [orderStatus, navigate]);
+
+    return (
+        <main className="page-container">
+            <aside className="sidebar">
+                <RouteDetails/>
+            </aside>
+
+            <div className="main-section">
+                <section className="confirmation-section">
+
+                    {departureTrain && (
+                        <div className="confirmation-form">
+                            <h3 className="form-title">Поезд</h3>
+                            <TrainCard
+                                data={{departure: departureTrain, arrival: arrivalTrain}}
+                                availableSeatsInfo={availableSeatsInfo}
+                                priceInfo={priceInfo}
+                                readonly
+                            />
+                        </div>
+                    )}
+
+                    <div className="confirmation-overall">
+                        <h3 className="form-title full-width-title">Пассажиры</h3>
+
+                        <div className="confirmation-overall-row">
+                            <div className="confirmation-form passengers-block">
+                                {passengers.map((p, index) => (
+                                    <div className="confirmation-passenger" key={p.id}>
+                                        <p><strong>Пассажир {index + 1}</strong></p>
+                                        <p>Тип
+                                            билета: {p.passengerType === PassengerType.Adult ? 'Взрослый' : 'Детский'}</p>
+                                        <p>ФИО: {`${p.surname} ${p.name} ${p.patronymic}`}</p>
+                                        <p>Пол: {p.gender === PassengerGender.Male ? 'Мужской' : 'Женский'}</p>
+                                        <p>Дата рождения: {p.birthDate}</p>
+                                        <p>
+                                            Документ:
+                                            {p.birthDate === 'adult'
+                                                ? ` Паспорт: ${p.passportSeries} ${p.passportNumber}`
+                                                : ` Свидетельство о рождении: ${p.birthCertNumber}`}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {availableSeatsInfo && priceInfo?.departure && (
+                                <div className="confirmation-form summary-block">
+                                    <h3 className="form-title">Всего</h3>
+                                    <div className="confirmation-summary">
+                                        <p>Всего мест: {totalCount}</p>
+                                        <p>Общая цена: {totalPrice} ₽</p>
+                                    </div>
+                                    <div className="confirmation-change-btn">
+                                        <button className="seats_button" onClick={() => navigate('/wagon-selection')}>
+                                            Изменить выбор
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+
+                    <div className="confirmation-form">
+                        <h3 className="form-title">Способ оплаты</h3>
+                        <div className="confirmation-payment-method">
+                            <p className="payment-label">Вы выбрали:</p>
+                            <p className="payment-value">
+                                {paymentMethod === 'cash' ? 'Наличные' : 'Онлайн-оплата'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="seats_buttons">
+                        <button
+                            type="button"
+                            className="button seats_button"
+                            onClick={handlePurchaseTicketsClick}
+                        >
+                            Подтвердить
+                        </button>
+                    </div>
+
+                </section>
+            </div>
+        </main>
     );
 };
 
 export default Confirmation;
+

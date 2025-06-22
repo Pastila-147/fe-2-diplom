@@ -1,0 +1,164 @@
+.personal-data {
+    margin-bottom: 50px;
+    background: #fff;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.personal-data-head {
+    padding: 35px 0 36px 35px;
+    background: #f9f9f9;
+    border-bottom: 1px dashed #928f94;
+}
+
+.personal-data-head > h3 {
+    font-weight: 400;
+    font-size: 30px;
+    color: #292929;
+}
+
+.personal-data-main {
+    padding: 30px 35px;
+    border-bottom: 1px dashed #928f94;
+}
+
+.personal-data-info {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    gap: 25px;
+}
+
+.data-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.surname,
+.name,
+.father,
+.phone,
+.mail {
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #292929;
+    text-transform: capitalize;
+}
+
+.surname-input,
+.name-input,
+.father-input,
+.phone-input,
+.mail-input {
+    width: 280px;
+    height: 50px;
+    padding-left: 15px;
+    margin-bottom: 15px;
+
+    border: 1px solid #928f94;
+    border-radius: 5px;
+    background: #fff;
+
+    font-weight: 400;
+    font-size: 18px;
+    color: #292929;
+}
+
+.phone-input,
+.mail-input {
+    width: 360px;
+}
+
+.footer-title {
+    padding: 33px 0 37px 35px;
+    background: #f9f9f9;
+    border-bottom: 1px dashed #928f94;
+}
+
+.footer-title > h3 {
+    font-weight: 400;
+    font-size: 30px;
+    color: #292929;
+}
+
+.methods {
+    padding: 50px 35px 82px 35px;
+}
+
+.method-online,
+.method-cash {
+    margin-bottom: 58px;
+}
+
+.online-checkbox,
+.cash-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.input-checkbox {
+    display: none;
+}
+
+.input-checkbox + label {
+    position: relative;
+    padding-left: 45px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #292929;
+}
+
+.input-checkbox + label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #928f94;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.input-checkbox:checked + label::before {
+    border: 1px solid #ffa800;
+}
+
+.input-checkbox:checked + label::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    width: 18px;
+    height: 14px;
+    background-image: url("../../assets/img/check.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.input-checkbox:checked + .checkbox-text {
+    color: #ffa800;
+}
+
+.checkbox-text {
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.online-variation {
+    display: flex;
+    gap: 60px;
+    margin-left: 45px;
+    margin-bottom: 20px;
+}
+
+.variant {
+    font-weight: 700;
+    font-size: 20px;
+    color: #292929;
+}
+
+.variant.card {
+    max-width: 135px;
+}

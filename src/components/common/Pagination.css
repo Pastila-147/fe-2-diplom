@@ -48,10 +48,16 @@
     background-color: transparent;
 }
 
+.pagination__button--arrow {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
 .pagination__button--arrow-left {
-    background-image: url('../../assets/img/arrow-left.png');
+    background-image: url('../../assets/img/arrow-left.svg');
 }
 
 .pagination__button--arrow-right {
-    background-image: url('../../assets/img/arrow-right.png');
+    background-image: url('../../assets/img/arrow-right.svg');
 }

@@ -2,23 +2,62 @@
     background: #ffffff;
     border: 1px solid #c4c4c4;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    /*padding: 32px 40px;*/
+    width: 960px;
     margin-bottom: 44px;
     font-family: Roboto, sans-serif;
+}
+
+.passenger-card__header {
+    height: 107px;
+    background-color: #F9F9F9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: relative;
+    /*margin-bottom: -32px;*/
+}
+
+.passenger-card__header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.collapse-toggle {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.close-button {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.passenger-card.collapsed .personal-info,
+.passenger-card.collapsed .field-row,
+.passenger-card.collapsed .section-divider,
+.passenger-card.collapsed .validation-message,
+.passenger-card.collapsed .next-passenger-button {
+    display: none;
 }
 
 .passenger-card__title {
     font-weight: 400;
     font-size: 30px;
     color: #292929;
-    margin: 32px 40px 30px 40px;
+    margin: 0;
+
 }
 
 .personal-info {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    margin: 0 40px;
+    border-top: 1px dashed #928F94;
+    padding: 32px 40px 0;
 }
 
 /* Общая группа поля */
@@ -56,8 +95,12 @@
     min-width: 180px;
 }
 
-.birth-row .field-group {
-    flex: 1;
+/*.birth-row .field-group {*/
+/*    flex: 1;*/
+/*}*/
+
+.docs-row {
+    margin: 0 40px;
 }
 
 .docs-row .field-group {
@@ -91,6 +134,46 @@
 
 .gender-button.active {
     background-color: #ffa800;
+}
+
+/* дата рождения */
+.birth-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.birth-row .field-group {
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.birth-row .field-group:first-child {
+    flex: 0 0 45%;
+}
+
+.birth-date-group {
+    flex: 0 0 45%;
+    min-width: 200px;
+}
+
+
+.birth-date-input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.birth-date-input {
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: #292929;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    height: 50px;
+    padding-left: 12px;
 }
 
 /* Блок ограничения подвижности */
@@ -178,6 +261,60 @@
     text-align: center;
     color: #292929;
     margin-left: auto;
+}
+
+.docs-row .field-group {
+    width: 205px;
+    max-width: 205px;
+    flex: 0 0 auto;
+}
+
+.docs-row .field-group .field-group__input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-passenger {
+    width: 960px;
+    height: 97px;
+    margin: 32px auto;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.add-passenger__text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    color: #292929;
+}
+
+.add-passenger__icon {
+    width: 32px;
+    height: 32px;
+}
+
+
+.next-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: top;
+    height: 80px;
+    padding: 0 30px;
+}
+
+
+
+.section-divider {
+    border: none;
+    border-top: 1px dashed #928F94;
+    margin: 32px 0;
 }
 
 

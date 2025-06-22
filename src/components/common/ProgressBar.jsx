@@ -1,43 +1,38 @@
-import PropTypes from 'prop-types';
 import './ProgressBar.css';
-import arrowIcon from '../../assets/img/stepArrow.png';
 
-const steps = ['Билеты', 'Пассажиры', 'Оплата', 'Проверка'];
+const steps = [
+    { id: 1, title: 'Билеты' },
+    { id: 2, title: 'Пассажиры' },
+    { id: 3, title: 'Оплата' },
+    { id: 4, title: 'Проверка' },
+];
 
-const ProgressBar = ({ currentStep }) => {
+const ProgressBar = ({ step }) => {
     return (
-        <div className="progress-bar">
-            {steps.map((label, index) => {
-                const stepIndex = index + 1;
-                const isActive = stepIndex === currentStep;
-                const isCompleted = stepIndex < currentStep;
+        <ul className="progress-bar">
+            {steps.map((elem, index) => {
+                const isLast = elem.id === steps.length;
+                const isActive = elem.id <= step;
 
-                let stepClass = 'progress-bar__step';
-                if (isActive) stepClass += ' progress-bar__step_active';
-                else if (isCompleted) stepClass += ' progress-bar__step_completed';
+                const baseClass = isLast
+                    ? 'progress-bar__item-last-elem'
+                    : elem.id === step
+                        ? 'progress-bar__item-last-step'
+                        : 'progress-bar__item';
+
+                const activeClass = isActive ? `${baseClass}_active` : '';
 
                 return (
-                    <div className={stepClass} key={stepIndex}>
-                        <div className="progress-bar__number">{stepIndex}</div>
-                        <div className="progress-bar__label">{label}</div>
-                        {stepIndex < steps.length && (
-                            <img
-                                className="progress-bar__arrow"
-                                src={arrowIcon}
-                                alt="arrow"
-                                width="37"
-                                height="98"
-                            />
-                        )}
-                    </div>
+                    <li className="progress-bar__elem" key={index}>
+                        <div className={`${baseClass} ${activeClass}`}>
+                            <span className="progress-bar__step">{elem.id}</span>
+                            <p className="progress-bar__name">{elem.title}</p>
+                        </div>
+                    </li>
                 );
             })}
-        </div>
+        </ul>
     );
-};
-
-ProgressBar.propTypes = {
-    currentStep: PropTypes.number.isRequired,
 };
 
 export default ProgressBar;
