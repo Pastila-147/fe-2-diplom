@@ -4,6 +4,8 @@ import seatsReducer from '../store/seatsSlice'
 import passengersReducer from '../store/passengersSlice'
 import paymentReducer from "../store/paymentSlice"
 import orderReducer from "../store/orderSlice"
+import loadingReducer from "../store/loadingSlice"
+import summaryReducer from '../store/summarySlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +14,7 @@ export const store = configureStore({
     passengers: passengersReducer,
     payment: paymentReducer,
     order: orderReducer,
+    loading: loadingReducer,
+    // summary: summaryReducer,
   },
 })

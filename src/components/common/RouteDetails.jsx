@@ -1,7 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import './RouteDetails.css';
-import {selectTicketPrice} from "../../store/seatsPriceSelector";
+// import {selectTicketPrice} from "../../store/seatsPriceSelector";
+// import { selectTotalPrice, selectSeatsPrice } from '../../store/summarySlice';
+import { selectTotalPrice, selectSeatsPrice } from '../../store/summarySlice';
+
 
 export default function RouteDetails() {
 
@@ -19,9 +22,8 @@ export default function RouteDetails() {
             minute: '2-digit',
         })
 
-    const seatsPrice = useSelector(selectTicketPrice);
-
-    const totalPrice = seatsPrice.departureAdults + seatsPrice.departureChildren + seatsPrice.arrivalAdults + seatsPrice.arrivalChildren;
+    const seatsPrice = useSelector(selectSeatsPrice);
+    const totalPrice = useSelector(selectTotalPrice);
 
     const formatDuration = (sec) => {
         const hours = Math.floor(sec / 3600);

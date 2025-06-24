@@ -3,6 +3,7 @@ import {CoachInfo, CoachTypes} from "./CoachConsts";
 import {ExtraServices} from "./ExtraServices";
 
 export function GetSeatPrice(seat) {
+    if (!seat || !seat.coach) return 0;
     const {coach, seat_number, passenger_type, extra_services } = seat;
     const childrenDiscount = 0.6;
     var price = 0;
@@ -21,7 +22,7 @@ export function GetSeatPrice(seat) {
             seat_number % 2 === 0 ? coach.top_price : coach.bottom_price:
             coach.side_price;
     } else if (isSeat) {
-        price = coach.price;
+        price = coach.top_price; // This is a bug on the backend. For the 'fourth' class only top_price and bottom_price are non-zero.
     } else {
         throw "Unknown coach type: " + coach.class_type;
     }

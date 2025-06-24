@@ -21,85 +21,13 @@ import iconTo from '../../../assets/img/subtract.png'
 import iconBack from '../../../assets/img/subtract-back.png'
 import collapseIcon from '../../../assets/img/collapse.svg'
 import collapseStartIcon from '../../../assets/img/collapse_start.svg'
+import {setLoading} from "../../../store/loadingSlice";
 
-export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5, setIsLoading }) {
+export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
     const dispatch = useDispatch()
     const state = useSelector((state) => state.filters)
 
     const [error, setError] = useState(null)
-
-    useEffect(() => {
-        if (!state?.fromCityId || !state?.toCityId || !state?.dateStart) return
-
-        const fetchRoutes = async () => {
-            try {
-                setIsLoading?.(true);
-                const params = {
-                    from_city_id: state.fromCityId,
-                    to_city_id: state.toCityId,
-                    date_start: state.dateStart,
-                    date_end: state.dateEnd,
-                    price_from: state.priceFrom,
-                    price_to: state.priceTo,
-                    have_first_class: state.options?.have_first_class,
-                    have_second_class: state.options?.have_second_class,
-                    have_third_class: state.options?.have_third_class,
-                    have_fourth_class: state.options?.have_fourth_class,
-                    have_wifi: state.options?.have_wifi,
-                    have_air_conditioning: state.options?.have_air_conditioning,
-                    start_departure_hour_from: state.startTimes?.departure?.[0],
-                    start_departure_hour_to: state.startTimes?.departure?.[1],
-                    start_arrival_hour_from: state.startTimes?.arrival?.[0],
-                    start_arrival_hour_to: state.startTimes?.arrival?.[1],
-                    end_departure_hour_from: state.endTimes?.departure?.[0],
-                    end_departure_hour_to: state.endTimes?.departure?.[1],
-                    end_arrival_hour_from: state.endTimes?.arrival?.[0],
-                    end_arrival_hour_to: state.endTimes?.arrival?.[1],
-                    limit,
-                    offset,
-                }
-
-                Object.keys(params).forEach((key) => {
-                    if (
-                        params[key] === false ||
-                        params[key] === null ||
-                        params[key] === ''
-                    ) {
-                        delete params[key]
-                    }
-                })
-
-                console.log('👉 Отправляем параметры:', params)
-                console.log('limit:', limit, 'offset:', offset)
-
-                const data = await TicketApi.getRoutes(params)
-
-                console.log('Длина items:', data.items?.length)
-                console.log('total_count:', data.total_count)
-
-                if (onRoutesChange) {
-                    onRoutesChange(data.items || [], data.total_count || 0)
-                }
-            } catch (err) {
-                console.error('Ошибка при загрузке маршрутов:', err)
-                setError('Не удалось загрузить маршруты')
-            }
-        }
-
-        fetchRoutes()
-    }, [
-        state.fromCityId,
-        state.toCityId,
-        state.dateStart,
-        state.dateEnd,
-        state.priceFrom,
-        state.priceTo,
-        state.options,
-        state.startTimes,
-        state.endTimes,
-        offset,
-        limit,
-    ])
 
     const [collapsed, setCollapsed] = useState({ to: false, back: false })
 

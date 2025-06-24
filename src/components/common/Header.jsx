@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {
     setFromCityId,
     setToCityId,
     setDateStart,
-    setDateEnd,
+    setDateEnd, fetchTrains,
 } from '../../store/filtersSlice'
 import { useNavigate } from 'react-router-dom'
 import { CityApi } from '../../api/Api'
 import './Header.css'
 
-const Header = ({ isMainPage = true }) => {
+const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
     const [from, setFrom] = useState([ "санкт-петербург" ])
     const [to, setTo] = useState(["архангельск"])
     const [fromSuggestions, setFromSuggestions] = useState([])
@@ -24,7 +24,7 @@ const Header = ({ isMainPage = true }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-
+    const filters = useSelector(state => state.filters)
 
     // Поиск городов по названию
     const fetchCities = async (query, setSuggestions, setOpen) => {
@@ -78,13 +78,22 @@ const Header = ({ isMainPage = true }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
+    const setDepartureDate = (depDate) => {
+        dispatch(setDateStart(depDate))
+    }
+
+    const setArrivalDate = (depDate) => {
+        dispatch(setDateEnd(depDate))
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        const depDate = e.target.departureDate.value
-        const retDate = e.target.returnDate.value
+        // const depDate = e.target.departureDate.value
+        // const retDate = e.target.returnDate.value
 
-        dispatch(setDateStart(depDate))
-        dispatch(setDateEnd(retDate))
+        // dispatch(setDateStart(depDate))
+        // dispatch(setDateEnd(retDate))
+        dispatch(fetchTrains(filters))
 
         navigate('/search')
     }
@@ -98,127 +107,315 @@ const Header = ({ isMainPage = true }) => {
         }
     }
 
+
+    // return (
+    //     <header className={`header ${isMainPage ? 'header--main' : isSuccessPage ? 'header--success' : 'header--secondary'}`}>
+    //         <div className="header__top">
+    //             <div className="header__logo">Лого</div>
+    //         </div>
+    //
+    //         <div className="header__nav">
+    //             <nav>
+    //                 <ul className="nav__list">
+    //                     <li>
+    //                         <button type="button" onClick={() => handleNavClick('about')}>О нас</button>
+    //                     </li>
+    //                     <li>
+    //                         <button type="button" onClick={() => handleNavClick('how-it-works')}>Как это работает</button>
+    //                     </li>
+    //                     <li>
+    //                         <button type="button" onClick={() => handleNavClick('reviews')}>Отзывы</button>
+    //                     </li>
+    //                     <li>
+    //                         <button type="button" onClick={() => handleNavClick('contacts')}>Контакты</button>
+    //                     </li>
+    //                 </ul>
+    //             </nav>
+    //         </div>
+    //
+    //         <div className={`header__content
+    //         ${isMainPage ? 'header__content--main' : isSuccessPage ? 'header__content--success' : 'header__content--secondary'}`}>
+    //
+    //             {isMainPage && (
+    //
+    //
+    //                 <div className="header__left-text">
+    //                     <span className="header__left-text--light">Вся жизнь — </span>
+    //                     <span className="header__left-text--bold">путешествие!</span>
+    //                 </div>
+    //             )}
+    //
+    //             {isSuccessPage && (
+    //                 <div className="header__content--success-text">
+    //                     Благодарим Вас за заказ!
+    //                 </div>
+    //             )}
+    //
+    //             {!isSuccessPage && (
+    //                 <form className={`search-form ${!isMainPage ? 'search-form--compact' : ''}`} onSubmit={handleSubmit}>
+    //                     <div className={`${!isMainPage ? 'search-form--compact__row' : ''}`}>
+    //                         <div className="search-form__group">
+    //                             <label>Направление</label>
+    //                             <div className="search-form__inputs">
+    //                                 <div className="input-with-suggestions" ref={fromRef}>
+    //                                     <input
+    //                                         type="text"
+    //                                         placeholder="Откуда"
+    //                                         value={from}
+    //                                         onChange={(e) => setFrom(e.target.value)}
+    //                                         onFocus={() => from.length > 1 && setIsFromOpen(true)}
+    //                                         autoComplete="off"
+    //                                     />
+    //                                     {isFromOpen && (
+    //                                         <ul className="suggestions-list">
+    //                                             {fromSuggestions.length > 0 ? (
+    //                                                 fromSuggestions.map((city) => (
+    //                                                     <li key={city._id} onClick={() => selectFromCity(city)}>
+    //                                                         {city.name}
+    //                                                     </li>
+    //                                                 ))
+    //                                             ) : (
+    //                                                 <li className="no-suggestions">Ничего не найдено</li>
+    //                                             )}
+    //                                         </ul>
+    //                                     )}
+    //                                 </div>
+    //
+    //                                 <div className="change-icon"/>
+    //
+    //                                 <div className="input-with-suggestions" ref={toRef}>
+    //                                     <input
+    //                                         type="text"
+    //                                         placeholder="Куда"
+    //                                         value={to}
+    //                                         onChange={(e) => setTo(e.target.value)}
+    //                                         onFocus={() => to.length > 1 && setIsToOpen(true)}
+    //                                         autoComplete="off"
+    //                                     />
+    //                                     {isToOpen && (
+    //                                         <ul className="suggestions-list">
+    //                                             {toSuggestions.length > 0 ? (
+    //                                                 toSuggestions.map((city) => (
+    //                                                     <li key={city._id} onClick={() => selectToCity(city)}>
+    //                                                         {city.name}
+    //                                                     </li>
+    //                                                 ))
+    //                                             ) : (
+    //                                                 <li className="no-suggestions">Ничего не найдено</li>
+    //                                             )}
+    //                                         </ul>
+    //                                     )}
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //
+    //                         <div className="search-form__group">
+    //                             <label>Дата</label>
+    //                             <div className="search-form__inputs">
+    //                                 <input type="date" name="departureDate" defaultValue="2027-11-26" />
+    //                                 <input type="date" name="returnDate" defaultValue="2027-11-30" />
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //
+    //                     <div className="search-form__submit">
+    //                         <button type="submit">Найти билеты</button>
+    //                     </div>
+    //                 </form>
+    //             )}
+    //         </div>
+    //     </header>
+    // );
     return (
-        <header className={`header ${isMainPage ? 'header--main' : 'header--secondary'}`}>
+        <header className={`header ${isMainPage ? 'header--main' : isSuccessPage ? 'header--success' : 'header--secondary'}`}>
             <div className="header__top">
                 <div className="header__logo">Лого</div>
             </div>
 
-            {/*<div className="header__nav">*/}
-            {/*    <nav>*/}
-            {/*        <ul className="nav__list">*/}
-            {/*            <li><a href="#about">О нас</a></li>*/}
-            {/*            <li><a href="#how-it-works">Как это работает</a></li>*/}
-            {/*            <li><a href="#reviews">Отзывы</a></li>*/}
-            {/*            <li><a href="#contacts">Контакты</a></li>*/}
-            {/*        </ul>*/}
-            {/*    </nav>*/}
-            {/*</div>*/}
-
-
             <div className="header__nav">
                 <nav>
                     <ul className="nav__list">
-                        <li>
-                            <button type="button" onClick={() => handleNavClick('about')}>О нас</button>
-                        </li>
-                        <li>
-                            <button type="button" onClick={() => handleNavClick('how-it-works')}>Как это работает
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" onClick={() => handleNavClick('reviews')}>Отзывы</button>
-                        </li>
-                        <li>
-                            <button type="button" onClick={() => handleNavClick('contacts')}>Контакты</button>
-                        </li>
+                        <li><button type="button" onClick={() => handleNavClick('about')}>О нас</button></li>
+                        <li><button type="button" onClick={() => handleNavClick('how-it-works')}>Как это работает</button></li>
+                        <li><button type="button" onClick={() => handleNavClick('reviews')}>Отзывы</button></li>
+                        <li><button type="button" onClick={() => handleNavClick('contacts')}>Контакты</button></li>
                     </ul>
                 </nav>
             </div>
 
-            <div className={`header__content ${isMainPage ? 'header__content--main' : 'header__content--secondary'}`}>
+            <div className={`header__content ${isMainPage ? 'header__content--main' : isSuccessPage ? 'header__content--success' : 'header__content--secondary'}`}>
+
                 {isMainPage && (
-                    <div className="header__left-text">
-                        <span className="header__left-text--light">Вся жизнь — </span>
-                        <span className="header__left-text--bold">путешествие!</span>
+                    <>
+                        <div className="header__left-text">
+                            <span className="header__left-text--light">Вся жизнь — </span>
+                            <span className="header__left-text--bold">путешествие!</span>
+                        </div>
+
+                        <form className="search-form" onSubmit={handleSubmit}>
+                            <div className="search-form__fields">
+                                <div className="search-form__group">
+                                    <label>Направление</label>
+                                    <div className="search-form__inputs search-form__inputs--direction">
+                                        <div className="input-with-suggestions" ref={fromRef}>
+                                            <input
+                                                type="text"
+                                                placeholder="Откуда"
+                                                value={from}
+                                                onChange={(e) => setFrom(e.target.value)}
+                                                onFocus={() => from.length > 1 && setIsFromOpen(true)}
+                                                autoComplete="off"
+                                            />
+                                            {isFromOpen && (
+                                                <ul className="suggestions-list">
+                                                    {fromSuggestions.length > 0 ? (
+                                                        fromSuggestions.map((city) => (
+                                                            <li key={city._id} onClick={() => selectFromCity(city)}>
+                                                                {city.name}
+                                                            </li>
+                                                        ))
+                                                    ) : (
+                                                        <li className="no-suggestions">Ничего не найдено</li>
+                                                    )}
+                                                </ul>
+                                            )}
+                                        </div>
+
+                                        <div className="change-icon" />
+
+                                        <div className="input-with-suggestions" ref={toRef}>
+                                            <input
+                                                type="text"
+                                                placeholder="Куда"
+                                                value={to}
+                                                onChange={(e) => setTo(e.target.value)}
+                                                onFocus={() => to.length > 1 && setIsToOpen(true)}
+                                                autoComplete="off"
+                                            />
+                                            {isToOpen && (
+                                                <ul className="suggestions-list">
+                                                    {toSuggestions.length > 0 ? (
+                                                        toSuggestions.map((city) => (
+                                                            <li key={city._id} onClick={() => selectToCity(city)}>
+                                                                {city.name}
+                                                            </li>
+                                                        ))
+                                                    ) : (
+                                                        <li className="no-suggestions">Ничего не найдено</li>
+                                                    )}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="search-form__group">
+                                    <label>Дата</label>
+                                    <div className="search-form__inputs">
+                                        <input
+                                            type="date"
+                                            name="departureDate"
+                                            defaultValue="2027-11-26"
+                                            onChange={(e) => setDepartureDate(e.target.value)}
+                                        />
+                                        <input
+                                            type="date"
+                                            name="returnDate"
+                                            defaultValue="2027-11-30"
+                                            onChange={(e) => setArrivalDate(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="search-form__submit">
+                                <button type="submit">Найти билеты</button>
+                            </div>
+                        </form>
+                    </>
+                )}
+
+                {isSuccessPage && (
+                    <div className="header__content--success-text">
+                        Благодарим Вас за заказ!
                     </div>
                 )}
 
-                <form
-                    className={`search-form ${!isMainPage ? 'search-form--compact' : ''}`}
-                    onSubmit={handleSubmit}
-                >
-                    <div className={`${!isMainPage ? 'search-form--compact__row' : ''}`}>
-                        <div className="search-form__group">
-                            <label>Направление</label>
-                            <div className="search-form__inputs">
-                                <div className="input-with-suggestions" ref={fromRef}>
-                                    <input
-                                        type="text"
-                                        placeholder="Откуда"
-                                        value={from}
-                                        onChange={(e) => setFrom(e.target.value)}
-                                        onFocus={() => from.length > 1 && setIsFromOpen(true)}
-                                        autoComplete="off"
-                                    />
-                                    {isFromOpen && (
-                                        <ul className="suggestions-list">
-                                            {fromSuggestions.length > 0 ? (
-                                                fromSuggestions.map((city) => (
-                                                    <li key={city._id} onClick={() => selectFromCity(city)}>
-                                                        {city.name}
-                                                    </li>
-                                                ))
-                                            ) : (
-                                                <li className="no-suggestions">Ничего не найдено</li>
-                                            )}
-                                        </ul>
-                                    )}
-                                </div>
+                {!isMainPage && !isSuccessPage && (
+                    <form className="search-form search-form--compact" onSubmit={handleSubmit}>
+                        <div className="search-form--compact__row">
+                            <div className="search-form__group">
+                                <label>Направление</label>
+                                <div className="search-form__inputs">
+                                    <div className="input-with-suggestions" ref={fromRef}>
+                                        <input
+                                            type="text"
+                                            placeholder="Откуда"
+                                            value={from}
+                                            onChange={(e) => setFrom(e.target.value)}
+                                            onFocus={() => from.length > 1 && setIsFromOpen(true)}
+                                            autoComplete="off"
+                                        />
+                                        {isFromOpen && (
+                                            <ul className="suggestions-list">
+                                                {fromSuggestions.length > 0 ? (
+                                                    fromSuggestions.map((city) => (
+                                                        <li key={city._id} onClick={() => selectFromCity(city)}>
+                                                            {city.name}
+                                                        </li>
+                                                    ))
+                                                ) : (
+                                                    <li className="no-suggestions">Ничего не найдено</li>
+                                                )}
+                                            </ul>
+                                        )}
+                                    </div>
 
-                                <div className="input-with-suggestions" ref={toRef}>
-                                    <input
-                                        type="text"
-                                        placeholder="Куда"
-                                        value={to}
-                                        onChange={(e) => setTo(e.target.value)}
-                                        onFocus={() => to.length > 1 && setIsToOpen(true)}
-                                        autoComplete="off"
-                                    />
-                                    {isToOpen && (
-                                        <ul className="suggestions-list">
-                                            {toSuggestions.length > 0 ? (
-                                                toSuggestions.map((city) => (
-                                                    <li key={city._id} onClick={() => selectToCity(city)}>
-                                                        {city.name}
-                                                    </li>
-                                                ))
-                                            ) : (
-                                                <li className="no-suggestions">Ничего не найдено</li>
-                                            )}
-                                        </ul>
-                                    )}
+                                    <div className="input-with-suggestions" ref={toRef}>
+                                        <input
+                                            type="text"
+                                            placeholder="Куда"
+                                            value={to}
+                                            onChange={(e) => setTo(e.target.value)}
+                                            onFocus={() => to.length > 1 && setIsToOpen(true)}
+                                            autoComplete="off"
+                                        />
+                                        {isToOpen && (
+                                            <ul className="suggestions-list">
+                                                {toSuggestions.length > 0 ? (
+                                                    toSuggestions.map((city) => (
+                                                        <li key={city._id} onClick={() => selectToCity(city)}>
+                                                            {city.name}
+                                                        </li>
+                                                    ))
+                                                ) : (
+                                                    <li className="no-suggestions">Ничего не найдено</li>
+                                                )}
+                                            </ul>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="search-form__group">
+                                <label>Дата</label>
+                                <div className="search-form__inputs">
+                                    <input type="date" name="departureDate" defaultValue="2027-11-26" />
+                                    <input type="date" name="returnDate" defaultValue="2027-11-30" />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="search-form__group">
-                            <label>Дата</label>
-                            <div className="search-form__inputs">
-                                <input type="date" name="departureDate" defaultValue="2027-11-26"/>
-                                <input type="date" name="returnDate" defaultValue="2027-11-30"/>
-                            </div>
+                        <div className="search-form__submit">
+                            <button type="submit">Найти билеты</button>
                         </div>
-                    </div>
-
-                    <div className="search-form__submit">
-                        <button type="submit">Найти билеты</button>
-                    </div>
-                </form>
-
+                    </form>
+                )}
             </div>
         </header>
     )
+
+
 }
 
 export default Header

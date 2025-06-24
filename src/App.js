@@ -10,6 +10,8 @@ import SuccessOrder from './pages/SuccessOrder';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer/Footer';
 import ProgressBar from './components/common/ProgressBar';
+import LoadingBar from "./components/common/LoadingBar/LoadingBar";
+import {useSelector} from "react-redux";
 
 
 const AppContent = () => {
@@ -17,6 +19,7 @@ const AppContent = () => {
     const pathname = location.pathname;
     const isMainPage = pathname === '/';
     const isSuccessPage = pathname === '/success';
+    const isLoading = useSelector((state) => state.loading.isLoading)
 
 
     const getStep = () => {
@@ -31,7 +34,9 @@ const AppContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <Header isMainPage={isMainPage} />
+            <Header isMainPage={isMainPage} isSuccessPage={isSuccessPage} />
+            {isLoading &&(
+            <LoadingBar></LoadingBar>)}
 
             {!isMainPage && !isSuccessPage && currentStep && (
                 <ProgressBar step={currentStep} />

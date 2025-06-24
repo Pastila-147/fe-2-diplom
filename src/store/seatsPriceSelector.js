@@ -2,10 +2,12 @@ import { createSelector } from '@reduxjs/toolkit';
 import {PassengerType} from "../components/common/PassengerType";
 import {GetSeatPrice} from "../components/common/PriceCalculator";
 
-export const selectBothDirectionsSeats = (state) => { return {
-    departureSeats: state.seats.selectedSeats.departure.seats,
-    arrivalSeats: state.seats.selectedSeats.arrival.seats
-}}
+export const selectBothDirectionsSeats = (state) => {
+    return {
+        departureSeats: state.seats.selectedSeats?.departure?.seats || [],
+        arrivalSeats: state.seats.selectedSeats?.arrival?.seats || []
+    };
+};
 
 export const selectTicketPrice = createSelector(
     [selectBothDirectionsSeats],
