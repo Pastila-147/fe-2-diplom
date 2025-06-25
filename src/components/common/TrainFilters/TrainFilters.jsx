@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-    setDateStart,
-    setDateEnd,
-    setOption,
-    setPriceRange,
-    setStartTimes,
-    setEndTimes,
-} from '../../../store/filtersSlice'
-import { TicketApi } from '../../../api/Api'
 
 import FiltersDatePickers from './FiltersDatePickers'
 import TrainOptionsBlock from './TrainOptionsBlock'
@@ -21,11 +12,14 @@ import iconTo from '../../../assets/img/subtract.png'
 import iconBack from '../../../assets/img/subtract-back.png'
 import collapseIcon from '../../../assets/img/collapse.svg'
 import collapseStartIcon from '../../../assets/img/collapse_start.svg'
-import {setLoading} from "../../../store/loadingSlice";
+import {setDateEnd, setDateStart} from "../../../store/searchSlice";
+import {setEndTimes, setOption, setPriceRange, setStartTimes} from "../../../store/filtersSlice";
+import {resetPage} from "../../../store/searchResultSlice";
 
 export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
     const dispatch = useDispatch()
-    const state = useSelector((state) => state.filters)
+    const filters = useSelector((state) => state.filters)
+    const search = useSelector((state) => state.search)
 
     const [error, setError] = useState(null)
 
@@ -35,92 +29,39 @@ export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
         <div className="trains-filters">
             <div className="trains-filters__dates">
                 <FiltersDatePickers
-                    dateStart={state.dateStart}
-                    dateEnd={state.dateEnd}
-                    onChangeStart={(val) => dispatch(setDateStart(val))}
-                    onChangeEnd={(val) => dispatch(setDateEnd(val))}
+                    dateStart={search.dateStart}
+                    dateEnd={search.dateEnd}
+                    onChangeStart={(val) =>  {
+                        dispatch(setDateStart(val));
+                        dispatch(resetPage());
+                    }}
+                    onChangeEnd={(val) => {
+                        dispatch(setDateEnd(val));
+                        dispatch(resetPage());
+                    }}
                 />
             </div>
 
             <div className="trains-filters__options">
                 <TrainOptionsBlock
-                    values={state.options}
-                    onChange={(name, value) => dispatch(setOption({name, value}))}
+                    values={filters.options}
+                    onChange={(name, value) => {
+                        dispatch(setOption({name, value}));
+                        dispatch(resetPage());
+                    }}
                 />
             </div>
-
-            {/*<div className="trains-filters__price">*/}
-            {/*    <h3 className="trains-filters__price-title">Стоимость</h3>*/}
-            {/*    <RangeSliderBlock*/}
-            {/*        title=""*/}
-            {/*        value={[state.priceFrom, state.priceTo]}*/}
-            {/*        onChange={(val) => dispatch(setPriceRange(val))}*/}
-            {/*        min={0}*/}
-            {/*        max={10000}*/}
-            {/*        step={100}*/}
-            {/*        unit="₽"*/}
-            {/*    />*/}
-            {/*</div>*/}
 
             <div className="trains-filters__price">
                 <PriceFilter
                     min={0}
                     max={10000}
-                    onChange={(val) => dispatch(setPriceRange(val))}
+                    onChange={(val) => {
+                        dispatch(setPriceRange(val));
+                        dispatch(resetPage());
+                    }}
                 />
             </div>
-
-            {/*<div className="trains-filters__times">*/}
-            {/*    <h3 className="range-slider-block__title">Туда</h3>*/}
-            {/*    <RangeSliderBlock*/}
-            {/*        subtitleFrom="Время отбытия"*/}
-            {/*        value={state.startTimes.departure}*/}
-            {/*        onChange={(val) =>*/}
-            {/*            dispatch(setStartTimes({...state.startTimes, departure: val}))*/}
-            {/*        }*/}
-            {/*        min={0}*/}
-            {/*        max={24}*/}
-            {/*        step={1}*/}
-            {/*        unit="ч"*/}
-            {/*    />*/}
-            {/*    <RangeSliderBlock*/}
-            {/*        subtitleFrom="Время прибытия"*/}
-            {/*        value={state.startTimes.arrival}*/}
-            {/*        onChange={(val) =>*/}
-            {/*            dispatch(setStartTimes({...state.startTimes, arrival: val}))*/}
-            {/*        }*/}
-            {/*        min={0}*/}
-            {/*        max={24}*/}
-            {/*        step={1}*/}
-            {/*        unit="ч"*/}
-            {/*    />*/}
-
-            {/*    <h3 className="range-slider-block__title" style={{marginTop: '40px'}}>*/}
-            {/*        Обратно*/}
-            {/*    </h3>*/}
-            {/*    <RangeSliderBlock*/}
-            {/*        subtitleFrom="Время отбытия"*/}
-            {/*        value={state.endTimes.departure}*/}
-            {/*        onChange={(val) =>*/}
-            {/*            dispatch(setEndTimes({...state.endTimes, departure: val}))*/}
-            {/*        }*/}
-            {/*        min={0}*/}
-            {/*        max={24}*/}
-            {/*        step={1}*/}
-            {/*        unit="ч"*/}
-            {/*    />*/}
-            {/*    <RangeSliderBlock*/}
-            {/*        subtitleFrom="Время прибытия"*/}
-            {/*        value={state.endTimes.arrival}*/}
-            {/*        onChange={(val) =>*/}
-            {/*            dispatch(setEndTimes({...state.endTimes, arrival: val}))*/}
-            {/*        }*/}
-            {/*        min={0}*/}
-            {/*        max={24}*/}
-            {/*        step={1}*/}
-            {/*        unit="ч"*/}
-            {/*    />*/}
-            {/*</div>*/}
 
             <div className="trains-filters__times-wrapper">
                 <div className="trains-filters__times-block">
@@ -141,10 +82,11 @@ export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
                                 subtitleFrom="Время отбытия"
                                 className="departure"
                                 position="left"
-                                value={state.startTimes.departure}
-                                onChange={(val) =>
-                                    dispatch(setStartTimes({...state.startTimes, departure: val}))
-                                }
+                                value={filters.startTimes.departure}
+                                onChange={(val) => {
+                                    dispatch(setStartTimes({...filters.startTimes, departure: val}));
+                                    dispatch(resetPage());
+                                }}
                                 min={0}
                                 max={24}
                                 step={1}
@@ -153,10 +95,11 @@ export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
                             <RangeSliderBlock
                                 subtitleFrom="Время прибытия"
                                 position="right"
-                                value={state.startTimes.arrival}
-                                onChange={(val) =>
-                                    dispatch(setStartTimes({...state.startTimes, arrival: val}))
-                                }
+                                value={filters.startTimes.arrival}
+                                onChange={(val) => {
+                                    dispatch(setStartTimes({...filters.startTimes, arrival: val}))
+                                    dispatch(resetPage());
+                                }}
                                 min={0}
                                 max={24}
                                 step={1}
@@ -184,9 +127,9 @@ export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
                                 subtitleFrom="Время отбытия"
                                 className="departure"
                                 position="left"
-                                value={state.endTimes.departure}
+                                value={filters.endTimes.departure}
                                 onChange={(val) =>
-                                    dispatch(setEndTimes({...state.endTimes, departure: val}))
+                                    dispatch(setEndTimes({...filters.endTimes, departure: val}))
                                 }
                                 min={0}
                                 max={24}
@@ -196,9 +139,9 @@ export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
                             <RangeSliderBlock
                                 subtitleFrom="Время прибытия"
                                 position="right"
-                                value={state.endTimes.arrival}
+                                value={filters.endTimes.arrival}
                                 onChange={(val) =>
-                                    dispatch(setEndTimes({...state.endTimes, arrival: val}))
+                                    dispatch(setEndTimes({...filters.endTimes, arrival: val}))
                                 }
                                 min={0}
                                 max={24}

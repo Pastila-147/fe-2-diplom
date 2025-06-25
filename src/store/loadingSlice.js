@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {fetchTrains} from "./filtersSlice";
 import {fetchArrivalSeats, fetchDepartureSeats} from "./seatsSlice";
+import {fetchTrains} from "./searchResultSlice";
 
 const initialState = {
     isLoading: false
