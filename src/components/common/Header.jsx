@@ -256,7 +256,7 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
                             <div className="search-form__fields">
                                 <div className="search-form__group">
                                     <label>Направление</label>
-                                    <div className="search-form__inputs search-form__inputs--direction">
+                                    <div className="search-form__inputs">
                                         <div className="input-with-suggestions" ref={fromRef}>
                                             <input
                                                 type="text"

@@ -41,7 +41,8 @@
 /*------------SearchResults.css----------*/
 .search-results-page {
   background-color: #f5f4f6;
-  padding: 40px 0;
+  /*padding: 40px 0;*/
+  padding: 0;
 }
 
 /*------------Wagon-selection.css----------*/
@@ -75,11 +76,22 @@
 
 .confirmation-section .confirmation-form {
   background: #fff;
-  border: 1px solid #c4c4c4;
-  padding: 30px;
-  margin-bottom: 40px;
-  border-radius: 4px;
+  margin-bottom: 46px;
 }
+
+.confirmation-form > .form-title {
+  padding: 33px 0 30px 30px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 30px;
+  color: #292929;
+}
+
+/*.confirmation-form > .form-title {*/
+/*  padding: 33px 0 30px 30px;*/
+/*  margin: 0;*/
+/*  border-bottom: 1px solid #c4c4c4;*/
+/*}*/
 
 /* Заголовки секций (Поезд, Пассажиры, Всего, Способ оплаты) */
 .confirmation-section .form-title {
@@ -94,9 +106,90 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-top: none;
+  border-radius: 0 0 0.208vw 0.208vw; /* ~4px */
+
 }
 
-/* Заголовок "Пассажиры" на всю ширину */
+.full-width-title {
+  font-weight: 400;
+  font-size: 30px;
+  display: block;
+  height: 10vh;
+  border-bottom: 1px solid #928F94;
+}
+
+.confirmation-passenger {
+  display: flex;
+  gap: 1.04vw; /* ~20px */
+  height: 22.13vh; /* 218 / 985 */
+  width: 35.42vw; /* 680 / 1920 */
+  padding: 1.52vh 1.25vw; /* 15px 24px */
+  border-bottom: 1px dashed #E5E5E5;
+  border-right: 1px dashed #E5E5E5;
+  box-sizing: border-box;
+
+}
+.confirmation-passenger__icon-block {
+  width: 3.54vw; /* 68px */
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.confirmation-passenger__icon {
+  width: 3.54vw;
+  height: 6.9vh; /* 68px */
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.confirmation-passenger__icon-img {
+  width: 6.9vw;
+  height: 6.9vh;
+  object-fit: contain;
+}
+
+.confirmation-passenger__ticket-type {
+  margin-top: 0.81vh; /* 8px */
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 0.73vw; /* ~14px */
+  color: #292929;
+}
+
+
+.confirmation-passenger__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.passenger-name {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 0.94vw; /* 18px */
+  color: #292929;
+  margin-bottom: 1vh;
+}
+
+.passenger-detail {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 0.94vw;
+  color: #928f94;
+  margin-bottom: 0.6vh;
+}
+
+
+
+
 .confirmation-overall .full-width-title {
   width: 100%;
   margin: 0;
@@ -104,7 +197,6 @@
 
 .confirmation-overall .confirmation-overall-row {
   display: flex;
-  gap: 20px;
 }
 
 .passengers-block {
@@ -124,14 +216,6 @@
 
 .summary-block > .confirmation-change-btn {
   margin-top: 8px;
-}
-
-.confirmation-passenger {
-  padding: 16px 0;
-  border-bottom: 1px solid #ddd;
-}
-.confirmation-passenger:last-child {
-  border-bottom: none;
 }
 
 .confirmation-summary {
@@ -200,21 +284,25 @@
 .page-container {
   display: flex;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 96px 20px;
   box-sizing: border-box;
   justify-content: space-between;
   gap: 3%;
   max-width: 100%;
+  background-color: #e5e5e5;
 }
 
 .sidebar {
   flex: 0 0 27%;
   max-width: 27%;
+  /*width: 280px;*/
+
 }
 
 .main-section {
   flex: 1;
-  width: 958px;
+  width: 960px;
+  margin-left: 4vw;
 }
 
 .seats_buttons {
@@ -242,7 +330,7 @@
 
 .seats_button:hover {
   background-color: #ffbb33;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .seats_button:active {
@@ -254,5 +342,6 @@
   color: #928F94;
   cursor: not-allowed;
 }
+
 
 

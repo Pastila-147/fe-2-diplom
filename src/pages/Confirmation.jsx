@@ -9,6 +9,7 @@ import {PassengerType} from "../components/common/PassengerType";
 import React, {useEffect} from "react";
 import {selectTicketsForOrder} from "../store/seatsOrderSelector";
 import {purchaseTickets} from "../store/purchaseTicketsRequest";
+import passengerIcon from '../assets/img/passenger.svg';
 
 const Confirmation = () => {
     const navigate = useNavigate();
@@ -85,20 +86,50 @@ const Confirmation = () => {
                         <div className="confirmation-overall-row">
                             <div className="confirmation-form passengers-block">
                                 {passengers.map((p, index) => (
+                                    // <div className="confirmation-passenger" key={p.id}>
+                                    //     <p>Тип
+                                    //         билета: {p.passengerType === PassengerType.Adult ? 'Взрослый' : 'Детский'}</p>
+                                    //     <p>ФИО: {`${p.surname} ${p.name} ${p.patronymic}`}</p>
+                                    //     <p>Пол: {p.gender === PassengerGender.Male ? 'Мужской' : 'Женский'}</p>
+                                    //     <p>Дата рождения: {p.birthDate}</p>
+                                    //     <p>
+                                    //         Документ:
+                                    //         {p.birthDate === 'adult'
+                                    //             ? ` Паспорт: ${p.passportSeries} ${p.passportNumber}`
+                                    //             : ` Свидетельство о рождении: ${p.birthCertNumber}`}
+                                    //     </p>
+                                    // </div>
                                     <div className="confirmation-passenger" key={p.id}>
-                                        <p><strong>Пассажир {index + 1}</strong></p>
-                                        <p>Тип
-                                            билета: {p.passengerType === PassengerType.Adult ? 'Взрослый' : 'Детский'}</p>
-                                        <p>ФИО: {`${p.surname} ${p.name} ${p.patronymic}`}</p>
-                                        <p>Пол: {p.gender === PassengerGender.Male ? 'Мужской' : 'Женский'}</p>
-                                        <p>Дата рождения: {p.birthDate}</p>
-                                        <p>
-                                            Документ:
-                                            {p.birthDate === 'adult'
-                                                ? ` Паспорт: ${p.passportSeries} ${p.passportNumber}`
-                                                : ` Свидетельство о рождении: ${p.birthCertNumber}`}
-                                        </p>
+                                        <div className="confirmation-passenger__icon-block">
+                                            <div className="confirmation-passenger__icon">
+                                                <img
+                                                    src={passengerIcon}
+                                                    alt="Пассажир"
+                                                    className="confirmation-passenger__icon-img"
+                                                />
+                                            </div>
+                                            <p className="confirmation-passenger__ticket-type">
+                                                {p.passengerType === PassengerType.Adult ? 'Взрослый' : 'Детский'}
+                                            </p>
+                                        </div>
+
+                                        <div className="confirmation-passenger__info">
+                                            <p className="passenger-name">
+                                                {`${p.surname} ${p.name} ${p.patronymic}`}
+                                            </p>
+                                            <p className="passenger-detail">
+                                                Пол: {p.gender === PassengerGender.Male ? 'Мужской' : 'Женский'}
+                                            </p>
+                                            <p className="passenger-detail">Дата рождения: {p.birthDate}</p>
+                                            <p className="passenger-detail">
+                                                Документ:
+                                                {p.birthDate === 'adult'
+                                                    ? ` Паспорт: ${p.passportSeries} ${p.passportNumber}`
+                                                    : ` Свидетельство о рождении: ${p.birthCertNumber}`}
+                                            </p>
+                                        </div>
                                     </div>
+
                                 ))}
                             </div>
 
