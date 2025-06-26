@@ -6,7 +6,7 @@ import PassengerCard from '../components/cards/PassengerCard'
 import PlusIcon from '../assets/img/plus.svg';
 import '../App.css'
 import { useNavigate } from 'react-router-dom'
-import { setInitialPassengers, removePassenger } from '../store/passengersSlice';
+import {setInitialPassengers, removePassenger, canAddPassenger} from '../store/passengersSlice';
 import {PassengerType} from "../components/common/PassengerType";
 import {PassengerGender} from "../components/common/PassengerGender";
 import {DocumentType} from "../components/common/DocumentType";
@@ -16,7 +16,10 @@ export default function PassengerDetails() {
     const handleDelete = (id) => {
         dispatch(removePassenger(id));
     };
+    const canAddPassengerLocal = useSelector(canAddPassenger);
+
     const handleAddPassenger = () => {
+        if (!canAddPassengerLocal) return;
         const newPassenger = {
             id: nanoid(),
             passengerType: PassengerType.Adult,
@@ -46,6 +49,7 @@ export default function PassengerDetails() {
         }));
     };
     const navigate = useNavigate();
+
     const handleClick = () => {
         const totalPassengers = passengers.length;
         const validatedCount = Object.keys(validationResults).length;

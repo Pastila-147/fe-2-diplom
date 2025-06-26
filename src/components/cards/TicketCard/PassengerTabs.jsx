@@ -1,42 +1,42 @@
-import React from 'react'
 import './TicketCard.css'
 import {PassengerType} from "../../common/PassengerType";
+import {useSelector} from "react-redux";
 
-const tabs = [
-    { key: PassengerType.Adult, label: 'Взрослых' },
-    { key: PassengerType.Child, label: 'Детских' },
-    { key: PassengerType.Baby, label: 'Детских «без места»' },
-]
-
-const descriptions = {
-    adult: 'Можно добавить еще 3 пассажиров',
-    child: 'Можно добавить еще 3 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%',
-    baby: 'Без предоставления места',
-};
+const MAX_ADULTS   = 5;
+const MAX_CHILDREN = 5;
+const BABYS_PER_ADULT = 3;
 
 export default function PassengerTabs({ activeTab, onTabChange, counts, onCountChange }) {
+    const { adult, child, baby } = useSelector((state) => state.passengers.passengersCount);
+
+    const departureSeats = useSelector((state) => state.seats.selectedSeats.departure.seats);
+    const arrivalSeats = useSelector((state) => state.seats.selectedSeats.arrival.seats);
+    const seatsCount = adult + child;
+
+    const lockSeats = departureSeats.length >= seatsCount || arrivalSeats.length >= seatsCount || seatsCount === 1;
+    const maxBabys = adult * BABYS_PER_ADULT;
+
+    if (baby > maxBabys)
+        onCountChange(PassengerType.Baby, maxBabys)
+
+
+    const tabs = [
+        { key: PassengerType.Adult, label: 'Взрослых', max: MAX_ADULTS, min: lockSeats ? adult : 0 },
+        { key: PassengerType.Child, label: 'Детских', max: MAX_CHILDREN, min: lockSeats ? child : 0 },
+        { key: PassengerType.Baby, label: 'Детских «без места»', max: maxBabys, min: 0 },
+    ]
+
+    const extraAdults = MAX_ADULTS - adult;
+    const extraChildren = MAX_CHILDREN - child;
+
+    const descriptions = {
+        adult: extraAdults > 0 ? 'Можно добавить еще ' + extraAdults + ' пассажиров' : "",
+        child: extraChildren > 0 ?
+            'Можно добавить еще ' + extraChildren + ' детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%' : "",
+        baby: 'Без предоставления места',
+    };
+
     return (
-        // <div className="ticket-ages-block">
-        //     <h3 className="ticket-section-title">Количество билетов</h3>
-        //     <div className="ticket-ages-tabs">
-        //         {tabs.map((tab) => (
-        //             <button
-        //                 key={tab.key}
-        //                 className={`age-tab ${activeTab === tab.key ? 'active' : ''}`}
-        //                 onClick={() => onTabChange(tab.key)}
-        //             >
-        //                 <input
-        //                     type="number"
-        //                     placeholder={tab.label}
-        //                     value={counts[tab.key] ?? ''}
-        //                     onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
-        //                     min={0}
-        //                 />
-        //                 <p className="input-desc">{descriptions[tab.key]}</p>
-        //             </button>
-        //         ))}
-        //     </div>
-        // </div>
         <div className="ticket-ages-tabs">
             {tabs.map((tab) => (
                 <div
@@ -51,7 +51,8 @@ export default function PassengerTabs({ activeTab, onTabChange, counts, onCountC
                                 type="number"
                                 value={counts[tab.key] ?? 0}
                                 onChange={(e) => onCountChange(tab.key, Number(e.target.value))}
-                                min={0}
+                                min={tab.min}
+                                max={tab.max}
                                 className="age-tab__number"
                             />
                         </div>

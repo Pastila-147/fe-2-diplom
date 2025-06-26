@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSelector, createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     passengersCount: {
@@ -8,6 +8,15 @@ const initialState = {
     },
     passengers: [],
 };
+
+export const canAddPassenger = createSelector(
+    state => state.passengers.passengersCount,
+    state => state.passengers.passengers.length,
+    (passengersCount, passengerDetailsCount) => {
+        const seats = passengersCount.adult + passengersCount.child;
+        return passengerDetailsCount < seats;
+    }
+);
 
 const passengersSlice = createSlice({
     name: 'passengers',

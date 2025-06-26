@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import FiltersDatePickers from './FiltersDatePickers'
@@ -16,12 +16,10 @@ import {setDateEnd, setDateStart} from "../../../store/searchSlice";
 import {setEndTimes, setOption, setPriceRange, setStartTimes} from "../../../store/filtersSlice";
 import {resetPage} from "../../../store/searchResultSlice";
 
-export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
+export default function TrainFilters() {
     const dispatch = useDispatch()
     const filters = useSelector((state) => state.filters)
     const search = useSelector((state) => state.search)
-
-    const [error, setError] = useState(null)
 
     const [collapsed, setCollapsed] = useState({ to: false, back: false })
 
@@ -152,9 +150,6 @@ export default function TrainFilters({ onRoutesChange, offset = 0, limit = 5}) {
                     )}
                 </div>
             </div>
-
-
-            {error && <div className="error">{error}</div>}
         </div>
     )
 }

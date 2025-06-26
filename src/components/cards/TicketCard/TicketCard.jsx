@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    coachItemsSelect,
-    coachItemsUnSelect,
-    coachClassChange,
-    seatsItemSelect,
-    seatsItemUnSelect, coachSelect, resetSeats, resetTrain,
+    coachClassChange, coachSelect, resetSeats, resetTrain,
 } from '../../../store/seatsSlice';
 import { passengersCountChange } from '../../../store/passengersSlice';
-// import WagonScheme from '../wagon-schemes/WagonScheme';
 import Loading from '../../common/Loading';
 import TicketHeader from './TicketHeader';
 import TrainInfo from './TrainInfo';
@@ -21,18 +16,13 @@ import CoachDetails from "./CoachDetails";
 export default function TicketCard({train, coachesList, direction }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const seatState = useSelector((state) => state.seats.selectedSeats[direction]);
-
     const [activeTab, setActiveTab] = useState('adult');
-
     const passengerCount = useSelector((state) => state.passengers.passengersCount);
-
     const coachClass = seatState?.selectedCoachClass;
     const coachesOfSelectedClass = seatState?.coachesOfSelectedClass;
     const selectedCoachId = seatState?.selectedCoachId;
     const selectedCoach = coachesList ? coachesList.find(c => c.coach._id === selectedCoachId) : null;
-
     const availableClasses = {
         fourth: train.have_fourth_class,
         third: train.have_third_class,

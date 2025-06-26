@@ -1,11 +1,18 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSelector, createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    fromCityId: null,
-    toCityId: null,
+    fromCityId: "67ceb6548c75f00047c8f78e",
+    toCityId: "67ceb6548c75f00047c8f794",
     dateStart: '',
     dateEnd: ''
 }
+
+export const areCitiesValid = createSelector(
+    state => state.search,
+    (search) => {
+        return search.fromCityId !== null && search.toCityId !== null;
+    }
+);
 
 const searchSlice = createSlice({
     name: 'search',
@@ -29,6 +36,11 @@ const searchSlice = createSlice({
         setDateEnd: (state, action) => {
             state.dateEnd = action.payload
         },
+        toggleFromToCity: (state, action) => {
+            const oldFrom = state.fromCityId;
+            state.fromCityId = state.toCityId;
+            state.toCityId = oldFrom;
+        }
     }
 })
 
@@ -37,7 +49,8 @@ export const {
     setFromCityId,
     setToCityId,
     setDateStart,
-    setDateEnd
+    setDateEnd,
+    toggleFromToCity,
 } = searchSlice.actions
 
 export default searchSlice.reducer

@@ -98,8 +98,8 @@ const PassengerCard = forwardRef(
                                     value={data.passengerType}
                                     onChange={(e) => handleChange({passengerType: e.target.value})}
                                 >
-                                <option value="adult">Взрослый</option>
-                                    <option value="child">Детский</option>
+                                    <option value={PassengerType.Adult}>Взрослый</option>
+                                    <option value={PassengerType.Child}>Детский</option>
                                 </select>
                             </div>
 

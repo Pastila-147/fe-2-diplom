@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const TrainsSort = {
     Date: "date",
-    Price: "price",
+    Price: "price_min",
     Duration: "duration",
 }
 
@@ -88,8 +88,8 @@ const searchResultSlice = createSlice({
     name: 'searchResult',
     initialState,
     reducers: {
-        setTrainsOnPage: (state, payload) => {
-            state.limit = payload;
+        setTrainsOnPage: (state, action) => {
+            state.limit = action.payload;
             state.offset = 0;
             state.page = 1;
         },

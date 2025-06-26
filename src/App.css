@@ -45,6 +45,70 @@
   padding: 0;
 }
 
+.search-results.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+  opacity: 0.6;
+  transition: all 0.1s ease;
+}
+
+.train-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.train-controls label {
+  font-weight: 500;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.train-controls select {
+  padding: 6px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.train-limit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.train-limit__label {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.train-limit__options {
+  display: flex;
+  gap: 12px;
+}
+
+.train-limit__option {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #292929;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.train-limit__option:hover {
+  background-color: #ffd87d;
+}
+
+.train-limit__option.active {
+  background-color: #ffa800;
+  color: #fff;
+}
+
+
+
 /*------------Wagon-selection.css----------*/
 
 .wagon-selection-page {
@@ -53,6 +117,15 @@
   background-color: #f5f4f6;
   padding: 40px 0 60px;
   font-family: 'Roboto', sans-serif;
+}
+
+.seats_title {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #000000;
 }
 /*------------PassengerDetails.css----------*/
 .passenger-details-page {
@@ -87,13 +160,6 @@
   color: #292929;
 }
 
-/*.confirmation-form > .form-title {*/
-/*  padding: 33px 0 30px 30px;*/
-/*  margin: 0;*/
-/*  border-bottom: 1px solid #c4c4c4;*/
-/*}*/
-
-/* Заголовки секций (Поезд, Пассажиры, Всего, Способ оплаты) */
 .confirmation-section .form-title {
   font-weight: 400;
   font-size: 30px;
@@ -101,17 +167,14 @@
   margin-bottom: 20px;
 }
 
-/* Контейнер: заголовок + колонки под ним */
 .confirmation-overall {
   display: flex;
   flex-direction: column;
   gap: 20px;
-
   background: #ffffff;
   border: 1px solid #c4c4c4;
   border-top: none;
   border-radius: 0 0 0.208vw 0.208vw; /* ~4px */
-
 }
 
 .full-width-title {
@@ -186,9 +249,6 @@
   color: #928f94;
   margin-bottom: 0.6vh;
 }
-
-
-
 
 .confirmation-overall .full-width-title {
   width: 100%;
@@ -342,6 +402,3 @@
   color: #928F94;
   cursor: not-allowed;
 }
-
-
-

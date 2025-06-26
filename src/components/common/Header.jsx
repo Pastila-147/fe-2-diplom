@@ -4,7 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import { CityApi } from '../../api/Api'
 import './Header.css'
 import {setPage} from "../../store/searchResultSlice";
-import {setDateEnd, setDateStart, setFromCityId, setToCityId} from "../../store/searchSlice";
+import {
+    areCitiesValid,
+    setDateEnd,
+    setDateStart,
+    setFromCityId,
+    setToCityId,
+    toggleFromToCity
+} from "../../store/searchSlice";
 import {resetFilters} from "../../store/filtersSlice";
 
 const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
@@ -22,6 +29,8 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const citiesValid = useSelector(areCitiesValid);
 
     // Поиск городов по названию
     const fetchCities = async (query, userTypes, setSuggestions, setOpen) => {
@@ -47,11 +56,11 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
 
     useEffect(() => {
         fetchCities(from, userTypesFrom, setFromSuggestions, setIsFromOpen)
-    }, [from])
+    }, [from, userTypesFrom])
 
     useEffect(() => {
         fetchCities(to, userTypesTo, setToSuggestions, setIsToOpen)
-    }, [to])
+    }, [to, userTypesTo])
 
     // Выбор городов
     const selectFromCity = (city) => {
@@ -66,6 +75,13 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
         setTo(city.name)
         dispatch(setToCityId(city._id))
         setIsToOpen(false)
+    }
+
+    const toggleFromTo = () => {
+        const oldFrom = from;
+        setFrom(to);
+        setTo(oldFrom)
+        dispatch(toggleFromToCity())
     }
 
     useEffect(() => {
@@ -106,7 +122,12 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
     return (
         <header className={`header ${isMainPage ? 'header--main' : isSuccessPage ? 'header--success' : 'header--secondary'}`}>
             <div className="header__top">
-                <div className="header__logo">Лого</div>
+                <div className="header__logo"
+                     onClick={() => {
+                         navigate('/');
+                         window.scrollTo({top: 0, behavior: 'smooth'});
+                     }}
+                >Лого</div>
             </div>
 
             <div className="header__nav">
@@ -161,7 +182,12 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
                                             )}
                                         </div>
 
-                                        <div className="change-icon" />
+                                        <div className="change-icon"
+                                        onClick={e => {
+                                            toggleFromTo()
+                                        }}>
+
+                                        </div>
 
                                         <div className="input-with-suggestions" ref={toRef}>
                                             <input
@@ -210,7 +236,7 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
                             </div>
 
                             <div className="search-form__submit">
-                                <button type="submit">Найти билеты</button>
+                                <button type="submit" disabled={!citiesValid}>Найти билеты</button>
                             </div>
                         </form>
                     </>
@@ -294,7 +320,7 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
                         </div>
 
                         <div className="search-form__submit">
-                            <button type="submit">Найти билеты</button>
+                            <button type="submit" disabled={!citiesValid}>Найти билеты</button>
                         </div>
                     </form>
                 )}

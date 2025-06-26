@@ -5,23 +5,7 @@ import subtractBackIcon from '../../../assets/img/subtract-back.png';
 
 
 export default function TicketHeader({ type, onSelectAnotherTrain }) {
-    // const iconUrl = type === 'departure'
-    //     ? '/assets/img/subtract.png'
-    //     : '/assets/img/subtract-back.png';
-    //
-    // return (
-    //     <div className="ticket-card__header">
-    //         <div
-    //             className="ticket-card__icon"
-    //             style={{ backgroundImage: `url(${iconUrl})` }}
-    //         />
-    //         <button className="ticket-card__button" onClick={onSelectTrain}>
-    //             Выбрать другой поезд
-    //         </button>
-    //     </div>
-    // );
 
-    // const icon = type === 'departure' ? subtractIcon : train-arrow;
     const icon = type === 'departure' ? subtractIcon : subtractBackIcon;
 
     return (
