@@ -151,7 +151,7 @@
     font-size: 1.56vw;
     color: #ffffff;
     display: block;
-    margin-bottom: 1.2vh;
+    margin-bottom: 18px;
 }
 
 .search-form__inputs {
@@ -162,13 +162,35 @@
     flex-wrap: nowrap;
 }
 
-.search-form__inputs input {
-    padding: 0.8vh 1vw;
-    border: none;
+.search-form__inputs input,
+.input-with-suggestions input {
+    width: 325px;
+    height: 60px;
+    font-size: 18px;
+    padding: 0 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #292929;
 }
 
-.search-form__group .search-form__inputs input[type="date"]:not(:last-child) {
-    margin-right: 24px;
+
+/*.search-form__inputs input {*/
+/*    padding: 0.8vh 1vw;*/
+/*    border: none;*/
+/*}*/
+
+.header--main .search-form__group .search-form__inputs input[type="date"]:not(:last-child) {
+    margin-right: 36px;
+}
+
+
+.input-with-suggestions_from {
+    padding-right: 6px;
+}
+.input-with-suggestions_to {
+    padding-left: 6px;
 }
 
 .search-form__inputs input,
@@ -222,7 +244,7 @@
     height: 32.8vh;
     margin: 0 auto;
     background-color: rgba(41, 41, 41, 0.8);
-    padding: 2vh 2vw;
+    padding: 30px;
     border-radius: 0.5vw;
     display: flex;
     flex-direction: column;
@@ -255,11 +277,6 @@
 }
 
 .search-form--compact input {
-    width: 16.9vw;
-    height: 6.1vh;
-    font-size: 1vw;
-    border-radius: 0.3vw;
-    padding: 0 1vw;
     box-sizing: border-box;
     font-weight: 400;
     font-variant: small-caps;
@@ -331,9 +348,6 @@
     color: #928f94;
 }
 .input-with-suggestions input {
-    width: 16.9vw;
-    height: 5.5vh;
-    font-size: 1vw;
     font-weight: 400;
     font-variant: small-caps;
     color: #292929;
@@ -343,7 +357,7 @@
     box-sizing: border-box;
 }
 
-/*--------------SUCCESSPAGE-----------*/
+/*--------------SUCCESS PAGE-----------*/
 
 .header--success {
     height: 84.67vh; /* 834px при макете 985px */

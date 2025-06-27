@@ -102,7 +102,7 @@ export default function PassengerDetails() {
     }, [dispatch, passengers.length, count])
 
     return (
-        <div className="passenger-details-page">
+        <div className="page-container">
             <aside className="sidebar">
                 <RouteDetails />
             </aside>
@@ -124,7 +124,7 @@ export default function PassengerDetails() {
                     <span className="add-passenger__text">Добавить пассажира</span>
                     <img src={PlusIcon} alt="+" className="add-passenger__icon"/>
                 </div>
-                <div className="seats_buttons">
+                <div className="seats_buttons further-button">
                     <button
                         type="button"
                         className="button seats_button"

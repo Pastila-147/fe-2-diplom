@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import './Confirmation.css';
 import RouteDetails from '../components/common/RouteDetails';
 import TrainCard from '../components/cards/TrainCard';
 import {useDispatch, useSelector} from 'react-redux';
@@ -76,29 +77,23 @@ const Confirmation = () => {
                                 availableSeatsInfo={availableSeatsInfo}
                                 priceInfo={priceInfo}
                                 readonly
+                                customButton={
+                                    <div className="change-button-wrapper change-button-wrapper_train">
+                                        <button className="change-button" onClick={() => navigate('/search')}>
+                                            Изменить
+                                        </button>
+                                    </div>
+                                }
                             />
                         </div>
                     )}
 
                     <div className="confirmation-overall">
-                        <h3 className="form-title full-width-title">Пассажиры</h3>
+                        <h3 className="form-title ">Пассажиры</h3>
 
                         <div className="confirmation-overall-row">
                             <div className="confirmation-form passengers-block">
                                 {passengers.map((p, index) => (
-                                    // <div className="confirmation-passenger" key={p.id}>
-                                    //     <p>Тип
-                                    //         билета: {p.passengerType === PassengerType.Adult ? 'Взрослый' : 'Детский'}</p>
-                                    //     <p>ФИО: {`${p.surname} ${p.name} ${p.patronymic}`}</p>
-                                    //     <p>Пол: {p.gender === PassengerGender.Male ? 'Мужской' : 'Женский'}</p>
-                                    //     <p>Дата рождения: {p.birthDate}</p>
-                                    //     <p>
-                                    //         Документ:
-                                    //         {p.birthDate === 'adult'
-                                    //             ? ` Паспорт: ${p.passportSeries} ${p.passportNumber}`
-                                    //             : ` Свидетельство о рождении: ${p.birthCertNumber}`}
-                                    //     </p>
-                                    // </div>
                                     <div className="confirmation-passenger" key={p.id}>
                                         <div className="confirmation-passenger__icon-block">
                                             <div className="confirmation-passenger__icon">
@@ -135,14 +130,13 @@ const Confirmation = () => {
 
                             {availableSeatsInfo && priceInfo?.departure && (
                                 <div className="confirmation-form summary-block">
-                                    <h3 className="form-title">Всего</h3>
-                                    <div className="confirmation-summary">
-                                        <p>Всего мест: {totalCount}</p>
-                                        <p>Общая цена: {totalPrice} ₽</p>
+                                    <div className="form-title">
+                                        Всего <span style={{fontWeight: 700}}>{totalPrice}</span>
+                                        <span className="summary-img"/>
                                     </div>
-                                    <div className="confirmation-change-btn">
-                                        <button className="seats_button" onClick={() => navigate('/wagon-selection')}>
-                                            Изменить выбор
+                                    <div className="change-button-wrapper">
+                                        <button className="change-button" onClick={() => navigate('/passenger-details')}>
+                                            Изменить
                                         </button>
                                     </div>
                                 </div>
@@ -151,18 +145,20 @@ const Confirmation = () => {
                     </div>
 
 
-                    <div className="confirmation-form">
+                    <div className="confirmation-payment">
                         <h3 className="form-title">Способ оплаты</h3>
                         <div className="confirmation-payment-method">
-                            <p className="payment-label">Вы выбрали:</p>
                             <p className="payment-value">
                                 {paymentMethod === 'cash' ? 'Наличные' : 'Онлайн-оплата'}
                             </p>
                         </div>
+                        <div className="change-button-wrapper">
+                            <button className="change-button" onClick={() => navigate('/payment')}>Изменить</button>
+                        </div>
                     </div>
 
                     <div className="seats_buttons">
-                        <button
+                    <button
                             type="button"
                             className="button seats_button"
                             onClick={handlePurchaseTicketsClick}

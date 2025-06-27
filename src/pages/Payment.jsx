@@ -25,7 +25,7 @@ const Payment = () => {
                 </aside>
                 <section className="main-section">
                     <PaymentForm/>
-                    <div className="payment-buy">
+                    <div className="payment-buy seats_buttons">
                         <button className="seats_button" onClick={handleBuyClick}>Купить билеты</button>
                     </div>
                 </section>

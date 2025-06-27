@@ -12,7 +12,8 @@
     height: 108px;
     display: flex;
     align-items: center;
-    padding: 0 35px; /* только горизонтальные отступы */
+    margin: 0;
+    padding: 0 35px;
     border-bottom: 1px solid #e5e5e5;
 
     font-family: Roboto, sans-serif;
@@ -24,7 +25,6 @@
     color: #e5e5e5;
 }
 
-/* Блок "Туда" / "Обратно" */
 .route-block {
     height: 450px;
     padding: 0 28px 0 28px;
@@ -33,7 +33,11 @@
     flex-direction: column;
 }
 
-/* Заголовок блока — иконка, "Туда"/"Обратно", дата и кнопка */
+.route-block.collapsed {
+    height: auto;
+    padding-bottom: 0;
+}
+
 .details-route-head {
     display: flex;
     align-items: center;
@@ -49,11 +53,11 @@
     margin-right: 12px;
 }
 
-.details-route-icon.departure {
+.details-route-icon.departuretrain {
     background-image: url('../../assets/img/subtract.png');
 }
 
-.details-route-icon.arrival {
+.details-route-icon.arrivaltrain {
     background-image: url('../../assets/img/subtract-back.png');
 }
 
@@ -74,7 +78,8 @@
 .head-date {
     font-size: 18px;
     color: #fff;
-    margin-right: 12px;
+    box-sizing: border-box;
+    margin-right: 10px;
 }
 
 .collapse-button {
@@ -87,17 +92,25 @@
     border: none;
 }
 
-/* Контент маршрута */
-.route-block p {
+.details-route_city {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+}
+
+.details-route_city p {
+    margin: 0;
+    font-weight: 700;
     font-size: 16px;
-    color: #e5e5e5;
-    margin: 0 0 8px 0;
+    color: #ffffff;
 }
 
 .details-route-time > div {
     display: flex;
     justify-content: space-between;
 }
+
 .details-route-time {
     display: flex;
     flex-direction: column;
@@ -151,10 +164,6 @@
     width: 100%;
 }
 
-
-
-
-
 .direction-dates,
 .direction-names,
 .stations-names {
@@ -171,31 +180,37 @@
     margin: 0;
 }
 
-.there-direction-from {
-    font-weight: 400;
-    font-size: 18px;
-    color: #ffffff;
+.stations-names h5,
+.direction-names h5 {
     margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+    color: inherit;
+}
+
+.stations-names h5{
+    color:#928F94;
+}
+
+.there-direction-from {
+    text-align: left;
 }
 
 .there-direction-to {
-    font-weight: 400;
-    font-size: 16px;
-    color: #928f94;
-    margin: 0;
     text-align: right;
 }
 
 .number,
-.name {
+.title {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /*align-items: center;*/
+    align-items: flex-start;
     margin-bottom: 22px;
 }
 
 .number > h4,
-.name > h4 {
+.title > h4 {
     font-weight: 400;
     font-size: 18px;
     color: #e5e5e5;
@@ -203,7 +218,7 @@
 }
 
 .number > p,
-.name > p {
+.title > p {
     font-weight: 700;
     font-size: 16px;
     text-align: right;
@@ -211,17 +226,19 @@
     margin: 0;
 }
 
-/* Пассажиры */
 .widget-details-pass {
-    height: 310px;
     padding: 0 28px;
     border-bottom: 1px solid #e5e5e5;
+}
+
+.widget-details-pass.collapsed {
+    height: auto;
+    padding-bottom: 0;
 }
 
 .pass-head {
     display: flex;
     align-items: center;
-    margin-bottom: 27px;
 }
 
 .head-img.person {
@@ -255,7 +272,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
 }
 
 .age-count {
@@ -272,7 +288,6 @@
     color: #fff;
 }
 
-/* Иконка рубля */
 .currency-icon {
     background-repeat: no-repeat;
     background-size: contain;
@@ -311,7 +326,7 @@
 .total {
     display: flex;
     align-items: center;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 700;
     color: #ffa800;
     margin: 0;

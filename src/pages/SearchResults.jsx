@@ -61,9 +61,10 @@ export default function SearchResults() {
                 <section className="main-section">
                     <div className="train-controls">
                         <div className="train-sorting">
-                            <label htmlFor="sort-select">Сортировать по:</label>
+                            <label className="train-controls-label" htmlFor="sort-select">сортировать по:</label>
                             <select
                                 id="sort-select"
+                                className="sort-select"
                                 onChange={(e) => dispatch(setSort(e.target.value))}
                                 defaultValue={TrainsSort.Date}
                             >
@@ -73,7 +74,7 @@ export default function SearchResults() {
                             </select>
                         </div>
                         <div className="train-limit">
-                            <span className="train-limit__label">Показывать по:</span>
+                            <span className="train-controls-label">показывать по:</span>
                             <div className="train-limit__options">
                                 {[5, 10, 20].map((value) => (
                                     <span

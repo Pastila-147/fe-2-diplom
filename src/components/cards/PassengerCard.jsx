@@ -95,6 +95,7 @@ const PassengerCard = forwardRef(
                         <div className="personal-info">
                             <div className="field-group">
                                 <select
+                                    className="field-group_type"
                                     value={data.passengerType}
                                     onChange={(e) => handleChange({passengerType: e.target.value})}
                                 >
@@ -173,7 +174,7 @@ const PassengerCard = forwardRef(
                             <div className="field-group">
                                 <label className="field-group__label">Тип документа</label>
                                 <select
-                                    className="field-group__input"
+                                    className="field-group__input type-doc"
                                     value={data.documentType}
                                     onChange={(e) => handleChange({documentType: e.target.value})}
                                 >
@@ -274,6 +275,7 @@ const PassengerCard = forwardRef(
                     </div>
                 )}
             </div>
+
         );
     }
 );

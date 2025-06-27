@@ -21,7 +21,7 @@ const formatDuration = (sec) => {
     return `${hours} ч ${minutes} мин`
 };
 
-export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonly = false }) {
+export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonly = false, customButton = null }) {
     const dep = data.departure;
     const arr = data.arrival;
 
@@ -118,9 +118,16 @@ export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonl
                 </div>
 
                 <div className="train-card__type">
+
                     {seatTypes.map((type) => {
-                        const count = data.available_seats_info?.[type.count];
-                        const price = dep.price_info?.[type.price]?.top_price;
+                        const count = readonly
+                            ? availableSeatsInfo?.[type.count]
+                            : data.available_seats_info?.[type.count];
+
+                        const price = readonly
+                            ? priceInfo?.departure?.[type.price]?.top_price
+                            : dep.price_info?.[type.price]?.top_price;
+
                         if (!count || !price) return null;
 
                         return (
@@ -128,35 +135,12 @@ export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonl
                                 <div className="train-seats__type">{type.label}</div>
                                 <div className="train-seats__count">{count}</div>
                                 <div className="train-seats__price">
-                                    <span className="train-seats__price-text">от {price}</span>
+                                    <span className="train-seats__price-text">от {price}{readonly ? ' ' : ''}</span>
                                     <span className="train-seats__price-img"/>
                                 </div>
                             </div>
                         );
                     })}
-
-                    {readonly && availableSeatsInfo && priceInfo?.departure && (
-                        <div className="train-card__confirmation-info">
-                            <div className="train-card__type">
-                                {seatTypes.map((type) => {
-                                    const count = availableSeatsInfo[type.count];
-                                    const price = priceInfo.departure[type.price]?.top_price;
-                                    if (!count || !price) return null;
-
-                                    return (
-                                        <div key={type.key} className="train-seats__item">
-                                            <div className="train-seats__type">{type.label}</div>
-                                            <div className="train-seats__count">{count}</div>
-                                            <div className="train-seats__price">
-                                                <span className="train-seats__price-text">от {price} ₽</span>
-                                                <span className="train-seats__price-img" />
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
 
                     <div className="train-service__block">
                         {dep.have_wifi && <div className="train-service__item train-service__item-wifi"/>}
@@ -166,18 +150,14 @@ export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonl
                         {dep.is_express && <div className="train-service__item train-service__item-express"/>}
                     </div>
 
-                    {/*<button className="train-card__btn" onClick={handleSelect}>*/}
-                    {/*    Выбрать места*/}
-                    {/*</button>*/}
                     {!readonly ? (
                         <button className="train-card__btn" onClick={handleSelect}>Выбрать места</button>
                     ) : (
-                        <button className="train-card__btn" onClick={handleChange}>Изменить выбор</button>
+                        customButton
                     )}
                     {!readonly && (departureSeats.queryStatus === 'loading' || arrivalSeats.queryStatus === 'loading') && (
                         <Loading />
                     )}
-                    {/*{(departureSeats.queryStatus === 'loading' || arrivalSeats.queryStatus === 'loading') && <Loading/>}*/}
                 </div>
             </div>
         </div>

@@ -9,8 +9,6 @@ const coachTypes = [
 ]
 
 export default function CoachTypeSelector({ selectedType, onSelect, availability }) {
-    console.log('🔥 CoachTypeSelector — availability:', availability)
-
     return (
         <div className="carriage-types">
             {coachTypes.map(({ key, label, icon }) => {

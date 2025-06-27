@@ -155,7 +155,7 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
                                 <div className="search-form__group">
                                     <label>Направление</label>
                                     <div className="search-form__inputs">
-                                        <div className="input-with-suggestions" ref={fromRef}>
+                                        <div className="input-with-suggestions input-with-suggestions_from" ref={fromRef}>
                                             <input
                                                 type="text"
                                                 placeholder="Откуда"
@@ -189,7 +189,7 @@ const Header = ({ isMainPage = true, isSuccessPage = false  }) => {
 
                                         </div>
 
-                                        <div className="input-with-suggestions" ref={toRef}>
+                                        <div className="input-with-suggestions input-with-suggestions_to" ref={toRef}>
                                             <input
                                                 type="text"
                                                 placeholder="Куда"

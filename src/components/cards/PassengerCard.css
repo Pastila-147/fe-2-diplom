@@ -5,6 +5,13 @@
     width: 960px;
     margin-bottom: 44px;
     font-family: Roboto, sans-serif;
+    color: #292929;
+    font-size: 18px;
+    line-height: 100%;
+}
+
+.passenger-card *, .passenger-card *::before, .passenger-card *::after {
+    box-sizing: border-box;
 }
 
 .passenger-card__header {
@@ -15,7 +22,6 @@
     justify-content: space-between;
     padding: 0 40px;
     position: relative;
-    /*margin-bottom: -32px;*/
 }
 
 .passenger-card__header-left {
@@ -40,16 +46,15 @@
 .passenger-card.collapsed .field-row,
 .passenger-card.collapsed .section-divider,
 .passenger-card.collapsed .validation-message,
-.passenger-card.collapsed .next-passenger-button {
+.passenger-card.collapsed .next-passenger-button,
+.passenger-card.collapsed .next-button-wrapper {
     display: none;
 }
 
 .passenger-card__title {
     font-weight: 400;
     font-size: 30px;
-    color: #292929;
     margin: 0;
-
 }
 
 .personal-info {
@@ -60,10 +65,31 @@
     padding: 32px 40px 0;
 }
 
-/* Общая группа поля */
 .field-group {
     display: flex;
     flex-direction: column;
+}
+
+.field-group_type,.fio .field-group__input {
+    width: 280px;
+}
+
+.field-group_type, .type-doc {
+    width: 280px;
+    height: 50px;
+    padding: 0 12px;
+    /*font-size: 18px;*/
+    border: 1px solid #928f94;
+    border-radius: 5px;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('../../assets/img/custom-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 11px auto;
+    cursor: pointer;
 }
 
 .field-group__label {
@@ -77,13 +103,11 @@
     height: 50px;
     padding-left: 16px;
     font-size: 18px;
-    color: #292929;
     border: 1px solid #928f94;
     border-radius: 5px;
     background-color: #fff;
 }
 
-/* Группы полей в строку */
 .field-row {
     display: flex;
     gap: 25px;
@@ -95,16 +119,12 @@
     min-width: 180px;
 }
 
-/*.birth-row .field-group {*/
-/*    flex: 1;*/
-/*}*/
+.birth-date-group .field-group__label {
+    margin-bottom: 16px;
+}
 
 .docs-row {
     margin: 0 40px;
-}
-
-.docs-row .field-group {
-    max-width: 205px;
 }
 
 .docs-row .field-group:last-child {
@@ -112,7 +132,6 @@
     max-width: none;
 }
 
-/* Блок выбора пола */
 .gender-group {
     display: flex;
     gap: 8px;
@@ -149,34 +168,23 @@
     flex: 0 0 auto;
 }
 
-.birth-row .field-group:first-child {
-    flex: 0 0 45%;
-}
-
 .birth-date-group {
     flex: 0 0 45%;
     min-width: 200px;
 }
-
 
 .birth-date-input::-webkit-calendar-picker-indicator {
     display: none;
 }
 
 .birth-date-input {
-    box-sizing: border-box;
-    font-family: Roboto, sans-serif;
     font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    color: #292929;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
     height: 50px;
     padding-left: 12px;
 }
 
-/* Блок ограничения подвижности */
 .mobility-checkbox {
     display: flex;
     align-items: center;
@@ -186,7 +194,6 @@
 
 .mobility-label {
     font-size: 18px;
-    color: #292929;
     display: flex;
     align-items: center;
 }
@@ -218,13 +225,9 @@
     background-repeat: no-repeat;
 }
 
-
-
-/* Валидация */
 .validation-message {
     width: 100%;
     display: flex;
-    box-sizing: border-box;
     align-items: center;
     gap: 12px;
     padding: 16px 20px;
@@ -257,27 +260,23 @@
     border-radius: 5px;
     font-weight: 700;
     font-size: 24px;
-    line-height: 100%;
     text-align: center;
-    color: #292929;
     margin-left: auto;
 }
 
 .docs-row .field-group {
-    width: 205px;
-    max-width: 205px;
     flex: 0 0 auto;
 }
 
 .docs-row .field-group .field-group__input {
-    width: 100%;
-    box-sizing: border-box;
+    width: 205px;
 }
 
 .add-passenger {
-    /*width: 960px;*/
+    width: 960px;
+    box-sizing: border-box;
     height: 97px;
-    margin: 32px auto;
+    margin: 32px 0;
     border: 1px solid #c4c4c4;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
     display: flex;
@@ -289,17 +288,14 @@
 }
 
 .add-passenger__text {
-    font-family: Roboto, sans-serif;
     font-weight: 400;
     font-size: 30px;
-    color: #292929;
 }
 
 .add-passenger__icon {
     width: 32px;
     height: 32px;
 }
-
 
 .next-button-wrapper {
     display: flex;
@@ -308,12 +304,13 @@
     padding: 0 30px;
 }
 
-
-
 .section-divider {
     border: none;
     border-top: 1px dashed #928F94;
     margin: 32px 0;
 }
 
+.further-button {
+    width: 960px;
+}
 

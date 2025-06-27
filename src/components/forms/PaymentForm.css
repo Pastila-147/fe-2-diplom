@@ -54,6 +54,7 @@
     height: 50px;
     padding-left: 15px;
     margin-bottom: 15px;
+    box-sizing: border-box;
 
     border: 1px solid #928f94;
     border-radius: 5px;
@@ -70,9 +71,13 @@
 }
 
 .footer-title {
-    padding: 33px 0 37px 35px;
+    height: 108px;
+    padding: 0 33px;
     background: #f9f9f9;
     border-bottom: 1px dashed #928f94;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 .footer-title > h3 {
@@ -81,13 +86,13 @@
     color: #292929;
 }
 
-.methods {
-    padding: 50px 35px 82px 35px;
+.method-online {
+    border-bottom: 1px dashed #928f94;
 }
 
 .method-online,
 .method-cash {
-    margin-bottom: 58px;
+    padding: 35px;
 }
 
 .online-checkbox,
@@ -128,13 +133,13 @@
 .input-checkbox:checked + label::after {
     content: "";
     position: absolute;
-    left: 5px;
-    top: 6px;
-    width: 18px;
-    height: 14px;
-    background-image: url("../../assets/img/check.svg");
-    background-size: contain;
+    left: 3px;
+    top: 3px;
+    width: 23px;
+    height: 23px;
+    background-image: url("../../assets/img/check-orange.svg");
     background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .input-checkbox:checked + .checkbox-text {
@@ -150,7 +155,6 @@
     display: flex;
     gap: 60px;
     margin-left: 45px;
-    margin-bottom: 20px;
 }
 
 .variant {
