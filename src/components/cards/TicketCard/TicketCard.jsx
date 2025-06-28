@@ -36,11 +36,11 @@ export default function TicketCard({train, coachesList, direction }) {
             coachClass: type,
             coachesOfSelectedClass: coachesOfSelectedClass,
             type: direction }));
-    }, [coachesList, coachClassChange, coachesOfSelectedClass, direction]);
+    }, [coachesList, direction, dispatch]);
 
     const handleCoachToggle = useCallback((id) => {
         dispatch(coachSelect({ id, type: direction }))
-    }, [coachSelect, direction]);
+    }, [direction, dispatch]);
 
     const handleSelectAnotherTrain = () => {
         dispatch(resetSeats())
