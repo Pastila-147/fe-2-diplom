@@ -62,7 +62,7 @@ const AppContent = () => {
 };
 
 const App = () => (
-    <Router>
+    <Router basename="/fe-2-diplom">
       <AppContent />
     </Router>
 );
