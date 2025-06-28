@@ -69,11 +69,11 @@ const SubscriptionSection = () => {
 
             <h3 className="footer__section-title">Подписывайтесь на нас</h3>
             <div className="socials">
-                <img src="/img/youtube.png" alt="YouTube" className="social" />
-                <img src="/img/linkedin.png" alt="LinkedIn" className="social" />
-                <img src="/img/google.png" alt="Google" className="social" />
-                <img src="/img/facebook.png" alt="Facebook" className="social" />
-                <img src="/img/twitter.png" alt="Twitter" className="social" />
+                <img src={`${process.env.PUBLIC_URL}/img/youtube.png`} alt="YouTube" className="social" />
+                <img src={`${process.env.PUBLIC_URL}/img/linkedin.png`} alt="LinkedIn" className="social" />
+                <img src={`${process.env.PUBLIC_URL}/img/google.png`} alt="Google" className="social" />
+                <img src={`${process.env.PUBLIC_URL}/img/facebook.png`} alt="Facebook" className="social" />
+                <img src={`${process.env.PUBLIC_URL}/img/twitter.png`} alt="Twitter" className="social" />
             </div>
         </div>
     );
