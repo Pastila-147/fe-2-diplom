@@ -24,7 +24,7 @@ export function GetSeatPrice(seat) {
     } else if (isSeat) {
         price = coach.top_price; // This is a bug on the backend. For the 'fourth' class only top_price and bottom_price are non-zero.
     } else {
-        throw "Unknown coach type: " + coach.class_type;
+        throw new Error("Unknown coach type: " + coach.class_type);
     }
 
     if (passenger_type === PassengerType.Child)

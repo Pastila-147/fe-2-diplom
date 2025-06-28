@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     coachClassChange, coachSelect, resetSeats, resetTrain,
@@ -30,17 +30,17 @@ export default function TicketCard({train, coachesList, direction }) {
         first: train.have_first_class,
     };
 
-    const handleCoachClassChange = (type) => {
+    const handleCoachClassChange = useCallback((type) => {
         const coachesOfSelectedClass = coachesList.filter((el) => el.coach.class_type === type);
         dispatch(coachClassChange({
             coachClass: type,
             coachesOfSelectedClass: coachesOfSelectedClass,
             type: direction }));
-    };
+    }, [coachesList, coachClassChange, coachesOfSelectedClass, direction]);
 
-    const handleCoachToggle = (id) => {
+    const handleCoachToggle = useCallback((id) => {
         dispatch(coachSelect({ id, type: direction }))
-    };
+    }, [coachSelect, direction]);
 
     const handleSelectAnotherTrain = () => {
         dispatch(resetSeats())
@@ -53,13 +53,13 @@ export default function TicketCard({train, coachesList, direction }) {
             const classOfTheFirstCoach = coachesList[0].coach.class_type;
             handleCoachClassChange(classOfTheFirstCoach);
         }
-    }, [coachClass, coachesList, direction, dispatch])
+    }, [coachClass, coachesList, direction, dispatch, handleCoachClassChange])
 
     useEffect(() => {
         if (coachesOfSelectedClass.length > 0 && (!selectedCoach || selectedCoach.coach.class_type !== coachClass)) {
             handleCoachToggle(coachesOfSelectedClass[0].coach._id)
         }
-    }, [coachClass, selectedCoach, coachesOfSelectedClass, direction, dispatch]);
+    }, [coachClass, selectedCoach, coachesOfSelectedClass, direction, dispatch, handleCoachToggle]);
 
     if (!coachesList || !train) {
         return <Loading />;
@@ -114,13 +114,11 @@ export default function TicketCard({train, coachesList, direction }) {
                         </div>
                     </div>
 
-
                     {selectedCoach && (
                         <CoachDetails
                             key={selectedCoach.coach.name}
                             selectedCoach={selectedCoach}
                             direction={direction}
-                            activeTab={activeTab}
                         />
                     )}
                 </div>

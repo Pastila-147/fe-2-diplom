@@ -44,9 +44,6 @@ const Confirmation = () => {
         "arrival": ticketsForOrder.arrivalTickets,
     }
 
-    const { adult, child, baby } = useSelector(state => state.passengers.passengersCount);
-
-    const totalCount = adult + child;
     const seatsPrice = useSelector(selectTicketPrice);
     const totalPrice = seatsPrice.departureAdults + seatsPrice.departureChildren + seatsPrice.arrivalAdults + seatsPrice.arrivalChildren;
 
@@ -93,7 +90,7 @@ const Confirmation = () => {
 
                         <div className="confirmation-overall-row">
                             <div className="confirmation-form passengers-block">
-                                {passengers.map((p, index) => (
+                                {passengers.map((p) => (
                                     <div className="confirmation-passenger" key={p.id}>
                                         <div className="confirmation-passenger__icon-block">
                                             <div className="confirmation-passenger__icon">

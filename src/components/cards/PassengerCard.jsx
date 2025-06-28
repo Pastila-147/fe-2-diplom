@@ -14,7 +14,6 @@ import {DocumentType} from "../common/DocumentType";
 const PassengerCard = forwardRef(
     ({ type, number, data, updateValidation, validationResults, scrollToNext, onDelete }, ref) => {
         const dispatch = useDispatch();
-        const [touched, setTouched] = useState(false);
         const [isSubmitted, setIsSubmitted] = useState(false);
         const [collapsed, setCollapsed] = useState(false);
 
@@ -23,7 +22,7 @@ const PassengerCard = forwardRef(
             let isValid = true;
             let error = '';
 
-            const letterPattern = /^[A-Za-zА-Яа-яЁё\s\-]+$/;
+            const letterPattern = /^[A-Za-zА-Яа-яЁё\s-]+$/;
 
             if (!data.surname || !letterPattern.test(data.surname)) {
                 isValid = false;
@@ -82,7 +81,6 @@ const PassengerCard = forwardRef(
         if (!data) return null;
 
         const handleChange = (updatedFields) => {
-            setTouched(true);
             dispatch(updatePassengerData({ id: data.id, changes: updatedFields }));
         };
 

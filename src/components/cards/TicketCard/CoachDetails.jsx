@@ -25,7 +25,7 @@ const schemeComponents = {
     first: SchemeLux,
 };
 
-export default function CoachDetails({ selectedCoach, direction, activeTab }) {
+export default function CoachDetails({ selectedCoach, direction }) {
     const dispatch = useDispatch();
     const seatsState = useSelector((state) => state.seats.selectedSeats[direction]);
 
@@ -41,8 +41,8 @@ export default function CoachDetails({ selectedCoach, direction, activeTab }) {
 
     const isLux = coach.class_type === CoachTypes.Lux;
     const isPlatz = coach.class_type === CoachTypes.Platzkart;
-    const isKupe = coach.class_type === CoachTypes.Kupe;
-    const isSeat = coach.class_type === CoachTypes.Seat;
+    // const isKupe = coach.class_type === CoachTypes.Kupe;
+    // const isSeat = coach.class_type === CoachTypes.Seat;
     const SchemeComponent = schemeComponents[coach.class_type];
 
     const selectedSeatsArray = useSelector((state) => state.seats.selectedSeats[direction].seats);

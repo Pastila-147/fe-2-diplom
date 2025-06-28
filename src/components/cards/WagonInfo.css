@@ -90,18 +90,18 @@
     background-size: contain;
 }
 
-.conditioner {
-    background-image: url(../../assets/img/Conditioner.png);
-}
-.wifi {
-    background-image: url(../../assets/img/Wifi.png);
-}
-.linens {
-    background-image: url(../../assets/img/Linens.png);
-}
-.food {
-    background-image: url(../../assets/img/TeaCup.png);
-}
+/*.conditioner {*/
+/*    background-image: url(../../assets/img/Conditioner.png);*/
+/*}*/
+/*.wifi {*/
+/*    background-image: url(../../assets/img/Wifi.png);*/
+/*}*/
+/*.linens {*/
+/*    background-image: url(../../assets/img/Linens.png);*/
+/*}*/
+/*.food {*/
+/*    background-image: url(../../assets/img/TeaCup.png);*/
+/*}*/
 
 
 .conditioner-included,

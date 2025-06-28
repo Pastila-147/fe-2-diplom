@@ -10,11 +10,6 @@ const formatTime = (timestamp) => {
     return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
 };
 
-const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleDateString('ru-RU');
-};
-
 const formatDuration = (sec) => {
     const hours = Math.floor(sec / 3600);
     const minutes = Math.floor((sec % 3600) / 60);
@@ -31,9 +26,9 @@ export default function TrainCard({ data, availableSeatsInfo, priceInfo, readonl
     const departureSeats = useSelector((state) => state.seats.availableCoaches.departure);
     const arrivalSeats = useSelector((state) => state.seats.availableCoaches.arrival);
 
-    const handleChange = () => {
-        navigate('/');
-    };
+    // const handleChange = () => {
+    //     navigate('/');
+    // };
 
     const handleSelect = () => {
         dispatch(resetSeats());

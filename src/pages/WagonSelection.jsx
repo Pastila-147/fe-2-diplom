@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import TicketCard from '../components/cards/TicketCard/TicketCard';
@@ -8,7 +8,6 @@ import '../App.css';
 import {areAllSeatsSelected} from "../store/allSeatsSelectedSelector";
 
 export default function WagonSelection() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const departureTrain = useSelector((state) => state.seats.train.departure);

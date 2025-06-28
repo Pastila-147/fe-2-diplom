@@ -5,7 +5,6 @@ import passengersReducer from '../store/passengersSlice'
 import paymentReducer from "../store/paymentSlice"
 import orderReducer from "../store/orderSlice"
 import loadingReducer from "../store/loadingSlice"
-import summaryReducer from '../store/summarySlice';
 import searchReducer from '../store/searchSlice';
 import searchResultReducer from '../store/searchResultSlice';
 
@@ -19,6 +18,5 @@ export const store = configureStore({
     payment: paymentReducer,
     order: orderReducer,
     loading: loadingReducer,
-    // summary: summaryReducer,
   },
 })
