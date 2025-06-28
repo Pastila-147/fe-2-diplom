@@ -71,9 +71,6 @@ const SuccessOrder = () => {
                                 ))}
                             </div>
                         </div>
-                        {/*<button className="success-button" onClick={() => navigate('/')}>*/}
-                        {/*    Вернуться на главную*/}
-                        {/*</button>*/}
                         <button
                             className="success-button"
                             onClick={() => {

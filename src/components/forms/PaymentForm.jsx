@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setPersonalData, setPaymentMethod } from "../../store/paymentSlice";
 import "./PaymentForm.css";
 
-const PersonalDataBlock = () => {
+const PersonalDataBlock = ({ onValidationChange }) => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState("online");
     const [formData, setFormData] = useState({
@@ -32,6 +32,38 @@ const PersonalDataBlock = () => {
     useEffect(() => {
         dispatch(setPaymentMethod("online"));
     }, [dispatch]);
+
+    useEffect(() => {
+        const letterPattern = /^[A-Za-zА-Яа-яЁё\s]+$/;
+        const phonePattern = /^\+\d{7,}$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        let valid = true;
+        let error = '';
+
+        if (!formData.surname || !letterPattern.test(formData.surname.trim())) {
+            valid = false;
+            error = 'Фамилия должна содержать только буквы';
+        } else if (!formData.name || !letterPattern.test(formData.name.trim())) {
+            valid = false;
+            error = 'Имя должна содержать только буквы';
+        } else if (!formData.father || !letterPattern.test(formData.father.trim())) {
+            valid = false;
+            error = 'Отчество должно содержать только буквы';
+        } else if (!formData.phone || !phonePattern.test(formData.phone.trim())) {
+            valid = false;
+            error = 'Телефон должен начинаться с + и содержать не менее 7 цифр';
+        } else if (!formData.mail || !emailPattern.test(formData.mail.trim())) {
+            valid = false;
+            error = 'Введите корректный Email';
+        }
+
+        // setIsValid(valid);
+
+        onValidationChange?.(valid, error);
+
+    }, [formData, onValidationChange]);
+
 
     return (
         <div className="personal-data">

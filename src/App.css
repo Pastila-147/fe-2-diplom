@@ -159,23 +159,38 @@
   margin: 0 auto;
   padding: 96px 20px;
   box-sizing: border-box;
-  justify-content: space-between;
-  gap: 1.5%;
-  max-width: 100%;
+  /*justify-content: space-between;*/
+  justify-content: center;
+  /*gap: 1.5%;*/
+  gap: 85px;
+  /*max-width: 100%;*/
+  max-width: 1920px;
   background-color: #e5e5e5;
 }
 
 .sidebar {
-  flex: 0 0 27%;
-  max-width: 27%;
+  /*flex: 0 0 27%;*/
+  flex: 0 0 360px;
+  /*max-width: 27%;*/
   /*width: 280px;*/
 
 }
 
 .main-section {
   flex: 1;
-  width: 960px;
-  margin-left: 4vw;
+  max-width: 960px;
+  /*margin-left: 4vw;*/
+}
+
+.form-error-text {
+  margin-top: 16px;
+  padding: 12px 20px;
+  background-color: #ffe6e6;
+  color: #c62828;
+  border: 1px solid #c62828;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .seats_buttons {

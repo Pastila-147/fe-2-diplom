@@ -1,6 +1,6 @@
 .train-card {
-    /*width: 960px;*/
-    width: 100%;
+    width: 960px;
+    /*width: 100%;*/
     min-height: 270px;
     display: flex;
     background: #fff;
