@@ -164,42 +164,26 @@
 
 .search-form__inputs input,
 .input-with-suggestions input {
-    width: 325px;
-    height: 60px;
     font-size: 18px;
     padding: 0 16px;
-    border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     background-color: #fff;
     color: #292929;
+    width: 16.9vw;
+    height: 5.5vh;
+    border-radius: 3px;
 }
-
-
-/*.search-form__inputs input {*/
-/*    padding: 0.8vh 1vw;*/
-/*    border: none;*/
-/*}*/
 
 .header--main .search-form__group .search-form__inputs input[type="date"]:not(:last-child) {
     margin-right: 36px;
 }
-
 
 .input-with-suggestions_from {
     padding-right: 6px;
 }
 .input-with-suggestions_to {
     padding-left: 6px;
-}
-
-.search-form__inputs input,
-.input-with-suggestions input {
-    width: 16.9vw;
-    height: 5.5vh;
-    font-size: 1vw;
-    border-radius: 3px;
-    box-sizing: border-box;
 }
 
 .header--main .search-form__group + .search-form__group {
@@ -307,7 +291,6 @@
 .search-form--compact .search-form__submit button:hover {
     background-color: #ffd87d;
 }
-
 
 .input-with-suggestions {
     position: relative;

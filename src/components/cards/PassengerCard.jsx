@@ -23,6 +23,33 @@ const PassengerCard = forwardRef(
             let isValid = true;
             let error = '';
 
+            const letterPattern = /^[A-Za-zА-Яа-яЁё\s\-]+$/;
+
+            if (!data.surname || !letterPattern.test(data.surname)) {
+                isValid = false;
+                error = 'Фамилия должна содержать только буквы';
+            } else if (!data.name || !letterPattern.test(data.name)) {
+                isValid = false;
+                error = 'Имя должно содержать только буквы';
+            } else if (!data.patronymic || !letterPattern.test(data.patronymic)) {
+                isValid = false;
+                error = 'Отчество должно содержать только буквы';
+            }
+
+            else if (!data.birthDate) {
+                isValid = false;
+                error = 'Укажите дату рождения';
+            }
+            else {
+                const inputDate = new Date(data.birthDate);
+                const maxDate = new Date('2025-07-01');
+                if (inputDate > maxDate) {
+                    isValid = false;
+                    error = 'Дата рождения не может быть позже 01-07-2025';
+                }
+            }
+
+
             if (isChild) {
                 const pattern = /^[IVXLCDM]+-[А-ЯЁ]{2}-\d{6}$/i;
                 if (!pattern.test(data.birthCertNumber || '')) {

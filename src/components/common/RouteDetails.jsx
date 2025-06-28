@@ -43,15 +43,15 @@ export default function RouteDetails() {
 
                     {!isDepartureCollapsed && (
                         <div className="details-route-content">
-                        <div className="number">
+                            <div className="number">
                                 <h4>№ Поезда</h4>
                                 <p>{departureTrain.train.name}</p>
                             </div>
                             <div className="title">
                                 <h4>Название</h4>
                                 <div className="details-route_city">
-                                <p>{departureTrain.from.city.name}</p>
-                                <p>{departureTrain.to.city.name}</p>
+                                    <p>{departureTrain.from.city.name}</p>
+                                    <p>{departureTrain.to.city.name}</p>
                                 </div>
                             </div>
                             <div className="details-route-time">
@@ -93,9 +93,12 @@ export default function RouteDetails() {
                                 <h4>№ Поезда</h4>
                                 <p>{arrivalTrain.train.name}</p>
                             </div>
-                            <div className="name">
+                            <div className="title">
                                 <h4>Название</h4>
-                                <p>{arrivalTrain.from.city.name} {arrivalTrain.to.city.name}</p>
+                                <div className="details-route_city">
+                                    <p>{arrivalTrain.from.city.name} </p>
+                                    <p>{arrivalTrain.to.city.name}</p>
+                                </div>
                             </div>
                             <div className="details-route-time">
                                 <div className="durationText">{formatDuration(departureTrain.duration)}</div>
@@ -133,7 +136,7 @@ export default function RouteDetails() {
                     <>
                         {passengersCount.adult > 0 && (
                             <div className="pass-age-price">
-                            <p className="age-count">{passengersCount.adult} взрослых</p>
+                                <p className="age-count">{passengersCount.adult} взрослых</p>
                                 <div className="price">
                                     <p>{seatsPrice.departureAdults + seatsPrice.arrivalAdults}</p>
                                     <div className="currency-icon small"/>

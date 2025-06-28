@@ -61,13 +61,6 @@
     background-image: url('../../assets/img/subtract-back.png');
 }
 
-.details-route-title {
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 100%;
-    margin-right: auto;
-}
-
 .head-title {
     font-weight: 700;
     font-size: 30px;
@@ -101,8 +94,7 @@
 
 .details-route_city p {
     margin: 0;
-    font-weight: 700;
-    font-size: 16px;
+    font: 700 16px Roboto, sans-serif;
     color: #ffffff;
 }
 
@@ -115,7 +107,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    /*position: relative;*/
 }
 
 .time-box {
@@ -204,7 +195,6 @@
 .title {
     display: flex;
     justify-content: space-between;
-    /*align-items: center;*/
     align-items: flex-start;
     margin-bottom: 22px;
 }
@@ -250,21 +240,7 @@
     margin-right: 17px;
 }
 
-.head-title {
-    font-weight: 700;
-    font-size: 30px;
-    color: #fff;
-    margin-right: auto;
-}
-
 .pass-head .collapse-button {
-    width: 20px;
-    height: 20px;
-    background-image: url('../../assets/img/collapse.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent;
-    border: none;
     margin-left: auto;
 }
 
